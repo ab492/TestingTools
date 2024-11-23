@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		AD1397442CF297AA00497008 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397432CF297AA00497008 /* Cocoa.framework */; };
-		AD1397462CF297AA00497008 /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397452CF297AA00497008 /* XcodeKit.framework */; };
 		AD1397502CF297AA00497008 /* TestingToolsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AD1397412CF297AA00497008 /* TestingToolsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AD1397562CF297C800497008 /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397452CF297AA00497008 /* XcodeKit.framework */; };
+		AD1397572CF297C800497008 /* XcodeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397452CF297AA00497008 /* XcodeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,17 @@
 				AD1397502CF297AA00497008 /* TestingToolsExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD1397582CF297C800497008 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AD1397572CF297C800497008 /* XcodeKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -82,7 +94,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD1397442CF297AA00497008 /* Cocoa.framework in Frameworks */,
-				AD1397462CF297AA00497008 /* XcodeKit.framework in Frameworks */,
+				AD1397562CF297C800497008 /* XcodeKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +163,7 @@
 				AD13973D2CF297AA00497008 /* Sources */,
 				AD13973E2CF297AA00497008 /* Frameworks */,
 				AD13973F2CF297AA00497008 /* Resources */,
+				AD1397582CF297C800497008 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
