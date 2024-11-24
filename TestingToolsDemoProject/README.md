@@ -1,0 +1,1 @@
+Because the main extension is set to automatically open Xcode on run, this project serves as the destination project to load. It's purpose is a playground for using the extesnion.
