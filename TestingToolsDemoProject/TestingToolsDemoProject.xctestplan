@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "CAFFDDEA-0B58-49A1-BD27-35F6BD2A28E7",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:TestingToolsDemoProject.xcodeproj",
+        "identifier" : "ADBE185C2CF31556000317A8",
+        "name" : "TestingToolsDemoProjectTests"
+      }
+    }
+  ],
+  "version" : 1
+}
