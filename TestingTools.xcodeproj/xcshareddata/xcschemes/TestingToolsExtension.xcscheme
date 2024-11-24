@@ -69,6 +69,12 @@
             ReferencedContainer = "container:TestingTools.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "/Users/andybrown/Documents/Personal/TestingTools/TestingToolsDemoProject/TestingToolsDemoProject.xcodeproj"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
