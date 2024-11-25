@@ -5,3 +5,4 @@
 ## Useful Resources for Xcode Extensions
 [Working with XcodeKit by Aryaman Sharda](https://www.youtube.com/watch?v=hsX-b7lobF0)
 [NSHipster Xcode Source Extensions](https://nshipster.com/xcode-source-extensions/)
+[Source editor extensions starting guide](https://kowei-chen.medium.com/xcode-extension-1-5-starting-guide-519a95bdc865)
