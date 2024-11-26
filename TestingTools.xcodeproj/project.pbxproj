@@ -71,6 +71,13 @@
 			);
 			target = AD1397402CF297AA00497008 /* TestingToolsExtension */;
 		};
+		AD43C8282CF5A834002484E8 /* Exceptions for "TestingToolsExtension" folder in "TestingToolsTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CreateType.swift,
+			);
+			target = ADA80AC32CF317FD005FE717 /* TestingToolsTests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -83,6 +90,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				AD1397512CF297AA00497008 /* Exceptions for "TestingToolsExtension" folder in "TestingToolsExtension" target */,
+				AD43C8282CF5A834002484E8 /* Exceptions for "TestingToolsExtension" folder in "TestingToolsTests" target */,
 			);
 			path = TestingToolsExtension;
 			sourceTree = "<group>";

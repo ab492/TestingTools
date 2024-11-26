@@ -9,16 +9,12 @@ import Testing
 import XcodeKit
 @testable import TestingToolsExtension
 
-struct CreateType {
-    func create(from: NSMutableArray) -> NSMutableArray {
-        return ["Hello, world!"]
-    }
-}
+
 
 struct TestingToolsTests {
     @Test func example() async throws {
         let input = NSMutableArray()
-        
+
         let output = CreateType().create(from: input)
         
         #expect(output == NSMutableArray(array: ["Hello, world!"]))
