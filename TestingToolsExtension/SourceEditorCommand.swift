@@ -12,7 +12,14 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
     func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void ) -> Void {
         // Implement your command here, invoking the completion handler when done. Pass it nil on success, and an NSError on failure.
         let lines = invocation.buffer.lines
-
+        let stringLines = lines as! [String]
+        let createType = CreateType()
+        let newLines = createType.create(from: stringLines)
+        
+        newLines.forEach {
+            lines.add($0)
+        }
+        
         completionHandler(nil)
     }
     

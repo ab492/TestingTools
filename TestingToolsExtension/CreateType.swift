@@ -8,7 +8,7 @@
 import Foundation
 
 struct CreateType {
-    func create(from: NSMutableArray) -> NSMutableArray {
+    func create(from: [String]) -> [String] {
         return ["Hello, world!"]
     }
 }
