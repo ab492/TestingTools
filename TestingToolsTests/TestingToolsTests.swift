@@ -13,7 +13,7 @@ struct TestingToolsTests {
     @Test func example() async throws {
         let input = [String]()
 
-        let output = CreateType().create(from: input)
+        let output = CreateType().createStruct(from: input)
         
         #expect(output == ["Hello, world!"])
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct CreateType {
-    func create(from: [String]) -> [String] {
+    func createStruct(from selection: [String]) -> [String] {
         return ["Hello, world!"]
     }
 }

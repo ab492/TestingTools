@@ -14,7 +14,7 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         let lines = invocation.buffer.lines
         let stringLines = lines as! [String]
         let createType = CreateType()
-        let newLines = createType.create(from: stringLines)
+        let newLines = createType.createStruct(from selection: stringLines)
         
         newLines.forEach {
             lines.add($0)
