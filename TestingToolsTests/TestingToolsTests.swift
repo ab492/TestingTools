@@ -11,13 +11,14 @@ import XcodeKit
 
 struct TestingToolsTests {
     @Test func example() async throws {
-        let input = [String]()
+        let input = ""
 
         let output = CreateType().createStruct(from: input)
         
         #expect(output == ["Hello, world!"])
     }
 }
+
 // IN PROGRESS:
 // Exploration: When I pass NSMutableArray (empty), then I get one back with one string: Hello, world! ✅
 // Exploration: When I invoke command on blank file, it adds a comment at beginning of file: // input: "" // output: "Hello, world!" ✅
