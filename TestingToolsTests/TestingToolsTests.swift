@@ -9,19 +9,19 @@ import Testing
 import XcodeKit
 @testable import TestingToolsExtension
 
-struct TestingToolsTests {
-    @Test func example() async throws {
-        let input = ""
+func createStruct(allText: [String]) -> String {
+    "struct TestStruct { }"
+}
 
-        let output = CreateType().createStruct(from: input)
+struct TestingToolsTests {
+    @Test func oneWord_withThatWordSelected_correctlyCreatesStruct() {
+        let text = ["TestStruct"]
         
-        #expect(output == ["Hello, world!"])
+        let sut = createStruct(allText: text)
+        
+        #expect(sut == "struct TestStruct { }")
     }
 }
 
-// IN PROGRESS:
-// Exploration: When I pass NSMutableArray (empty), then I get one back with one string: Hello, world! ✅
-// Exploration: When I invoke command on blank file, it adds a comment at beginning of file: // input: "" // output: "Hello, world!" ✅
-
 // TODO:
-// I am able to highlight some text and make a struct with that name: // input: MyTestClass // output: struct MyTestClass { }
+// I am able to highlight some text and make a struct with that name: // input: MyTestClass // output: struct MyTestClass { } ⬅️
