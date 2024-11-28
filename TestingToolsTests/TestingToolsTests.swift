@@ -9,7 +9,14 @@ import Testing
 import XcodeKit
 @testable import TestingToolsExtension
 
-func createStruct(allText: [String], selectedText: [XCSourceTextRange]) -> String {
+enum TestingToolsError: Error {
+    case multipleSelectionNotSupported
+}
+
+func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -> String {
+    if selectedText.count > 1 {
+        throw TestingToolsError.multipleSelectionNotSupported
+    }
     let selectedText = selectedText.first!
     let line = allText[selectedText.start.line]
     
@@ -21,16 +28,32 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) -> Strin
 }
 
 struct TestingToolsTests {
-    @Test func selectingWordInTheMiddleOfLine_correctlyCreatesStruct() {
+    @Test func selectingWordInTheMiddleOfLine_correctlyCreatesStruct() throws {
         let text = ["let sut = TestStruct()"]
         let rangeOfTestStruct = XCSourceTextRange(
             start: XCSourceTextPosition(line: 0, column: 10),
             end: XCSourceTextPosition(line: 0, column: 20)
         )
         
-        let sut = createStruct(allText: text, selectedText: [rangeOfTestStruct])
+        let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
 
         #expect(sut == "struct TestStruct { }")
+    }
+    
+    @Test func multipleSelection_throwsError() {
+        let text = ["let sut = TestStruct()"]
+        let firstSelection = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 0, column: 0),
+            end: XCSourceTextPosition(line: 0, column: 3)
+        )
+        let secondSelection = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 0, column: 5),
+            end: XCSourceTextPosition(line: 0, column: 10)
+        )
+        
+        #expect(throws: TestingToolsError.multipleSelectionNotSupported) {
+            try createStruct(allText: text, selectedText: [firstSelection, secondSelection])
+        }
     }
 }
 
