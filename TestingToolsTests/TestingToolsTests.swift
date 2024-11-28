@@ -14,10 +14,13 @@ enum TestingToolsError: Error {
     case multilineSelectionNotSupported
 }
 
-func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -> String {
-    if selectedText.count > 1 {
+func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
+    let numberOfSelectedItems = selectedText.count
+    
+    guard numberOfSelectedItems == 1 else {
         throw TestingToolsError.multipleSelectionNotSupported
     }
+
     let selectedText = selectedText.first!
     
     let selectionIsMultiline = selectedText.start.line != selectedText.end.line
@@ -80,3 +83,5 @@ struct TestingToolsTests {
 // I am able to highlight some text and make a struct with that name: // input: MyTestClass // output: struct MyTestClass { } ✅
 // If I pass in more than one selection, an error is thrown. ✅
 // If I pass in multiple line selection, an error is thrown ✅
+// If I pass a selection into an empty page, nil is returned
+// If selection doesn't exist in page, nil is returned
