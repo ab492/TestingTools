@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD07E3D82CF849FF00D4C42C /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397452CF297AA00497008 /* XcodeKit.framework */; };
 		AD1397442CF297AA00497008 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397432CF297AA00497008 /* Cocoa.framework */; };
 		AD1397502CF297AA00497008 /* TestingToolsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AD1397412CF297AA00497008 /* TestingToolsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AD1397562CF297C800497008 /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397452CF297AA00497008 /* XcodeKit.framework */; };
@@ -123,6 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD07E3D82CF849FF00D4C42C /* XcodeKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,6 +574,7 @@
 				DEVELOPMENT_TEAM = KBZAGJGUTC;
 				FRAMEWORK_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Library/Frameworks;
 				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Library/Frameworks;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andybrown.TestingToolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -590,6 +593,7 @@
 				DEVELOPMENT_TEAM = KBZAGJGUTC;
 				FRAMEWORK_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Library/Frameworks;
 				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Library/Frameworks;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andybrown.TestingToolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
