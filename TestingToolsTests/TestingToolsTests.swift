@@ -11,6 +11,7 @@ import XcodeKit
 
 enum TestingToolsError: Error {
     case multipleSelectionNotSupported
+    case multilineSelectionNotSupported
 }
 
 func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -> String {
@@ -18,6 +19,12 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
         throw TestingToolsError.multipleSelectionNotSupported
     }
     let selectedText = selectedText.first!
+    
+    let selectionIsMultiline = selectedText.start.line != selectedText.end.line
+    if selectionIsMultiline {
+        throw TestingToolsError.multilineSelectionNotSupported
+    }
+    
     let line = allText[selectedText.start.line]
     
     let startIndex = line.index(line.startIndex, offsetBy: selectedText.start.column)
@@ -40,7 +47,7 @@ struct TestingToolsTests {
         #expect(sut == "struct TestStruct { }")
     }
     
-    @Test func multipleSelection_throwsError() {
+    @Test func multipleSelectedText_throwsError() {
         let text = ["let sut = TestStruct()"]
         let firstSelection = XCSourceTextRange(
             start: XCSourceTextPosition(line: 0, column: 0),
@@ -55,9 +62,21 @@ struct TestingToolsTests {
             try createStruct(allText: text, selectedText: [firstSelection, secondSelection])
         }
     }
+    
+    @Test func multipleLineSelectedText_throwsError() {
+        let text = ["let sut = TestStruct()"]
+        let multipleLineSelection = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 0, column: 0),
+            end: XCSourceTextPosition(line: 1, column: 10)
+        )
+        
+        #expect(throws: TestingToolsError.multilineSelectionNotSupported) {
+            try createStruct(allText: text, selectedText: [multipleLineSelection])
+        }
+    }
 }
 
 // TODO:
 // I am able to highlight some text and make a struct with that name: // input: MyTestClass // output: struct MyTestClass { } ✅
-// If I pass in more than one selection, an error is thrown. ⬅️
-// If I pass in multiple line selection, an error is thrown
+// If I pass in more than one selection, an error is thrown. ✅
+// If I pass in multiple line selection, an error is thrown ✅
