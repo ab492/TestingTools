@@ -97,12 +97,24 @@ struct TestingToolsTests {
 
         #expect(sut == nil, "This doesn't throw an error since it's not really a situation that should happen")
     }
+    
+    @Test func passingASelectionThatDoesntExistOnPage_returnsNil() throws {
+        let text = ["let sut = TestStruct()"]
+        let nonExistentSelection = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 1, column: 0),
+            end: XCSourceTextPosition(line: 1, column: 10)
+        )
+        
+        let sut = try createStruct(allText: text, selectedText: [nonExistentSelection])
+        
+        #expect(sut == nil, "This doesn't throw an error since it's not really a situation that should happen")
+    }
 }
 
 // TODO:
 // I am able to highlight some text and make a struct with that name: // input: MyTestClass // output: struct MyTestClass { } ✅
 // If I pass in more than one selection, an error is thrown. ✅
 // If I pass in multiple line selection, an error is thrown ✅
-// If I pass a selection into an empty page, nil is returned
-// If selection doesn't exist in page, nil is returned
+// If I pass a selection into an empty page, nil is returned ✅
+// If selection doesn't exist in page, nil is returned <-
 // Empty selection, nil is returned
