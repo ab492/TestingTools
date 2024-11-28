@@ -9,7 +9,8 @@ import Testing
 import XcodeKit
 @testable import TestingToolsExtension
 
-func createStruct(allText: [String], selectedText: XCSourceTextRange) -> String {
+func createStruct(allText: [String], selectedText: [XCSourceTextRange]) -> String {
+    let selectedText = selectedText.first!
     let line = allText[selectedText.start.line]
     
     let startIndex = line.index(line.startIndex, offsetBy: selectedText.start.column)
@@ -27,7 +28,7 @@ struct TestingToolsTests {
             end: XCSourceTextPosition(line: 0, column: 20)
         )
         
-        let sut = createStruct(allText: text, selectedText: rangeOfTestStruct)
+        let sut = createStruct(allText: text, selectedText: [rangeOfTestStruct])
 
         #expect(sut == "struct TestStruct { }")
     }
