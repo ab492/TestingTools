@@ -31,7 +31,20 @@ struct TestingToolsTests {
         
         #expect(sut == "struct TestStruct { }")
     }
+    
+    @Test func oneWordInTheMiddleSentence_withThatWordSelected_correctlyCreatesStruct() {
+        let text = ["let sut = TestStruct()"]
+        let selectedText = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 0, column: 10),
+            end: XCSourceTextPosition(line: 0, column: 20)
+        )
+        
+        let sut = createStruct(allText: text, selectedText: selectedText)
+
+        #expect(sut == "struct TestStruct { }")
+    }
 }
 
 // TODO:
 // I am able to highlight some text and make a struct with that name: // input: MyTestClass // output: struct MyTestClass { } ⬅️
+// If I pass in more than one selection, an error is thrown.
