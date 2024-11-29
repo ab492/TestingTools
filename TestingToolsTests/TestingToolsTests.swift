@@ -73,6 +73,21 @@ struct TestingToolsTests {
         
         #expect(sut == nil, "This doesn't throw an error since it's not really a situation that should happen")
     }
+    
+    @Test func selectingWordInMultilinePage_returnsStruct() throws {
+        let text = [
+            "let sut = TestStruct()",
+            "   let anotherSut = AnotherStruct()"
+        ]
+        let rangeOfAnotherStruct = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 1, column: 20),
+            end: XCSourceTextPosition(line: 1, column: 33)
+        )
+        
+        let sut = try createStruct(allText: text, selectedText: [rangeOfAnotherStruct])
+
+        #expect(sut == "struct AnotherStruct { }")
+    }
 }
 
 // TODO:
@@ -80,5 +95,6 @@ struct TestingToolsTests {
 // If I pass in more than one selection, an error is thrown. ✅
 // If I pass in multiple line selection, an error is thrown ✅
 // If I pass a selection into an empty page, nil is returned ✅
-// If selection doesn't exist in page, nil is returned <-
-// Empty selection, nil is returned
+// If selection doesn't exist in page, nil is returned ✅
+// Empty selection, nil is returned ❌ Don't think this is required
+// If I have a multiline page and I select a struct, it will be created.
