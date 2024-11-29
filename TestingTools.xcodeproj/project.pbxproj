@@ -75,7 +75,9 @@
 		AD43C8282CF5A834002484E8 /* Exceptions for "TestingToolsExtension" folder in "TestingToolsTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				CreateStruct.swift,
 				CreateType.swift,
+				"Extensions/Array+SafeAccess.swift",
 			);
 			target = ADA80AC32CF317FD005FE717 /* TestingToolsTests */;
 		};

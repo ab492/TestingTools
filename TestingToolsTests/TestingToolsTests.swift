@@ -9,42 +9,6 @@ import Testing
 import XcodeKit
 @testable import TestingToolsExtension
 
-extension Array {
-    subscript(safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
-    }
-}
-
-enum TestingToolsError: Error {
-    case multipleSelectionNotSupported
-    case multilineSelectionNotSupported
-}
-
-func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
-    let numberOfSelectedItems = selectedText.count
-    
-    guard numberOfSelectedItems == 1 else {
-        throw TestingToolsError.multipleSelectionNotSupported
-    }
-    
-    let selectedText = selectedText.first!
-    
-    let selectionIsMultiline = selectedText.start.line != selectedText.end.line
-    if selectionIsMultiline {
-        throw TestingToolsError.multilineSelectionNotSupported
-    }
-    
-    
-    
-    guard let line = allText[safe: selectedText.start.line] else { return nil }
-    
-    let startIndex = line.index(line.startIndex, offsetBy: selectedText.start.column)
-    let endIndex = line.index(line.startIndex, offsetBy: selectedText.end.column)
-    let selectedWord = String(line[startIndex..<endIndex])
-    
-    return "struct \(selectedWord) { }"
-}
-
 struct TestingToolsTests {
     @Test func selectingWordInTheMiddleOfLine_correctlyCreatesStruct() throws {
         let text = ["let sut = TestStruct()"]
