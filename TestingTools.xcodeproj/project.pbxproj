@@ -76,7 +76,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				CreateStruct.swift,
-				CreateType.swift,
 				"Extensions/Array+SafeAccess.swift",
 			);
 			target = ADA80AC32CF317FD005FE717 /* TestingToolsTests */;

@@ -1,2 +1,3 @@
-        let sut = MyStruct()
-struct MyStruct { }
+let sut = MyStruct()
+let sut = Hello()
+
