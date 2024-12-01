@@ -97,4 +97,4 @@ struct TestingToolsTests {
 // If I pass a selection into an empty page, nil is returned ✅
 // If selection doesn't exist in page, nil is returned ✅
 // Empty selection, nil is returned ❌ Don't think this is required
-// If I have a multiline page and I select a struct, it will be created.
+// If I have a multiline page and I select a struct, it will be created. ✅
