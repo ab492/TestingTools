@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		AD07E3D82CF849FF00D4C42C /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397452CF297AA00497008 /* XcodeKit.framework */; };
 		AD1397442CF297AA00497008 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397432CF297AA00497008 /* Cocoa.framework */; };
-		AD1397502CF297AA00497008 /* TestingToolsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AD1397412CF297AA00497008 /* TestingToolsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AD1397502CF297AA00497008 /* Testing Tools.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AD1397412CF297AA00497008 /* Testing Tools.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AD1397562CF297C800497008 /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397452CF297AA00497008 /* XcodeKit.framework */; };
 		AD1397572CF297C800497008 /* XcodeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397452CF297AA00497008 /* XcodeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -38,7 +38,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				AD1397502CF297AA00497008 /* TestingToolsExtension.appex in Embed Foundation Extensions */,
+				AD1397502CF297AA00497008 /* Testing Tools.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -57,20 +57,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AD13972B2CF2972900497008 /* TestingTools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestingTools.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD1397412CF297AA00497008 /* TestingToolsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TestingToolsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD13972B2CF2972900497008 /* Testing Tools Host.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Testing Tools Host.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD1397412CF297AA00497008 /* Testing Tools.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Testing Tools.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD1397432CF297AA00497008 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AD1397452CF297AA00497008 /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = Library/Frameworks/XcodeKit.framework; sourceTree = DEVELOPER_DIR; };
 		ADA80AC42CF317FD005FE717 /* TestingToolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestingToolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		AD1397512CF297AA00497008 /* Exceptions for "TestingToolsExtension" folder in "TestingToolsExtension" target */ = {
+		AD1397512CF297AA00497008 /* Exceptions for "TestingToolsExtension" folder in "Testing Tools" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = AD1397402CF297AA00497008 /* TestingToolsExtension */;
+			target = AD1397402CF297AA00497008 /* Testing Tools */;
 		};
 		AD43C8282CF5A834002484E8 /* Exceptions for "TestingToolsExtension" folder in "TestingToolsTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -91,7 +91,7 @@
 		AD1397472CF297AA00497008 /* TestingToolsExtension */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				AD1397512CF297AA00497008 /* Exceptions for "TestingToolsExtension" folder in "TestingToolsExtension" target */,
+				AD1397512CF297AA00497008 /* Exceptions for "TestingToolsExtension" folder in "Testing Tools" target */,
 				AD43C8282CF5A834002484E8 /* Exceptions for "TestingToolsExtension" folder in "TestingToolsTests" target */,
 			);
 			path = TestingToolsExtension;
@@ -146,8 +146,8 @@
 		AD13972C2CF2972900497008 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AD13972B2CF2972900497008 /* TestingTools.app */,
-				AD1397412CF297AA00497008 /* TestingToolsExtension.appex */,
+				AD13972B2CF2972900497008 /* Testing Tools Host.app */,
+				AD1397412CF297AA00497008 /* Testing Tools.appex */,
 				ADA80AC42CF317FD005FE717 /* TestingToolsTests.xctest */,
 			);
 			name = Products;
@@ -165,9 +165,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AD13972A2CF2972900497008 /* TestingTools */ = {
+		AD13972A2CF2972900497008 /* Testing Tools Host */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AD13973A2CF2972B00497008 /* Build configuration list for PBXNativeTarget "TestingTools" */;
+			buildConfigurationList = AD13973A2CF2972B00497008 /* Build configuration list for PBXNativeTarget "Testing Tools Host" */;
 			buildPhases = (
 				AD1397272CF2972900497008 /* Sources */,
 				AD1397282CF2972900497008 /* Frameworks */,
@@ -182,16 +182,16 @@
 			fileSystemSynchronizedGroups = (
 				AD13972D2CF2972900497008 /* TestingTools */,
 			);
-			name = TestingTools;
+			name = "Testing Tools Host";
 			packageProductDependencies = (
 			);
 			productName = TestingTools;
-			productReference = AD13972B2CF2972900497008 /* TestingTools.app */;
+			productReference = AD13972B2CF2972900497008 /* Testing Tools Host.app */;
 			productType = "com.apple.product-type.application";
 		};
-		AD1397402CF297AA00497008 /* TestingToolsExtension */ = {
+		AD1397402CF297AA00497008 /* Testing Tools */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AD1397522CF297AA00497008 /* Build configuration list for PBXNativeTarget "TestingToolsExtension" */;
+			buildConfigurationList = AD1397522CF297AA00497008 /* Build configuration list for PBXNativeTarget "Testing Tools" */;
 			buildPhases = (
 				AD13973D2CF297AA00497008 /* Sources */,
 				AD13973E2CF297AA00497008 /* Frameworks */,
@@ -205,11 +205,11 @@
 			fileSystemSynchronizedGroups = (
 				AD1397472CF297AA00497008 /* TestingToolsExtension */,
 			);
-			name = TestingToolsExtension;
+			name = "Testing Tools";
 			packageProductDependencies = (
 			);
 			productName = TestingToolsExtension;
-			productReference = AD1397412CF297AA00497008 /* TestingToolsExtension.appex */;
+			productReference = AD1397412CF297AA00497008 /* Testing Tools.appex */;
 			productType = "com.apple.product-type.xcode-extension";
 		};
 		ADA80AC32CF317FD005FE717 /* TestingToolsTests */ = {
@@ -271,8 +271,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AD13972A2CF2972900497008 /* TestingTools */,
-				AD1397402CF297AA00497008 /* TestingToolsExtension */,
+				AD13972A2CF2972900497008 /* Testing Tools Host */,
+				AD1397402CF297AA00497008 /* Testing Tools */,
 				ADA80AC32CF317FD005FE717 /* TestingToolsTests */,
 			);
 		};
@@ -329,12 +329,12 @@
 /* Begin PBXTargetDependency section */
 		AD13974F2CF297AA00497008 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = AD1397402CF297AA00497008 /* TestingToolsExtension */;
+			target = AD1397402CF297AA00497008 /* Testing Tools */;
 			targetProxy = AD13974E2CF297AA00497008 /* PBXContainerItemProxy */;
 		};
 		ADA80AC92CF317FD005FE717 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = AD13972A2CF2972900497008 /* TestingTools */;
+			target = AD13972A2CF2972900497008 /* Testing Tools Host */;
 			targetProxy = ADA80AC82CF317FD005FE717 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -523,7 +523,6 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TestingToolsExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Testing Tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -550,7 +549,6 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TestingToolsExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Testing Tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -616,7 +614,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AD13973A2CF2972B00497008 /* Build configuration list for PBXNativeTarget "TestingTools" */ = {
+		AD13973A2CF2972B00497008 /* Build configuration list for PBXNativeTarget "Testing Tools Host" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AD13973B2CF2972B00497008 /* Debug */,
@@ -625,7 +623,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AD1397522CF297AA00497008 /* Build configuration list for PBXNativeTarget "TestingToolsExtension" */ = {
+		AD1397522CF297AA00497008 /* Build configuration list for PBXNativeTarget "Testing Tools" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AD1397532CF297AA00497008 /* Debug */,
