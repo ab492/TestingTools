@@ -7,7 +7,7 @@
 
 import Testing
 import XcodeKit
-@testable import TestingToolsExtension
+@testable import Testing_Tools
 
 struct TestingToolsTests {
     @Test func selectingWordInTheMiddleOfLine_correctlyCreatesStruct() throws {

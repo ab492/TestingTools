@@ -579,7 +579,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestingTools.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestingTools";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Testing Tools Host.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Testing Tools Host";
 			};
 			name = Debug;
 		};
@@ -598,7 +598,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestingTools.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestingTools";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Testing Tools Host.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Testing Tools Host";
 			};
 			name = Release;
 		};
