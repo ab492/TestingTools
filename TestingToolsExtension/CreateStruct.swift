@@ -7,9 +7,22 @@
 import Foundation
 import XcodeKit
 
-enum TestingToolsError: Error {
+enum TestingToolsError: Error, LocalizedError, CustomNSError {
     case multipleSelectionNotSupported
     case multilineSelectionNotSupported
+    
+    var localizedDescription: String {
+        switch self {
+        case .multipleSelectionNotSupported:
+            return "Multiple text selections are not supported"
+        case .multilineSelectionNotSupported:
+            return "Multiline text selections are not supported"
+        }
+    }
+    
+    var errorUserInfo: [String: Any] {
+        [NSLocalizedDescriptionKey: localizedDescription]
+    }
 }
 
 func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
