@@ -38,12 +38,10 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
         throw TestingToolsError.multilineSelectionNotSupported
     }
 
-    guard let line = allText[safe: selectedText.start.line] else { return nil }
-    
-    let startIndex = line.index(line.startIndex, offsetBy: selectedText.start.column)
-    let endIndex = line.index(line.startIndex, offsetBy: selectedText.end.column)
-    let selectedWord = String(line[startIndex..<endIndex])
-    
+    guard let lineContainingSelection = allText[safe: selectedText.start.line] else { return nil }
+    let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
+    let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
+    let selectedWord = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
     
     let hasParameters = selectedWord.contains(":")
     if hasParameters {
