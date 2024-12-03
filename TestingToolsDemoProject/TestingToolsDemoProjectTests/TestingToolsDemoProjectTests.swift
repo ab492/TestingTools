@@ -1,3 +1,5 @@
-let sut = MyStruct()
-let sut = Hello()
+let sut = MyStruct(someString: "Hello")
 
+struct MyStruct {
+    let someString: String
+}
