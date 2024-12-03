@@ -41,15 +41,15 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
     guard let lineContainingSelection = allText[safe: selectedText.start.line] else { return nil }
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
-    let selectedWord = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
+    let selectedString = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
     
-    let hasParameters = selectedWord.contains(":")
+    let hasParameters = selectedString.contains(":")
     if hasParameters {
-        guard let rangeOfOpeningBracket = selectedWord.range(of: "("),
-              let rangeOfClosingBracket = selectedWord.range(of: ")") else { return nil } // TODO: Test an error thrown here!
-        let structName = String(selectedWord[..<rangeOfOpeningBracket.lowerBound])
+        guard let rangeOfOpeningBracket = selectedString.range(of: "("),
+              let rangeOfClosingBracket = selectedString.range(of: ")") else { return nil } // TODO: Test an error thrown here!
+        let structName = String(selectedString[..<rangeOfOpeningBracket.lowerBound])
         
-        let allParametersString = String(selectedWord[rangeOfOpeningBracket.upperBound..<rangeOfClosingBracket.lowerBound])
+        let allParametersString = String(selectedString[rangeOfOpeningBracket.upperBound..<rangeOfClosingBracket.lowerBound])
         let allParametersInArray = allParametersString.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
         
         let firstProperty = allParametersInArray.first!.split(separator: ":").map { $0.trimmingCharacters(in: .whitespaces) }
@@ -72,6 +72,6 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
 
         return structDefinition
     } else {
-        return "struct \(selectedWord) { }"
+        return "struct \(selectedString) { }"
     }
 }
