@@ -57,37 +57,31 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
         
         let allParametersString = String(selectedWord[rangeOfOpeningBracket.upperBound..<rangeOfClosingBracket.lowerBound])
         let allParametersInArray = allParametersString.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
-
-        // Generate properties with inferred types
-        let properties = allParametersInArray.compactMap { parameter -> String? in
-            let parts = parameter.split(separator: ":").map { $0.trimmingCharacters(in: .whitespaces) }
-            guard parts.count == 2 else { return nil }
-            let propertyName = parts[0]
-            let propertyValue = parts[1]
-
-            // Infer type based on the value
-            let propertyType: String
-            if propertyValue.hasPrefix("\"") && propertyValue.hasSuffix("\"") {
-                propertyType = "String"
-            } else if Int(propertyValue) != nil {
-                propertyType = "Int"
-            } else if Double(propertyValue) != nil {
-                propertyType = "Double"
-            } else if propertyValue == "true" || propertyValue == "false" {
-                propertyType = "Bool"
-            } else {
-                propertyType = "Unknown"
-            }
-
-            return "    let \(propertyName): \(propertyType)"
+        
+        let firstProperty = allParametersInArray.first!.split(separator: ":").map { $0.trimmingCharacters(in: .whitespaces) }
+        guard firstProperty.count == 2 else { return nil }
+        let propertyName = firstProperty[0]
+        let propertyValue = firstProperty[1]
+        
+        let propertyType: String
+        if propertyValue.hasPrefix("\"") && propertyValue.hasSuffix("\"") {
+            propertyType = "String"
+        } else if Int(propertyValue) != nil {
+            propertyType = "Int"
+        } else if Double(propertyValue) != nil {
+            propertyType = "Double"
+        } else if propertyValue == "true" || propertyValue == "false" {
+            propertyType = "Bool"
+        } else {
+            propertyType = "Unknown"
         }
-
-        // Construct the struct
+        
         let structDefinition = """
         struct \(structName) {
-        \(properties.joined(separator: "\n"))
+            let \(propertyName): \(propertyType)
         }
         """
+
         return structDefinition
     }
 
