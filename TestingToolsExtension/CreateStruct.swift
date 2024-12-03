@@ -26,19 +26,18 @@ enum TestingToolsError: Error, LocalizedError, CustomNSError {
 }
 
 func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
-    let numberOfSelectedItems = selectedText.count
     
-    guard numberOfSelectedItems == 1 else {
+    let numberOfSelectedItems = selectedText.count
+    guard numberOfSelectedItems == 1,
+          let selectedText = selectedText.first else {
         throw TestingToolsError.multipleSelectionNotSupported
     }
     
-    let selectedText = selectedText.first!
-    
     let selectionIsMultiline = selectedText.start.line != selectedText.end.line
-    if selectionIsMultiline {
+    guard selectionIsMultiline == false else {
         throw TestingToolsError.multilineSelectionNotSupported
     }
-        
+
     guard let line = allText[safe: selectedText.start.line] else { return nil }
     
     let startIndex = line.index(line.startIndex, offsetBy: selectedText.start.column)
