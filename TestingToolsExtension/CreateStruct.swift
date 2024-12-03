@@ -51,24 +51,15 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
     let hasParameters = selectedWord.contains(":")
     
     if hasParameters {
-        guard let rangeOfOpeningBracket = selectedWord.range(of: "(") else { return nil }
+        guard let rangeOfOpeningBracket = selectedWord.range(of: "("),
+              let rangeOfClosingBracket = selectedWord.range(of: ")") else { return nil } // TODO: Test an error thrown here!
         let structName = String(selectedWord[..<rangeOfOpeningBracket.lowerBound])
         
-        // Extract parameters and their types
-        let parametersStartIndex = line.range(of: "(")?.upperBound
-        let parametersEndIndex = line.range(of: ")")?.lowerBound
-        guard let parametersRange = parametersStartIndex.flatMap({ start in
-            parametersEndIndex.map { end in
-                start..<end
-            }
-        }) else {
-            return nil
-        }
-        let parametersString = line[parametersRange]
-        let parameters = parametersString.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+        let allParametersString = String(selectedWord[rangeOfOpeningBracket.upperBound..<rangeOfClosingBracket.lowerBound])
+        let allParametersInArray = allParametersString.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
 
         // Generate properties with inferred types
-        let properties = parameters.compactMap { parameter -> String? in
+        let properties = allParametersInArray.compactMap { parameter -> String? in
             let parts = parameter.split(separator: ":").map { $0.trimmingCharacters(in: .whitespaces) }
             guard parts.count == 2 else { return nil }
             let propertyName = parts[0]

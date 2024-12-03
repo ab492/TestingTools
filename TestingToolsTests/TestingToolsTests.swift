@@ -109,3 +109,7 @@ struct TestingToolsTests {
     }
 }
 
+
+
+// TODO
+// Guard that struct is passed in correctly with opening and closing brackets
