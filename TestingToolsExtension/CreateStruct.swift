@@ -41,15 +41,12 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
         
     guard let line = allText[safe: selectedText.start.line] else { return nil }
     
-
-    
     let startIndex = line.index(line.startIndex, offsetBy: selectedText.start.column)
     let endIndex = line.index(line.startIndex, offsetBy: selectedText.end.column)
     let selectedWord = String(line[startIndex..<endIndex])
     
     
     let hasParameters = selectedWord.contains(":")
-    
     if hasParameters {
         guard let rangeOfOpeningBracket = selectedWord.range(of: "("),
               let rangeOfClosingBracket = selectedWord.range(of: ")") else { return nil } // TODO: Test an error thrown here!
@@ -66,14 +63,8 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
         let propertyType: String
         if propertyValue.hasPrefix("\"") && propertyValue.hasSuffix("\"") {
             propertyType = "String"
-        } else if Int(propertyValue) != nil {
-            propertyType = "Int"
-        } else if Double(propertyValue) != nil {
-            propertyType = "Double"
-        } else if propertyValue == "true" || propertyValue == "false" {
-            propertyType = "Bool"
         } else {
-            propertyType = "Unknown"
+            return nil 
         }
         
         let structDefinition = """
@@ -83,8 +74,7 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
         """
 
         return structDefinition
+    } else {
+        return "struct \(selectedWord) { }"
     }
-
-    
-    return "struct \(selectedWord) { }"
 }

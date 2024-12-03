@@ -113,3 +113,8 @@ struct TestingToolsTests {
 
 // TODO
 // Guard that struct is passed in correctly with opening and closing brackets
+// Add tests for int
+// Add test for bool
+// Add tests for double
+// Add tests for unknown
+// Add tests for multiple parameters
