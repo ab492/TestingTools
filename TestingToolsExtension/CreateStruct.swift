@@ -47,15 +47,13 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
     let endIndex = line.index(line.startIndex, offsetBy: selectedText.end.column)
     let selectedWord = String(line[startIndex..<endIndex])
     
-
-    if selectedWord.contains(":") { // We're dealing with parameters
-        // Extract the struct name
-        guard let structNameStartIndex = line.range(of: "let sut = ")?.upperBound,
-              let structNameEndIndex = line[structNameStartIndex...].range(of: "(")?.lowerBound else {
-            return nil
-        }
-        let structName = String(line[structNameStartIndex..<structNameEndIndex])
-
+    
+    let hasParameters = selectedWord.contains(":")
+    
+    if hasParameters {
+        guard let rangeOfOpeningBracket = selectedWord.range(of: "(") else { return nil }
+        let structName = String(selectedWord[..<rangeOfOpeningBracket.lowerBound])
+        
         // Extract parameters and their types
         let parametersStartIndex = line.range(of: "(")?.upperBound
         let parametersEndIndex = line.range(of: ")")?.lowerBound
