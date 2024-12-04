@@ -42,10 +42,17 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let selectedString = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
 
+    // Check for parentheses to identify a call without parameters
+    if selectedString.hasSuffix("()") {
+        let structName = String(selectedString.dropLast(2)) // Remove `()` from the end
+        return "struct \(structName) { }"
+    }
+
+    // Check if the selected string contains parameters
     let hasParameters = selectedString.contains(":")
     if hasParameters {
         guard let rangeOfOpeningBracket = selectedString.range(of: "("),
-              let rangeOfClosingBracket = selectedString.range(of: ")") else { return nil } // TODO: Test an error thrown here!
+              let rangeOfClosingBracket = selectedString.range(of: ")") else { return nil }
         let structName = String(selectedString[..<rangeOfOpeningBracket.lowerBound])
         
         let allParametersString = String(selectedString[rangeOfOpeningBracket.upperBound..<rangeOfClosingBracket.lowerBound])

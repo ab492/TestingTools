@@ -10,19 +10,32 @@ import XcodeKit
 @testable import Testing_Tools
 
 struct TestingToolsTests {
-    struct StructWithNoPropertiesTests {
-        @Test func selectingWordInTheMiddleOfLine_correctlyCreatesStruct() throws {
-            let text = ["let sut = TestStruct()"]
-            let rangeOfTestStruct = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 0, column: 10),
-                end: XCSourceTextPosition(line: 0, column: 20)
-            )
-            
-            let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
-            
-            #expect(sut == "struct TestStruct { }")
-        }
+    @Test func selectingWordExludingBrackets_correctlyCreatesStruct() throws {
+        let text = ["let sut = TestStruct()"]
+        let rangeOfTestStruct = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 0, column: 10),
+            end: XCSourceTextPosition(line: 0, column: 20)
+        )
         
+        let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+        
+        #expect(sut == "struct TestStruct { }")
+    }
+    
+    @Test func selectingWordIncludingBrackets_correctlyCreatesStruct() throws {
+        let text = ["let sut = TestStruct()"]
+        let rangeOfTestStruct = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 0, column: 10),
+            end: XCSourceTextPosition(line: 0, column: 22)
+        )
+        
+        let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+        
+        #expect(sut == "struct TestStruct { }")
+    }
+    
+    struct StructWithNoPropertiesTests {
+
         @Test func multipleSelectedText_throwsError() {
             let text = ["let sut = TestStruct()"]
             let firstSelection = XCSourceTextRange(
@@ -207,5 +220,5 @@ struct TestingToolsTests {
 // Add tests for int ✅
 // Add test for bool✅
 // Add tests for double ✅
-// Add tests for unknown
-// Add tests for multiple parameters ⬅️
+// Add tests for unknown ✅
+// Add tests for multiple parameters ✅
