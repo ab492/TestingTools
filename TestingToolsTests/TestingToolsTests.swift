@@ -212,19 +212,17 @@ struct TestingToolsTests {
             #expect(sut == "struct AnotherStruct { }")
         }
         
-        
+        @Test("Selecting 'TestStruct(someInt:'")
+        func halfSelectingStructWithProperties_throwsError() throws {
+            let text = ["let sut = TestStruct(someInt: 42)"]
+            let rangeOfTestStruct = XCSourceTextRange(
+                start: XCSourceTextPosition(line: 0, column: 10),
+                end: XCSourceTextPosition(line: 0, column: 29)
+            )
+            
+            #expect(throws: TestingToolsError.invalidSelection) {
+                try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+            }
+        }
     }
-    
- 
-    
 }
-
-
-
-// TODO
-// Guard that struct is passed in correctly with opening and closing brackets
-// Add tests for int ✅
-// Add test for bool✅
-// Add tests for double ✅
-// Add tests for unknown ✅
-// Add tests for multiple parameters ✅

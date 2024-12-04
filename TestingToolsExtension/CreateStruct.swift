@@ -10,6 +10,7 @@ import XcodeKit
 enum TestingToolsError: Error, LocalizedError, CustomNSError {
     case multipleSelectionNotSupported
     case multilineSelectionNotSupported
+    case invalidSelection
     
     var localizedDescription: String {
         switch self {
@@ -17,6 +18,8 @@ enum TestingToolsError: Error, LocalizedError, CustomNSError {
             return "Multiple text selections are not supported"
         case .multilineSelectionNotSupported:
             return "Multiline text selections are not supported"
+        case .invalidSelection:
+            return "Invalid selection"
         }
     }
     
@@ -52,7 +55,9 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
     let hasParameters = selectedString.contains(":")
     if hasParameters {
         guard let rangeOfOpeningBracket = selectedString.range(of: "("),
-              let rangeOfClosingBracket = selectedString.range(of: ")") else { return nil }
+              let rangeOfClosingBracket = selectedString.range(of: ")") else {
+            throw TestingToolsError.invalidSelection
+        }
         let structName = String(selectedString[..<rangeOfOpeningBracket.lowerBound])
         
         let allParametersString = String(selectedString[rangeOfOpeningBracket.upperBound..<rangeOfClosingBracket.lowerBound])
