@@ -64,7 +64,9 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
             propertyType = "Int"
         } else if Double(propertyValue) != nil {
             propertyType = "Double"
-        }  else {
+        } else if propertyValue == "true" || propertyValue == "false" {
+            propertyType = "Bool"
+        } else {
             return nil
         }
         
