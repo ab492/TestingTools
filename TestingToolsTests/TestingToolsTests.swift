@@ -159,6 +159,25 @@ struct TestingToolsTests {
             """
             #expect(sut == expectedValue)
         }
+        
+        @Test func selectingStructWithMultipleParameters_correctlyCreatesStruct() throws {
+            let text = ["let sut = TestStruct(someBool: true, someInt: 42)"]
+            let rangeOfTestStruct = XCSourceTextRange(
+                start: XCSourceTextPosition(line: 0, column: 10),
+                end: XCSourceTextPosition(line: 0, column: 49)
+            )
+
+            
+            let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+            
+            let expectedValue = """
+            struct TestStruct {
+                let someBool: Bool
+                let someInt: Int
+            }
+            """
+            #expect(sut == expectedValue)
+        }
     }
     
 }
@@ -168,7 +187,7 @@ struct TestingToolsTests {
 // TODO
 // Guard that struct is passed in correctly with opening and closing brackets
 // Add tests for int ✅
-// Add test for bool⬅️
+// Add test for bool✅
 // Add tests for double ✅
 // Add tests for unknown
-// Add tests for multiple parameters
+// Add tests for multiple parameters ⬅️

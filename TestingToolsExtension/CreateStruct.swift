@@ -26,7 +26,6 @@ enum TestingToolsError: Error, LocalizedError, CustomNSError {
 }
 
 func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
-    
     let numberOfSelectedItems = selectedText.count
     guard numberOfSelectedItems == 1,
           let selectedText = selectedText.first else {
@@ -52,30 +51,36 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
         let allParametersString = String(selectedString[rangeOfOpeningBracket.upperBound..<rangeOfClosingBracket.lowerBound])
         let allParametersInArray = allParametersString.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
         
-        let firstProperty = allParametersInArray.first!.split(separator: ":").map { $0.trimmingCharacters(in: .whitespaces) }
-        guard firstProperty.count == 2 else { return nil }
-        let propertyName = firstProperty[0]
-        let propertyValue = firstProperty[1]
+        var properties: [(name: String, type: String)] = []
         
-        let propertyType: String
-        if propertyValue.hasPrefix("\"") && propertyValue.hasSuffix("\"") {
-            propertyType = "String"
-        } else if Int(propertyValue) != nil {
-            propertyType = "Int"
-        } else if Double(propertyValue) != nil {
-            propertyType = "Double"
-        } else if propertyValue == "true" || propertyValue == "false" {
-            propertyType = "Bool"
-        } else {
-            return nil
+        for parameter in allParametersInArray {
+            let components = parameter.split(separator: ":").map { $0.trimmingCharacters(in: .whitespaces) }
+            guard components.count == 2 else { return nil }
+            let propertyName = components[0]
+            let propertyValue = components[1]
+            
+            let propertyType: String
+            if propertyValue.hasPrefix("\"") && propertyValue.hasSuffix("\"") {
+                propertyType = "String"
+            } else if Int(propertyValue) != nil {
+                propertyType = "Int"
+            } else if Double(propertyValue) != nil {
+                propertyType = "Double"
+            } else if propertyValue == "true" || propertyValue == "false" {
+                propertyType = "Bool"
+            } else {
+                return nil
+            }
+            
+            properties.append((name: propertyName, type: propertyType))
         }
         
         let structDefinition = """
         struct \(structName) {
-            let \(propertyName): \(propertyType)
+        \(properties.map { "    let \($0.name): \($0.type)" }.joined(separator: "\n"))
         }
         """
-
+        
         return structDefinition
     } else {
         return "struct \(selectedString) { }"
