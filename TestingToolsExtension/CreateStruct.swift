@@ -42,7 +42,7 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let selectedString = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
-    
+
     let hasParameters = selectedString.contains(":")
     if hasParameters {
         guard let rangeOfOpeningBracket = selectedString.range(of: "("),
@@ -60,8 +60,12 @@ func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -
         let propertyType: String
         if propertyValue.hasPrefix("\"") && propertyValue.hasSuffix("\"") {
             propertyType = "String"
-        } else {
-            return nil 
+        } else if Int(propertyValue) != nil {
+            propertyType = "Int"
+        } else if Double(propertyValue) != nil {
+            propertyType = "Double"
+        }  else {
+            return nil
         }
         
         let structDefinition = """
