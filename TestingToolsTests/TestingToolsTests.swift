@@ -160,6 +160,24 @@ struct TestingToolsTests {
             #expect(sut == expectedValue)
         }
         
+        @Test("Unknown type should expand to editor placeholder - unicode characters required to prevent placeholder expanding in tests")
+        func selectingStructWithUnknownParamerInInit_correctlyCreatesStruct() throws {
+            let text = ["let sut = TestStruct(someUnknown: unknownProperty)"]
+            let rangeOfTestStruct = XCSourceTextRange(
+                start: XCSourceTextPosition(line: 0, column: 10),
+                end: XCSourceTextPosition(line: 0, column: 50)
+            )
+            
+            let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+            
+            let expectedValue = """
+            struct TestStruct {
+                let someUnknown: \u{003C}#Type#\u{003E}
+            }
+            """
+            #expect(sut == expectedValue)
+        }
+        
         @Test func selectingStructWithMultipleParameters_correctlyCreatesStruct() throws {
             let text = ["let sut = TestStruct(someBool: true, someInt: 42)"]
             let rangeOfTestStruct = XCSourceTextRange(
