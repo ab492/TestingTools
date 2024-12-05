@@ -10,13 +10,16 @@ import XcodeKit
 
 struct TestHelperTests {
     @Test func getRangeOfTextWorksCorrectly()  {
-        let text = ["let sut = TestStruct(someBool: true, someInt: 42)"]
+        let text = [
+            "let sut = TestStruct()",
+            "   let anotherSut = AnotherStruct()"
+        ]
         let expectedRange = XCSourceTextRange(
-            start: XCSourceTextPosition(line: 0, column: 10),
-            end: XCSourceTextPosition(line: 0, column: 49)
+            start: XCSourceTextPosition(line: 1, column: 20),
+            end: XCSourceTextPosition(line: 1, column: 33)
         )
         
-        let rangeOfText = getRangeOfText("TestStruct(someBool: true, someInt: 42)", from: text)
+        let rangeOfText = getRangeOfText("AnotherStruct", from: text)
 
         #expect(rangeOfText == expectedRange)
     }
@@ -34,7 +37,3 @@ func getRangeOfText(_ text: String, from allText: [String]) -> XCSourceTextRange
     
     return nil
 }
-
-
-
-

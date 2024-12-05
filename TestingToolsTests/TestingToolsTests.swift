@@ -31,12 +31,9 @@ struct TestingToolsTests {
         
         @Test func selectingStructWithStringInInit_correctlyCreatesStruct() throws {
             let text = ["let sut = TestStruct(someString: \"Hello\")"]
-            let rangeOfTestStruct = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 0, column: 10),
-                end: XCSourceTextPosition(line: 0, column: 41)
-            )
+            let highlightedText = getRangeOfText("TestStruct(someString: \"Hello\")", from: text)!
             
-            let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+            let sut = try createStruct(allText: text, selectedText: [highlightedText])
             
             let expectedValue = """
             struct TestStruct {
@@ -48,12 +45,9 @@ struct TestingToolsTests {
         
         @Test func selectingStructWithIntInInit_correctlyCreatesStruct() throws {
             let text = ["let sut = TestStruct(someInt: 42)"]
-            let rangeOfTestStruct = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 0, column: 10),
-                end: XCSourceTextPosition(line: 0, column: 33)
-            )
-            
-            let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+            let highlightedText = getRangeOfText("TestStruct(someInt: 42)", from: text)!
+
+            let sut = try createStruct(allText: text, selectedText: [highlightedText])
             
             let expectedValue = """
             struct TestStruct {
@@ -65,12 +59,9 @@ struct TestingToolsTests {
         
         @Test func selectingStructWithDoubleInInit_correctlyCreatesStruct() throws {
             let text = ["let sut = TestStruct(someDouble: 3.14)"]
-            let rangeOfTestStruct = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 0, column: 10),
-                end: XCSourceTextPosition(line: 0, column: 38)
-            )
+            let highlightedText = getRangeOfText("TestStruct(someDouble: 3.14)", from: text)!
             
-            let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+            let sut = try createStruct(allText: text, selectedText: [highlightedText])
             
             let expectedValue = """
             struct TestStruct {
@@ -82,12 +73,9 @@ struct TestingToolsTests {
         
         @Test func selectingStructWithBoolInInit_correctlyCreatesStruct() throws {
             let text = ["let sut = TestStruct(someBool: true)"]
-            let rangeOfTestStruct = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 0, column: 10),
-                end: XCSourceTextPosition(line: 0, column: 36)
-            )
-            
-            let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+            let highlightedText = getRangeOfText("TestStruct(someBool: true)", from: text)!
+
+            let sut = try createStruct(allText: text, selectedText: [highlightedText])
             
             let expectedValue = """
             struct TestStruct {
@@ -100,12 +88,9 @@ struct TestingToolsTests {
         @Test("Unknown type should expand to editor placeholder - unicode characters required to prevent placeholder expanding in tests")
         func selectingStructWithUnknownParamerInInit_correctlyCreatesStruct() throws {
             let text = ["let sut = TestStruct(someUnknown: unknownProperty)"]
-            let rangeOfTestStruct = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 0, column: 10),
-                end: XCSourceTextPosition(line: 0, column: 50)
-            )
+            let highlightedText = getRangeOfText("TestStruct(someUnknown: unknownProperty)", from: text)!
             
-            let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+            let sut = try createStruct(allText: text, selectedText: [highlightedText])
             
             let expectedValue = """
             struct TestStruct {
@@ -117,13 +102,9 @@ struct TestingToolsTests {
         
         @Test func selectingStructWithMultipleParameters_correctlyCreatesStruct() throws {
             let text = ["let sut = TestStruct(someBool: true, someInt: 42)"]
-            let rangeOfTestStruct = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 0, column: 10),
-                end: XCSourceTextPosition(line: 0, column: 49)
-            )
-            
-            
-            let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+            let highlightedText = getRangeOfText("TestStruct(someBool: true, someInt: 42)", from: text)!
+
+            let sut = try createStruct(allText: text, selectedText: [highlightedText])
             
             let expectedValue = """
             struct TestStruct {
@@ -194,30 +175,20 @@ struct TestingToolsTests {
                 "let sut = TestStruct()",
                 "   let anotherSut = AnotherStruct()"
             ]
-            let rangeOfAnotherStruct = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 1, column: 20),
-                end: XCSourceTextPosition(line: 1, column: 33)
-            )
-            
-            let sut = try createStruct(allText: text, selectedText: [rangeOfAnotherStruct])
+            let highlightedText = getRangeOfText("AnotherStruct", from: text)!
+
+            let sut = try createStruct(allText: text, selectedText: [highlightedText])
             
             #expect(sut == "struct AnotherStruct { }")
         }
         
-        @Test("Selecting 'TestStruct(someInt:'")
-        func halfSelectingStructWithProperties_throwsError() throws {
+        @Test func halfSelectingStructWithProperties_throwsError() throws {
             let text = ["let sut = TestStruct(someInt: 42)"]
-            let rangeOfTestStruct = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 0, column: 10),
-                end: XCSourceTextPosition(line: 0, column: 29)
-            )
-            
+            let highlightedText = getRangeOfText("TestStruct(someInt:", from: text)!
+
             #expect(throws: TestingToolsError.invalidSelection) {
-                try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+                try createStruct(allText: text, selectedText: [highlightedText])
             }
         }
     }
 }
-
-
-// Add flexible way to get range of highlighted text
