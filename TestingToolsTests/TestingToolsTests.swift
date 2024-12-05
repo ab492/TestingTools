@@ -226,3 +226,6 @@ struct TestingToolsTests {
         }
     }
 }
+
+
+// Add flexible way to get range of highlighted text
