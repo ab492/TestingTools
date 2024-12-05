@@ -22,6 +22,7 @@ struct TestHelperTests {
     }
 }
 
+/// Gets the `XCSourceTextRange` from an array of strings, which represents a page of text where each index is a line.
 func getRangeOfText(_ text: String, from allText: [String]) -> XCSourceTextRange? {
     for (lineIndex, line) in allText.enumerated() {
         if let range = line.range(of: text) {

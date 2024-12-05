@@ -11,33 +11,25 @@ import XcodeKit
 
 struct TestingToolsTests {
     struct CreatingObjectTests {
-        @Test("Selecting 'TestStruct'")
-        func selectingWordExludingBrackets_correctlyCreatesStruct() throws {
+        @Test func selectingWordExludingBrackets_correctlyCreatesStruct() throws {
             let text = ["let sut = TestStruct()"]
-            let rangeOfTestStruct = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 0, column: 10),
-                end: XCSourceTextPosition(line: 0, column: 20)
-            )
+            let highlightedText = getRangeOfText("TestStruct", from: text)!
             
-            let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+            let sut = try createStruct(allText: text, selectedText: [highlightedText])
             
             #expect(sut == "struct TestStruct { }")
         }
         
-        @Test("Selecting 'TestStruct()'")
-        func selectingWordIncludingBrackets_correctlyCreatesStruct() throws {
+        @Test func selectingWordIncludingBrackets_correctlyCreatesStruct() throws {
             let text = ["let sut = TestStruct()"]
-            let rangeOfTestStruct = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 0, column: 10),
-                end: XCSourceTextPosition(line: 0, column: 22)
-            )
+            let highlightedText = getRangeOfText("TestStruct()", from: text)!
             
-            let sut = try createStruct(allText: text, selectedText: [rangeOfTestStruct])
+            let sut = try createStruct(allText: text, selectedText: [highlightedText])
             
             #expect(sut == "struct TestStruct { }")
         }
         
-        func selectingStructWithStringInInit_correctlyCreatesStruct() throws {
+        @Test func selectingStructWithStringInInit_correctlyCreatesStruct() throws {
             let text = ["let sut = TestStruct(someString: \"Hello\")"]
             let rangeOfTestStruct = XCSourceTextRange(
                 start: XCSourceTextPosition(line: 0, column: 10),
@@ -54,7 +46,7 @@ struct TestingToolsTests {
             #expect(sut == expectedValue)
         }
         
-        func selectingStructWithIntInInit_correctlyCreatesStruct() throws {
+        @Test func selectingStructWithIntInInit_correctlyCreatesStruct() throws {
             let text = ["let sut = TestStruct(someInt: 42)"]
             let rangeOfTestStruct = XCSourceTextRange(
                 start: XCSourceTextPosition(line: 0, column: 10),
@@ -71,7 +63,7 @@ struct TestingToolsTests {
             #expect(sut == expectedValue)
         }
         
-        func selectingStructWithDoubleInInit_correctlyCreatesStruct() throws {
+        @Test func selectingStructWithDoubleInInit_correctlyCreatesStruct() throws {
             let text = ["let sut = TestStruct(someDouble: 3.14)"]
             let rangeOfTestStruct = XCSourceTextRange(
                 start: XCSourceTextPosition(line: 0, column: 10),
