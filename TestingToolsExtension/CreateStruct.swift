@@ -52,7 +52,7 @@ func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws ->
     }
     
     // Check if the selected string contains parameters
-    let hasParameters = selectedString.contains(":")
+    let hasParameters = selectedString.contains("(") && selectedString.contains(":")
     if hasParameters {
         guard let rangeOfOpeningBracket = selectedString.range(of: "("),
               let rangeOfClosingBracket = selectedString.range(of: ")") else {
@@ -80,9 +80,16 @@ func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws ->
             properties.append((name: propertyName, type: propertyType))
         }
         
+        let parametersString = properties.map { "\($0.name): \($0.type)" }.joined(separator: ", ")
+        let assignments = properties.map { "        self.\($0.name) = \($0.name)" }.joined(separator: "\n")
+        
         let classDefinition = """
         class \(structName) {
         \(properties.map { "    let \($0.name): \($0.type)" }.joined(separator: "\n"))
+        
+            init(\(parametersString)) {
+        \(assignments)
+            }
         }
         """
         

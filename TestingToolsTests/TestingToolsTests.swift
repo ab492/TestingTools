@@ -38,6 +38,10 @@ struct TestingToolsTests {
             let expectedValue = """
             class TestClass {
                 let someString: String
+            
+                init(someString: String) {
+                    self.someString = someString
+                }
             }
             """
             #expect(sut == expectedValue)
