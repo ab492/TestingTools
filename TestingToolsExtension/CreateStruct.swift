@@ -74,7 +74,10 @@ func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws ->
             let propertyType: String
             if propertyValue.hasPrefix("\"") && propertyValue.hasSuffix("\"") {
                 propertyType = "String"
-            } else {
+            } else if Int(propertyValue) != nil {
+                propertyType = "Int"
+            }
+            else {
                 propertyType = ""
             }
             properties.append((name: propertyName, type: propertyType))

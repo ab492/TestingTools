@@ -46,6 +46,24 @@ struct TestingToolsTests {
             """
             #expect(sut == expectedValue)
         }
+        
+        @Test func selectingClassWithIntInInit_correctlyCreatesClass() throws {
+            let text = ["let sut = TestClass(someInt: 42)"]
+            let highlightedText = getRangeOfText("TestClass(someInt: 42)", from: text)!
+
+            let sut = try createClass(allText: text, selectedText: [highlightedText])
+            
+            let expectedValue = """
+            class TestClass {
+                let someInt: Int
+            
+                init(someInt: Int) {
+                    self.someInt = someInt
+                }
+            }
+            """
+            #expect(sut == expectedValue)
+        }
     }
     struct CreatingStructTests {
         @Test func selectingWordExcludingBrackets_correctlyCreatesStruct() throws {
