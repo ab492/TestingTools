@@ -77,26 +77,16 @@ func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws ->
             } else {
                 propertyType = ""
             }
-//            else if Int(propertyValue) != nil {
-//                propertyType = "Int"
-//            } else if Double(propertyValue) != nil {
-//                propertyType = "Double"
-//            } else if propertyValue == "true" || propertyValue == "false" {
-//                propertyType = "Bool"
-//            } else {
-//                propertyType = "\u{003C}#Type#\u{003E}"
-//            }
-            
             properties.append((name: propertyName, type: propertyType))
         }
         
-        let structDefinition = """
+        let classDefinition = """
         class \(structName) {
         \(properties.map { "    let \($0.name): \($0.type)" }.joined(separator: "\n"))
         }
         """
         
-        return structDefinition
+        return classDefinition
     } else {
         return "class \(selectedString) { }"
     }
