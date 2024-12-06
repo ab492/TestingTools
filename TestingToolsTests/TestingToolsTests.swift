@@ -64,6 +64,42 @@ struct TestingToolsTests {
             """
             #expect(sut == expectedValue)
         }
+        
+        @Test func selectingClassWithDoubleInInit_correctlyCreatesClass() throws {
+            let text = ["let sut = TestClass(someDouble: 3.14)"]
+            let highlightedText = getRangeOfText("TestClass(someDouble: 3.14)", from: text)!
+
+            let sut = try createClass(allText: text, selectedText: [highlightedText])
+            
+            let expectedValue = """
+            class TestClass {
+                let someDouble: Double
+            
+                init(someDouble: Double) {
+                    self.someDouble = someDouble
+                }
+            }
+            """
+            #expect(sut == expectedValue)
+        }
+        
+        @Test func selectingClassWithBoolInInit_correctlyCreatesClass() throws {
+            let text = ["let sut = TestClass(someBool: false)"]
+            let highlightedText = getRangeOfText("TestClass(someBool: false)", from: text)!
+
+            let sut = try createClass(allText: text, selectedText: [highlightedText])
+            
+            let expectedValue = """
+            class TestClass {
+                let someBool: Bool
+            
+                init(someBool: Bool) {
+                    self.someBool = someBool
+                }
+            }
+            """
+            #expect(sut == expectedValue)
+        }
     }
     struct CreatingStructTests {
         @Test func selectingWordExcludingBrackets_correctlyCreatesStruct() throws {

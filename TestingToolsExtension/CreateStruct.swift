@@ -76,8 +76,11 @@ func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws ->
                 propertyType = "String"
             } else if Int(propertyValue) != nil {
                 propertyType = "Int"
-            }
-            else {
+            } else if Double(propertyValue) != nil {
+                propertyType = "Double"
+            } else if propertyValue == "true" || propertyValue == "false" {
+                propertyType = "Bool"
+            } else {
                 propertyType = ""
             }
             properties.append((name: propertyName, type: propertyType))
