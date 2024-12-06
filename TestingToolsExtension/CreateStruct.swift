@@ -28,6 +28,26 @@ enum TestingToolsError: Error, LocalizedError, CustomNSError {
     }
 }
 
+func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
+    let numberOfSelectedItems = selectedText.count
+    guard numberOfSelectedItems == 1,
+          let selectedText = selectedText.first else {
+        throw TestingToolsError.multipleSelectionNotSupported
+    }
+    
+    let selectionIsMultiline = selectedText.start.line != selectedText.end.line
+    guard selectionIsMultiline == false else {
+        throw TestingToolsError.multilineSelectionNotSupported
+    }
+
+    guard let lineContainingSelection = allText[safe: selectedText.start.line] else { return nil }
+    let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
+    let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
+    let selectedString = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
+    
+    return "class \(selectedString) { }"
+}
+
 func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
     let numberOfSelectedItems = selectedText.count
     guard numberOfSelectedItems == 1,

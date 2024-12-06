@@ -10,7 +10,17 @@ import XcodeKit
 @testable import Testing_Tools
 
 struct TestingToolsTests {
-    struct CreatingObjectTests {
+    struct CreatingClassTests {
+        @Test func selectingWordExludingBrackets_correctlyCreatesClass() throws {
+            let text = ["let sut = TestClass()"]
+            let highlightedText = getRangeOfText("TestClass", from: text)!
+            
+            let sut = try createClass(allText: text, selectedText: [highlightedText])
+            
+            #expect(sut == "class TestClass { }")
+        }
+    }
+    struct CreatingStructTests {
         @Test func selectingWordExludingBrackets_correctlyCreatesStruct() throws {
             let text = ["let sut = TestStruct()"]
             let highlightedText = getRangeOfText("TestStruct", from: text)!
