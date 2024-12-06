@@ -28,18 +28,6 @@ enum TestingToolsError: Error, LocalizedError, CustomNSError {
     }
 }
 
-enum Object {
-    case `class`
-    case `struct`
-}
-
-func create(_ type: Object, allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
-    switch type {
-    case .class: return try createClass(allText: allText, selectedText: selectedText)
-    case .struct: return try createStruct(allText: allText, selectedText: selectedText)
-    }
-}
-
 func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
     let numberOfSelectedItems = selectedText.count
     guard numberOfSelectedItems == 1,
