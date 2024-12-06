@@ -29,7 +29,7 @@ struct TestingToolsTests {
             #expect(sut == "class TestClass { }")
         }
         
-        @Test func selectingClassWithStringInInit_correctlyCreatesStruct() throws {
+        @Test func selectingClassWithStringInInit_correctlyCreatesClass() throws {
             let text = ["let sut = TestClass(someString: \"Hello\")"]
             let highlightedText = getRangeOfText("TestClass(someString: \"Hello\")", from: text)!
             
