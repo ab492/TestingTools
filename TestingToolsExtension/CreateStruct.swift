@@ -45,7 +45,14 @@ func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws ->
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let selectedString = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
     
-    return "class \(selectedString) { }"
+    // Check for parentheses to identify a call without parameters
+    if selectedString.hasSuffix("()") {
+        let structName = String(selectedString.dropLast(2)) // Remove `()` from the end
+        return "class \(structName) { }"
+    } else {
+        return "class \(selectedString) { }"
+    }
+
 }
 
 func createStruct(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
