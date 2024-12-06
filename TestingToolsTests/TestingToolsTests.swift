@@ -100,6 +100,45 @@ struct TestingToolsTests {
             """
             #expect(sut == expectedValue)
         }
+        
+        @Test("Unknown type should expand to editor placeholder - unicode characters required to prevent placeholder expanding in tests")
+        func selectingClassWithUnknownParameterInInit_correctlyCreatesClass() throws {
+            let text = ["let sut = TestClass(someUnknown: unknownProperty)"]
+            let highlightedText = getRangeOfText("TestClass(someUnknown: unknownProperty)", from: text)!
+            
+            let sut = try createClass(allText: text, selectedText: [highlightedText])
+            
+            let expectedValue = """
+            class TestClass {
+                let someUnknown: \u{003C}#Type#\u{003E}
+            
+                init(someUnknown: \u{003C}#Type#\u{003E}) {
+                    self.someUnknown = someUnknown
+                }
+            }
+            """
+            #expect(sut == expectedValue)
+        }
+        
+        @Test func selectingClassWithMultipleParameters_correctlyCreatesClass() throws {
+            let text = ["let sut = TestClass(someBool: true, someInt: 42)"]
+            let highlightedText = getRangeOfText("TestClass(someBool: true, someInt: 42)", from: text)!
+
+            let sut = try createClass(allText: text, selectedText: [highlightedText])
+            
+            let expectedValue = """
+            class TestClass {
+                let someBool: Bool
+                let someInt: Int
+            
+                init(someBool: Bool, someInt: Int) {
+                    self.someBool = someBool
+                    self.someInt = someInt
+                }
+            }
+            """
+            #expect(sut == expectedValue)
+        }
     }
     struct CreatingStructTests {
         @Test func selectingWordExcludingBrackets_correctlyCreatesStruct() throws {

@@ -81,7 +81,7 @@ func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws ->
             } else if propertyValue == "true" || propertyValue == "false" {
                 propertyType = "Bool"
             } else {
-                propertyType = ""
+                propertyType = "\u{003C}#Type#\u{003E}"
             }
             properties.append((name: propertyName, type: propertyType))
         }
