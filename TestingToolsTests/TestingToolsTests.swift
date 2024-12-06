@@ -28,6 +28,20 @@ struct TestingToolsTests {
             
             #expect(sut == "class TestClass { }")
         }
+        
+        @Test func selectingClassWithStringInInit_correctlyCreatesStruct() throws {
+            let text = ["let sut = TestClass(someString: \"Hello\")"]
+            let highlightedText = getRangeOfText("TestClass(someString: \"Hello\")", from: text)!
+            
+            let sut = try createClass(allText: text, selectedText: [highlightedText])
+            
+            let expectedValue = """
+            class TestClass {
+                let someString: String
+            }
+            """
+            #expect(sut == expectedValue)
+        }
     }
     struct CreatingStructTests {
         @Test func selectingWordExcludingBrackets_correctlyCreatesStruct() throws {
