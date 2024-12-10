@@ -1,6 +1,14 @@
 name: Build
 
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+concurrency:
+  # Cancel any in-progress workflows for this workflow/branch combination
+  group: ${{ github.workflow }}-${{ github.ref }} # Create a group identifier for the workflow/branch
+  cancel-in-progress: true
 
 jobs:
     build:
