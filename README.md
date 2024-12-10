@@ -1,3 +1,6 @@
+# Testing Tools
+[![Build](https://github.com/ab492/TestingTools/actions/workflows/build.yml/badge.svg)](https://github.com/ab492/TestingTools/actions/workflows/build.yml)
+
 ## Important
 - It's not documented anywhere, but to test your extension you need to 'Embed and Sign' the `XcodeKit.framework` on the extension target. 
 - As per [NSHipster](https://nshipster.com/xcode-source-extensions/), I added my frameworks path to 'Framework Search Paths' in 'Build Settings' to allow `XcodeKit` to show up in tests.
