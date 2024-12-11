@@ -1,4 +1,9 @@
-# Testing Tools
+<p align="center">
+  <img src="TestingTools/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png" alt="Testing Tools Icon" width="200" />
+</p>
+
+# Testing Tools Xcode Extension
+
 [![Build](https://github.com/ab492/TestingTools/actions/workflows/build.yml/badge.svg)](https://github.com/ab492/TestingTools/actions/workflows/build.yml)
 
 ## Important Notes on Developing Xcode Extensions
