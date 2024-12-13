@@ -1,0 +1,11 @@
+name: Deploy
+
+on:
+    workflow_dispatch
+
+jobs:
+    Build:
+        runs-on: macos-latest
+        steps:
+            - name: Dump file hierarchy
+              run: ls -R
