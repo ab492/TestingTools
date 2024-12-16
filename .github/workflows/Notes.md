@@ -1,1 +1,0 @@
-[Useful article about GitHub actions.](https://leenarts.net/2020/02/12/github-actions-for-ios-projects/)
