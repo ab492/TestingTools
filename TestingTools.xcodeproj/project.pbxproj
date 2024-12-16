@@ -61,7 +61,6 @@
 		AD1397412CF297AA00497008 /* Testing Tools.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Testing Tools.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD1397432CF297AA00497008 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AD1397452CF297AA00497008 /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = Library/Frameworks/XcodeKit.framework; sourceTree = DEVELOPER_DIR; };
-		AD57D6AE2D10342500A0F844 /* Testing-Tools-Host-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Testing-Tools-Host-Info.plist"; sourceTree = "<group>"; };
 		ADA80AC42CF317FD005FE717 /* TestingToolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestingToolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -81,11 +80,21 @@
 			);
 			target = ADA80AC32CF317FD005FE717 /* TestingToolsTests */;
 		};
+		ADF14FC02D1062C900671109 /* Exceptions for "TestingTools" folder in "Testing Tools Host" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = AD13972A2CF2972900497008 /* Testing Tools Host */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		AD13972D2CF2972900497008 /* TestingTools */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				ADF14FC02D1062C900671109 /* Exceptions for "TestingTools" folder in "Testing Tools Host" target */,
+			);
 			path = TestingTools;
 			sourceTree = "<group>";
 		};
@@ -136,7 +145,6 @@
 		AD1397222CF2972900497008 = {
 			isa = PBXGroup;
 			children = (
-				AD57D6AE2D10342500A0F844 /* Testing-Tools-Host-Info.plist */,
 				AD13972D2CF2972900497008 /* TestingTools */,
 				AD1397472CF297AA00497008 /* TestingToolsExtension */,
 				ADA80AC52CF317FD005FE717 /* TestingToolsTests */,
@@ -475,7 +483,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Testing-Tools-Host-Info.plist";
+				INFOPLIST_FILE = TestingTools/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -508,7 +516,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Testing-Tools-Host-Info.plist";
+				INFOPLIST_FILE = TestingTools/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
