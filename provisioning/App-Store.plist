@@ -5,7 +5,7 @@
 	<key>compileBitcode</key>
 	<false/>
 	<key>method</key>
-	<string>app-store</string>
+	<string>app-store-connect</string>
 	<key>teamID</key>
 	<string>ZME7ED67F3</string>
 	<key>uploadBitcode</key>
@@ -15,11 +15,13 @@
 	<key>signingStyle</key>
 	<string>manual</string>
 	<key>signingCertificate</key>
-	<string>Apple Distribution: Andy Brown</string>
+	<string>3rd Party Mac Developer Application: Andrew Brown (ZME7ED67F3)</string>
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>com.andybrown.TestingTools</key>
-		<string>GitInbox Distribution</string>
+		<string>Mac Distribution (Test)</string>
+		<key>com.andybrown.TestingTools.TestingToolsExtension</key>
+		<string>Testing Tools Extenstion Distribution</string>
 	</dict>
 </dict>
 </plist>
