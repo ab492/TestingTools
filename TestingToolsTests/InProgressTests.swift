@@ -8,7 +8,7 @@
 import Testing
 
 struct InProgressTests {
-    @Test func markSingleLineWithinMultipleLinesAsInProgress_addsCorrectEmoji() async throws {
+    @Test func markSingleLineWithinMultipleLinesAsInProgress_addsCorrectEmoji() {
         let text = ["My first item to do", "My second item to do", "My third item to do"]
         let highlightedText = getRangeOfText("My second item to do", from: text)!
         
@@ -20,11 +20,19 @@ struct InProgressTests {
             "My third item to do"
         ])
     }
+    
+    @Test func markMultipleLinesAsInProgress_addsCorrectEmoji() {
+        let text = ["My first item to do", "My second item to do", "My third item to do"]
+        let secondItem = getRangeOfText("My second item to do", from: text)!
+        let thirdItem = getRangeOfText("My third item to do", from: text)!
+
+
+    }
 
 
 }
 
 // Mark one line in progress ✅
-// Mark multiple lines in progress/done 
+// Mark multiple lines in progress/done
 // Selecting line from the middle still highlight the whole line
 // Don't add icon if it's already been added

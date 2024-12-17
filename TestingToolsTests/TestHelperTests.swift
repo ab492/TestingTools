@@ -23,6 +23,26 @@ struct TestHelperTests {
 
         #expect(rangeOfText == expectedRange)
     }
+    
+    @Test func combineRangesWorksCorrectly() {
+        let firstRange = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 1, column: 20),
+            end: XCSourceTextPosition(line: 1, column: 33)
+        )
+        let secondRange = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 2, column: 1),
+            end: XCSourceTextPosition(line: 2, column: 40)
+        )
+        
+        let combinedRange = combineRanges(firstRange, secondRange)
+        
+        #expect(
+            combinedRange == XCSourceTextRange(
+                start: XCSourceTextPosition(line: 1, column: 20),
+                end: XCSourceTextPosition(line: 2, column: 40)
+            )
+        )
+    }
 }
 
 /// Gets the `XCSourceTextRange` from an array of strings, which represents a page of text where each index is a line.
@@ -36,4 +56,10 @@ func getRangeOfText(_ text: String, from allText: [String]) -> XCSourceTextRange
     }
     
     return nil
+}
+
+func combineRanges(_ first: XCSourceTextRange, _ second: XCSourceTextRange) -> XCSourceTextRange {
+    let combinedStart = first.start
+    let combinedEnd = second.end
+    return XCSourceTextRange(start: combinedStart, end: combinedEnd)
 }
