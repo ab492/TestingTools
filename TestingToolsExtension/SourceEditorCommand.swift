@@ -11,6 +11,7 @@ import XcodeKit
 enum Action: String, CaseIterable {
     case createStruct = "testingtools.createStruct"
     case createClass = "testingtools.createClass"
+    case markInProgress = "testingtools.markInProgress"
     
     var identifier: String {
         self.rawValue
@@ -20,6 +21,7 @@ enum Action: String, CaseIterable {
         switch self {
         case .createStruct: return "Create Struct"
         case .createClass: return "Create Class"
+        case .markInProgress: return "Mark in Progress ⬅️"
         }
     }
 }
@@ -41,6 +43,8 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
             switch action {
             case .createStruct: textToAdd = try createStruct(allText: allLines, selectedText: selections)
             case .createClass: textToAdd = try createClass(allText: allLines, selectedText: selections)
+            case .markInProgress:
+                fatalError()
             }
             
             if let textToAdd {
