@@ -9,7 +9,7 @@ import Testing
 
 struct InProgressTests {
 
-    @Test func markLineAsInProgress_addsArrowEmoji() async throws {
+    @Test func markSingleLineAsInProgress_addsCorrectEmoji() async throws {
         let text = ["My first item to do"]
         let highlightedText = getRangeOfText("My first item to do", from: text)!
         
@@ -17,6 +17,21 @@ struct InProgressTests {
         
         #expect(sut == ["My first item to do ⬅️"])
     }
+    
+    
+    @Test func markSingleLineWithinMultipleLinesAsInProgress_addsCorrectEmoji() async throws {
+        let text = ["My first item to do", "My second item to do", "My third item to do"]
+        let highlightedText = getRangeOfText("My second item to do", from: text)!
+        
+        let sut = markInProgress(allText: text, selectedText: highlightedText)
+        
+        #expect(sut == [
+            "My first item to do",
+            "My second item to do ⬅️",
+            "My third item to do"
+        ])
+    }
+
 
 }
 
