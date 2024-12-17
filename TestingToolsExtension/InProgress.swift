@@ -8,15 +8,16 @@
 import Foundation
 import XcodeKit
 
-func markInProgress(allText: [String], selectedText: XCSourceTextRange) -> [String] {
+func markInProgress(allText: [String], selectedText: [XCSourceTextRange]) -> [String] {
     var updatedText = allText
-    let startLine = selectedText.start.line
-    let endLine = selectedText.end.line
     
-    for lineIndex in startLine...endLine {
-        let line = updatedText[lineIndex]
-        updatedText[lineIndex] = line + " ⬅️"
+    for range in selectedText {
+        let startLine = range.start.line
+        let endLine = range.end.line
+        
+        for lineIndex in startLine...endLine {
+            updatedText[lineIndex] += " ⬅️"
+        }
     }
     return updatedText
 }
-
