@@ -77,6 +77,7 @@
 			membershipExceptions = (
 				CreateStruct.swift,
 				"Extensions/Array+SafeAccess.swift",
+				InProgress.swift,
 			);
 			target = ADA80AC32CF317FD005FE717 /* TestingToolsTests */;
 		};
