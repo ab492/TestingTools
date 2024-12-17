@@ -25,11 +25,16 @@ struct InProgressTests {
         let text = ["My first item to do", "My second item to do", "My third item to do"]
         let secondItem = getRangeOfText("My second item to do", from: text)!
         let thirdItem = getRangeOfText("My third item to do", from: text)!
+        let multilineSelection = combineRanges(secondItem, thirdItem)
 
-
+        let sut = markInProgress(allText: text, selectedText: multilineSelection)
+        
+        #expect(sut == [
+            "My first item to do",
+            "My second item to do ⬅️",
+            "My third item to do ⬅️"
+        ])
     }
-
-
 }
 
 // Mark one line in progress ✅
