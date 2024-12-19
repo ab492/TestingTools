@@ -21,8 +21,12 @@ func addProgressMarker(_ progressMarker: ProgressMarker, allText: [String], sele
         let endLine = range.end.line
         
         for lineIndex in startLine...endLine {
+            
             let trimmedLine = updatedText[lineIndex].trimmingCharacters(in: .newlines)
-            updatedText[lineIndex] = "\(trimmedLine) \(progressMarker.icon)\n"
+            
+            // Remove existing progress markers if any
+            let lineWithoutMarker = trimmedLine.replacingOccurrences(of: "[⬅️✅]", with: "", options: .regularExpression).trimmingCharacters(in: .whitespaces)
+            updatedText[lineIndex] = "\(lineWithoutMarker) \(progressMarker.icon)\n"
         }
     }
     return updatedText

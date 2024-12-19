@@ -52,4 +52,17 @@ struct ProgressMarkerTests {
             "My third item to do\n"
         ])
     }
+    
+    @Test func addingDoneProgressMarkerToInProgressLine_removesInProgressMarkerAndAddsDoneMarker() {
+        let text = ["My first item to do\n", "My second item to do ⬅️\n", "My third item to do\n"]
+        let highlightedText = getRangeOfText("My second item to do", from: text)!
+
+        let sut = addProgressMarker(.done, allText: text, selectedText: [highlightedText])
+
+        #expect(sut == [
+            "My first item to do\n",
+            "My second item to do ✅\n",
+            "My third item to do\n"
+        ])
+    }
 }
