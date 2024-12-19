@@ -8,7 +8,7 @@
 import Testing
 
 struct InProgressTests {
-    @Test func markSingleLineWithinMultipleLinesAsInProgress_addsCorrectEmoji() {
+    @Test func addProgressMarkerToSingleLineWithinMultipleLines() {
         let text = ["My first item to do\n", "My second item to do\n", "My third item to do\n"]
         let highlightedText = getRangeOfText("My second item to do", from: text)!
         
@@ -21,7 +21,7 @@ struct InProgressTests {
         ])
     }
     
-    @Test func markMultipleLinesAsInProgress_addsCorrectEmoji() {
+    @Test func addProgressMarkerToMultipleLines() {
         let text = ["My first item to do\n", "My second item to do\n", "My third item to do\n"]
         let secondItem = getRangeOfText("My second item to do", from: text)!
         let thirdItem = getRangeOfText("My third item to do", from: text)!
@@ -35,7 +35,7 @@ struct InProgressTests {
         ])
     }
     
-    @Test func selectingLineFromMiddleAndMarkingInProgress_addsCorrectEmoji() {
+    @Test func addProgressMarkerToHalfSelectedLine() {
         let text = ["My first item to do\n", "My second item to do\n", "My third item to do\n"]
         let highlightedText = getRangeOfText("second item", from: text)!
         
