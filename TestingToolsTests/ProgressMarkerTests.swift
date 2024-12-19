@@ -18,7 +18,11 @@ struct ProgressMarkerTests {
         ])
     }
     
-    @Test func addProgressMarkerToMultipleLines() {
+    @Test(arguments: zip([ProgressMarker.inProgress, .done], ["⬅️", "✅"]))
+    func addProgressMarkerToMultipleLines(
+        progressMarker: ProgressMarker,
+        expectedIcon: String
+    ) {
         let text = ["My first item to do\n", "My second item to do\n", "My third item to do\n"]
         let secondItem = getRangeOfText("My second item to do", from: text)!
         let thirdItem = getRangeOfText("My third item to do", from: text)!
@@ -32,7 +36,11 @@ struct ProgressMarkerTests {
         ])
     }
     
-    @Test func addProgressMarkerToHalfSelectedLine() {
+    @Test(arguments: zip([ProgressMarker.inProgress, .done], ["⬅️", "✅"]))
+    func addProgressMarkerToHalfSelectedLine(
+        progressMarker: ProgressMarker,
+        expectedIcon: String
+    ) {
         let text = ["My first item to do\n", "My second item to do\n", "My third item to do\n"]
         let highlightedText = getRangeOfText("second item", from: text)!
         
