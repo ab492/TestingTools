@@ -16,7 +16,9 @@ func markInProgress(allText: [String], selectedText: [XCSourceTextRange]) -> [St
         let endLine = range.end.line
         
         for lineIndex in startLine...endLine {
-            updatedText[lineIndex] += " ⬅️"
+            // Remove the trailing newline
+            let trimmedLine = updatedText[lineIndex].trimmingCharacters(in: .newlines)
+            updatedText[lineIndex] = "\(trimmedLine) ⬅️\n"
         }
     }
     return updatedText

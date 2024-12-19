@@ -38,22 +38,28 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         let allLines = buffer.lines as! [String]
         
         do {
-            let textToAdd: String?
-            
             switch action {
-            case .createStruct: textToAdd = try createStruct(allText: allLines, selectedText: selections)
-            case .createClass: textToAdd = try createClass(allText: allLines, selectedText: selections)
+            case .createStruct:
+                let textToAdd = try createStruct(allText: allLines, selectedText: selections)
+                if let textToAdd {
+                    buffer.lines.add(textToAdd)
+                    completionHandler(nil)
+                }
+            case .createClass:
+                let textToAdd = try createClass(allText: allLines, selectedText: selections)
+                if let textToAdd {
+                    buffer.lines.add(textToAdd)
+                    completionHandler(nil)
+                }
             case .markInProgress:
-                fatalError()
+                let updatedText = markInProgress(allText: allLines, selectedText: selections)
+                 buffer.lines.removeAllObjects()
+                 buffer.lines.addObjects(from: updatedText)
+                 completionHandler(nil)
             }
-            
-            if let textToAdd {
-                buffer.lines.add(textToAdd)
-                completionHandler(nil)
-            }
+
         } catch {
             completionHandler(error)
         }
     }
 }
-
