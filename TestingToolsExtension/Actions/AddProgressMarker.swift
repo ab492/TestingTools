@@ -22,6 +22,7 @@ func addProgressMarker(_ progressMarker: ProgressMarker, allText: [String], sele
         
         for lineIndex in startLine...endLine {
             
+            // Remove existing markers, whitespace and new lines
             let trimmedLine = updatedText[lineIndex]
                 .replacingOccurrences(of: "[⬅️✅]", with: "", options: .regularExpression)
                 .trimmingCharacters(in: .whitespacesAndNewlines)
