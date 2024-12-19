@@ -1,7 +1,11 @@
 import Testing
 
 struct ProgressMarkerTests {
-    @Test func addProgressMarkerToSingleLineWithinMultipleLines() {
+    @Test(arguments: zip([ProgressMarker.inProgress, .done], ["⬅️", "✅"]))
+    func addProgressMarkerToSingleLineWithinMultipleLines(
+        progressMarker: ProgressMarker,
+        expectedIcon: String
+    ) {
         let text = ["My first item to do\n", "My second item to do\n", "My third item to do\n"]
         let highlightedText = getRangeOfText("My second item to do", from: text)!
         
