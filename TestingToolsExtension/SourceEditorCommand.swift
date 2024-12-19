@@ -47,13 +47,13 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
                     completionHandler(nil)
                 }
             case .markInProgress:
-                let updatedText = addProgressMarker("⬅️", allText: allLines, selectedText: selections)
+                let updatedText = addProgressMarker(.inProgress, allText: allLines, selectedText: selections)
                  buffer.lines.removeAllObjects()
                  buffer.lines.addObjects(from: updatedText)
                  completionHandler(nil)
             
             case .markAsDone:
-                let updatedText = addProgressMarker("✅", allText: allLines, selectedText: selections)
+                let updatedText = addProgressMarker(.done, allText: allLines, selectedText: selections)
                  buffer.lines.removeAllObjects()
                  buffer.lines.addObjects(from: updatedText)
                  completionHandler(nil)
