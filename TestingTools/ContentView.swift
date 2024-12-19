@@ -1,19 +1,13 @@
-//
-//  ContentView.swift
-//  TestingTools
-//
-//  Created by Andy Brown on 23/11/2024.
-//
-
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Image(.testingToolsIcon)
+                .resizable()
+                .scaledToFit().frame(width: 100, height: 100)
+            Text("Testing Tools")
+                .font(.largeTitle)
         }
         .padding()
     }
@@ -21,4 +15,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .frame(width: 600, height: 600)
 }
