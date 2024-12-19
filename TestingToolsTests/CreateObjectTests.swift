@@ -1,13 +1,5 @@
-//
-//  TestingToolsTests.swift
-//  TestingToolsTests
-//
-//  Created by Andy Brown on 24/11/2024.
-//
-
 import Testing
 import XcodeKit
-@testable import Testing_Tools
 
 struct TestingToolsTests {
     struct CreatingClassTests {

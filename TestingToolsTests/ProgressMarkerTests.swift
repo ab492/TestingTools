@@ -1,13 +1,6 @@
-//
-//  InProgressTests.swift
-//  TestingToolsTests
-//
-//  Created by Andy Brown on 17/12/2024.
-//
-
 import Testing
 
-struct InProgressTests {
+struct ProgressMarkerTests {
     @Test func addProgressMarkerToSingleLineWithinMultipleLines() {
         let text = ["My first item to do\n", "My second item to do\n", "My third item to do\n"]
         let highlightedText = getRangeOfText("My second item to do", from: text)!
