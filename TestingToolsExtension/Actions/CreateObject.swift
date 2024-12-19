@@ -1,32 +1,5 @@
-//
-//  TestingToolsError.swift
-//  TestingTools
-//
-//  Created by Andy Brown on 29/11/2024.
-//
 import Foundation
 import XcodeKit
-
-enum TestingToolsError: Error, LocalizedError, CustomNSError {
-    case multipleSelectionNotSupported
-    case multilineSelectionNotSupported
-    case invalidSelection
-    
-    var localizedDescription: String {
-        switch self {
-        case .multipleSelectionNotSupported:
-            return "Multiple text selections are not supported"
-        case .multilineSelectionNotSupported:
-            return "Multiline text selections are not supported"
-        case .invalidSelection:
-            return "Invalid selection"
-        }
-    }
-    
-    var errorUserInfo: [String: Any] {
-        [NSLocalizedDescriptionKey: localizedDescription]
-    }
-}
 
 func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
     let numberOfSelectedItems = selectedText.count

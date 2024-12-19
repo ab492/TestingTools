@@ -1,10 +1,3 @@
-//
-//  InProgress.swift
-//  Testing Tools Host
-//
-//  Created by Andy Brown on 17/12/2024.
-//
-
 import Foundation
 import XcodeKit
 

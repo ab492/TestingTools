@@ -1,10 +1,3 @@
-//
-//  SourceEditorExtension.swift
-//  TestingToolsExtension
-//
-//  Created by Andy Brown on 23/11/2024.
-//
-
 import Foundation
 import XcodeKit
 
