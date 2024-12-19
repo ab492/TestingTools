@@ -8,7 +8,7 @@
 import Foundation
 import XcodeKit
 
-func addProgressMarker(allText: [String], selectedText: [XCSourceTextRange]) -> [String] {
+func addProgressMarker(_ progressMarker: String, allText: [String], selectedText: [XCSourceTextRange]) -> [String] {
     var updatedText = allText
     
     for range in selectedText {
@@ -17,7 +17,7 @@ func addProgressMarker(allText: [String], selectedText: [XCSourceTextRange]) -> 
         
         for lineIndex in startLine...endLine {
             let trimmedLine = updatedText[lineIndex].trimmingCharacters(in: .newlines)
-            updatedText[lineIndex] = "\(trimmedLine) ⬅️\n"
+            updatedText[lineIndex] = "\(trimmedLine) \(progressMarker)\n"
         }
     }
     return updatedText
