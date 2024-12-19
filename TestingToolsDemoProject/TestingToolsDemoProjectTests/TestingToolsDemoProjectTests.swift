@@ -16,8 +16,3 @@ class MyClass {
         self.someInt = someInt
     }
 }
-
-// My first item
-// My second item
-// My third item
- ⬅️
