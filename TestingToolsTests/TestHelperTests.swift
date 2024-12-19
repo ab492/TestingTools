@@ -1,10 +1,3 @@
-//
-//  TestHelperTests.swift
-//  TestingToolsTests
-//
-//  Created by Andy Brown on 05/12/2024.
-//
-
 import Testing
 import XcodeKit
 

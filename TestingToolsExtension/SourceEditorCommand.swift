@@ -5,6 +5,7 @@ enum Action: String, CaseIterable {
     case createStruct = "testingtools.createStruct"
     case createClass = "testingtools.createClass"
     case markInProgress = "testingtools.markInProgress"
+    case markAsDone = "testingtools.markAsDone"
     
     var identifier: String {
         self.rawValue
@@ -15,6 +16,7 @@ enum Action: String, CaseIterable {
         case .createStruct: return "Create Struct"
         case .createClass: return "Create Class"
         case .markInProgress: return "Mark in Progress ⬅️"
+        case .markAsDone: return "Mark as Done ✅"
         }
     }
 }
@@ -49,6 +51,12 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
                  buffer.lines.removeAllObjects()
                  buffer.lines.addObjects(from: updatedText)
                  completionHandler(nil)
+            
+            case .markAsDone:
+                let updatedText = addProgressMarker("✅", allText: allLines, selectedText: selections)
+                 buffer.lines.removeAllObjects()
+                 buffer.lines.addObjects(from: updatedText)
+                 completionHandler(nil)
             }
 
         } catch {
@@ -56,3 +64,7 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         }
     }
 }
+
+// 1 First item to do
+// 2 Second item to do ⬅️
+// 3 Third item to do ✅
