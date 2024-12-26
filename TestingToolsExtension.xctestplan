@@ -17,7 +17,7 @@
       "target" : {
         "containerPath" : "container:TestingTools.xcodeproj",
         "identifier" : "ADA80AC32CF317FD005FE717",
-        "name" : "TestingToolsTests"
+        "name" : "Testing Tools Tests"
       }
     }
   ],
