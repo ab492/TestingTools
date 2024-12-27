@@ -2,20 +2,14 @@ import SwiftUI
 
 import AppKit
 
-func openExtensionsPane() {
-    guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.extensions") else {
-        return
-    }
-    NSWorkspace.shared.open(url)
-}
 
 struct ContentView: View {
     var body: some View {
         VStack(spacing: 20) {
-            VStack {
+            HStack {
                 Image(.testingToolsIcon)
                     .resizable()
-                    .scaledToFit().frame(width: 100, height: 100)
+                    .scaledToFit().frame(width: 80, height: 80)
                 Text("Testing Tools")
                     .font(.largeTitle)
             }
@@ -39,7 +33,14 @@ struct ContentView: View {
     }
 }
 
+func openExtensionsPane() {
+    guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.extensions") else {
+        return
+    }
+    NSWorkspace.shared.open(url)
+}
+
 #Preview {
     ContentView()
-        .frame(width: 600, height: 600)
+        .frame(width: 400, height: 300)
 }
