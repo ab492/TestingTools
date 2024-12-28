@@ -17,8 +17,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AD1397402CF297AA00497008"
-               BuildableName = "Testing Tools.appex"
-               BlueprintName = "Testing Tools"
+               BuildableName = "Testing Tools Extension.appex"
+               BlueprintName = "Testing Tools Extension"
                ReferencedContainer = "container:TestingTools.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
