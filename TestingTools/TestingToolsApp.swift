@@ -12,8 +12,6 @@ struct TestingToolsApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .frame(width: 480, height: 270)
         }
-        .windowResizability(.contentSize)
     }
 }

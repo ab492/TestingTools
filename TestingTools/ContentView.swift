@@ -28,7 +28,7 @@ struct ContentView: View {
                     Text("2. Select \"General\" and Navigate to \"Login Items & Extensions\"")
                     Text("3. Below \"Extensions\", select the ⓘ next to \"Xcode Source Editor\"")
                     Text("4. Enable \"TestingTools\"")
-                    Text("4. Relaunch Xcode")
+                    Text("5. Relaunch Xcode")
                 }
                 Spacer()
             }
@@ -46,5 +46,4 @@ func openExtensionsPane() {
 
 #Preview {
     ContentView()
-//        .frame(width: 400, height: 300)
 }
