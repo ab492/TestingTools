@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		AD07E3D82CF849FF00D4C42C /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397452CF297AA00497008 /* XcodeKit.framework */; };
 		AD1397442CF297AA00497008 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397432CF297AA00497008 /* Cocoa.framework */; };
-		AD1397502CF297AA00497008 /* Testing Tools Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AD1397412CF297AA00497008 /* Testing Tools Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AD1397502CF297AA00497008 /* Testing Tools.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AD1397412CF297AA00497008 /* Testing Tools.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AD1397562CF297C800497008 /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397452CF297AA00497008 /* XcodeKit.framework */; };
 		AD1397572CF297C800497008 /* XcodeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AD1397452CF297AA00497008 /* XcodeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -38,7 +38,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				AD1397502CF297AA00497008 /* Testing Tools Extension.appex in Embed Foundation Extensions */,
+				AD1397502CF297AA00497008 /* Testing Tools.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -57,8 +57,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AD13972B2CF2972900497008 /* Testing Tools Host.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Testing Tools Host.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD1397412CF297AA00497008 /* Testing Tools Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Testing Tools Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD13972B2CF2972900497008 /* TestingTools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestingTools.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD1397412CF297AA00497008 /* Testing Tools.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Testing Tools.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD1397432CF297AA00497008 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AD1397452CF297AA00497008 /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = Library/Frameworks/XcodeKit.framework; sourceTree = DEVELOPER_DIR; };
 		ADA80AC42CF317FD005FE717 /* Testing Tools Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Testing Tools Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,8 +158,8 @@
 		AD13972C2CF2972900497008 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AD13972B2CF2972900497008 /* Testing Tools Host.app */,
-				AD1397412CF297AA00497008 /* Testing Tools Extension.appex */,
+				AD13972B2CF2972900497008 /* TestingTools.app */,
+				AD1397412CF297AA00497008 /* Testing Tools.appex */,
 				ADA80AC42CF317FD005FE717 /* Testing Tools Tests.xctest */,
 			);
 			name = Products;
@@ -198,7 +198,7 @@
 			packageProductDependencies = (
 			);
 			productName = TestingTools;
-			productReference = AD13972B2CF2972900497008 /* Testing Tools Host.app */;
+			productReference = AD13972B2CF2972900497008 /* TestingTools.app */;
 			productType = "com.apple.product-type.application";
 		};
 		AD1397402CF297AA00497008 /* Testing Tools Extension */ = {
@@ -221,7 +221,7 @@
 			packageProductDependencies = (
 			);
 			productName = TestingToolsExtension;
-			productReference = AD1397412CF297AA00497008 /* Testing Tools Extension.appex */;
+			productReference = AD1397412CF297AA00497008 /* Testing Tools.appex */;
 			productType = "com.apple.product-type.xcode-extension";
 		};
 		ADA80AC32CF317FD005FE717 /* Testing Tools Tests */ = {
@@ -486,6 +486,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TestingTools/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Testing Tools";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -495,7 +496,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andybrown.TestingTools;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TestingTools;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -519,6 +520,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TestingTools/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Testing Tools";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -528,7 +530,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andybrown.TestingTools;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TestingTools;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -546,7 +548,6 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TestingToolsExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Testing Tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -556,7 +557,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andybrown.TestingTools.TestingToolsExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Testing Tools";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -575,7 +576,6 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TestingToolsExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Testing Tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -585,7 +585,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andybrown.TestingTools.TestingToolsExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Testing Tools";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -609,7 +609,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Testing Tools Host.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Testing Tools Host";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestingTools.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestingTools";
 			};
 			name = Debug;
 		};
@@ -629,7 +629,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Testing Tools Host.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Testing Tools Host";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestingTools.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TestingTools";
 			};
 			name = Release;
 		};

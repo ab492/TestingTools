@@ -9,22 +9,26 @@ struct ContentView: View {
             HStack {
                 Image(.testingToolsIcon)
                     .resizable()
-                    .scaledToFit().frame(width: 80, height: 80)
+                    .scaledToFit().frame(width: 60, height: 60)
                 Text("Testing Tools")
                     .font(.largeTitle)
             }
+            Divider()
             HStack {
-                VStack(alignment: .leading) {
-                    Text("How to Enable")
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("How do I install it?")
                         .font(.headline)
-                    Text("")
-                    Button("Open System Settings") {
-                        openExtensionsPane()
+                    HStack(spacing: 1) {
+                        Text("1. Open System Settings (")
+                        Button("System Settings") {
+                            openExtensionsPane()
+                        }
+                        Text(")")
                     }
-                    Text("• Select 'General'")
-                    Text("• Navigate to 'Login Items & Extensions'")
-                    Text("• Select 'Xcode Source Editor'")
-                    Text("• Enable 'Testing Tools'")
+                    Text("2. Select \"General\" and Navigate to \"Login Items & Extensions\"")
+                    Text("3. Below \"Extensions\", select the ⓘ next to \"Xcode Source Editor\"")
+                    Text("4. Enable \"TestingTools\"")
+                    Text("4. Relaunch Xcode")
                 }
                 Spacer()
             }
@@ -42,5 +46,5 @@ func openExtensionsPane() {
 
 #Preview {
     ContentView()
-        .frame(width: 400, height: 300)
+//        .frame(width: 400, height: 300)
 }

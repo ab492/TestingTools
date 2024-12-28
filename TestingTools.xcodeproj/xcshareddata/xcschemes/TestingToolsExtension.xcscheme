@@ -17,7 +17,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AD1397402CF297AA00497008"
-               BuildableName = "Testing Tools Extension.appex"
+               BuildableName = "Testing Tools.appex"
                BlueprintName = "Testing Tools Extension"
                ReferencedContainer = "container:TestingTools.xcodeproj">
             </BuildableReference>
@@ -31,7 +31,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AD13972A2CF2972900497008"
-               BuildableName = "Testing Tools Host.app"
+               BuildableName = "TestingTools.app"
                BlueprintName = "Testing Tools Host"
                ReferencedContainer = "container:TestingTools.xcodeproj">
             </BuildableReference>
@@ -82,7 +82,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AD13972A2CF2972900497008"
-            BuildableName = "Testing Tools Host.app"
+            BuildableName = "TestingTools.app"
             BlueprintName = "Testing Tools Host"
             ReferencedContainer = "container:TestingTools.xcodeproj">
          </BuildableReference>
@@ -107,7 +107,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AD13972A2CF2972900497008"
-            BuildableName = "Testing Tools Host.app"
+            BuildableName = "TestingTools.app"
             BlueprintName = "Testing Tools Host"
             ReferencedContainer = "container:TestingTools.xcodeproj">
          </BuildableReference>
