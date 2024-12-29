@@ -37,12 +37,14 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
             case .createStruct:
                 let textToAdd = try createStruct(allText: allLines, selectedText: selections)
                 if let textToAdd {
+                    buffer.lines.add("\n")
                     buffer.lines.add(textToAdd)
                     completionHandler(nil)
                 }
             case .createClass:
                 let textToAdd = try createClass(allText: allLines, selectedText: selections)
                 if let textToAdd {
+                    buffer.lines.add("\n")
                     buffer.lines.add(textToAdd)
                     completionHandler(nil)
                 }
