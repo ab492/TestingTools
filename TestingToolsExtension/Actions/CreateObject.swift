@@ -1,6 +1,23 @@
 import Foundation
 import XcodeKit
 
+enum ObjectType {
+    case `struct`
+    case `class`
+}
+
+/// Work in progress method for combining `createClass` and `createStruct`.
+func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
+    if type == .class {
+        if let classDefinition = try? createClass(allText: allText, selectedText: selectedText) {
+            var updatedText = allText
+            updatedText.append("") // Add a blank line
+            updatedText.append(classDefinition)
+        }
+    }
+    return []
+}
+
 func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
     let numberOfSelectedItems = selectedText.count
     guard numberOfSelectedItems == 1,
