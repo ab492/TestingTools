@@ -3,6 +3,7 @@
 </p>
 
 # Testing Tools Xcode Extension
+Testing Tools is an extension for Xcode designed to make test-driven development smoother. Sometimes, you may want to create the skeleton of an object that doesn’t exist yet (frame-first); Testing Tools will generate an object from your frame. Other times, you might want to manage a to-do list of tests to add; Testing Tools allows you to mark them as ‘in progress’ or ‘done’.
 
 ## Important Notes on Developing Xcode Extensions
 - It's not documented anywhere, but to test your extension you need to 'Embed and Sign' the `XcodeKit.framework` on the extension target. 
