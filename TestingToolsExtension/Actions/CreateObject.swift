@@ -7,7 +7,7 @@ enum ObjectType {
 }
 
 /// Work in progress method for combining `createClass` and `createStruct`.
-func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSourceTextRange]) throws -> [String]? {
+func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSourceTextRange], tabWidth: Int) throws -> [String]? {
     guard type == .class else { return nil }
     
     let numberOfSelectedItems = selectedText.count
@@ -28,18 +28,70 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let selectedString = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
     
-    let className: String
-    if selectedString.hasSuffix("()") {
-        className = String(selectedString.dropLast(2)) // Remove `()` from the end
+    let hasParameters = selectedString.contains("(") && selectedString.contains(":")
+    if hasParameters {
+        guard let rangeOfOpeningBracket = selectedString.range(of: "("),
+              let rangeOfClosingBracket = selectedString.range(of: ")") else {
+            return nil
+//            throw TestingToolsError.invalidSelection
+        }
+        
+        let className = String(selectedString[..<rangeOfOpeningBracket.lowerBound])
+        
+        let allParametersString = String(selectedString[rangeOfOpeningBracket.upperBound..<rangeOfClosingBracket.lowerBound])
+        let allParametersInArray = allParametersString.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+        
+        var properties: [(name: String, type: String)] = []
+        
+        for parameter in allParametersInArray {
+            let components = parameter.split(separator: ":").map { $0.trimmingCharacters(in: .whitespaces) }
+            guard components.count == 2 else { return nil }
+            let propertyName = components[0]
+            let propertyValue = components[1]
+            
+            let propertyType: String
+            if propertyValue.hasPrefix("\"") && propertyValue.hasSuffix("\"") {
+                propertyType = "String"
+            } else if Int(propertyValue) != nil {
+                propertyType = "Int"
+            } else if Double(propertyValue) != nil {
+                propertyType = "Double"
+            } else if propertyValue == "true" || propertyValue == "false" {
+                propertyType = "Bool"
+            } else {
+                propertyType = "\u{003C}#Type#\u{003E}"
+            }
+            properties.append((name: propertyName, type: propertyType))
+        }
+        
+        var classDefinition: [String] = []
+        classDefinition.append("class \(className) {\n")
+        
+        for property in properties {
+            let indentation = String(repeating: " ", count: tabWidth)
+            classDefinition.append("\(indentation)let \(property.name): \(property.type)\n")
+        }
+        
+        classDefinition.append("}\n")
+        
+        var updatedText = allText
+        updatedText.append("\n")
+        updatedText.append(contentsOf: classDefinition)
+        return updatedText
     } else {
-        className = selectedString
+        let className: String
+        if selectedString.hasSuffix("()") {
+            className = String(selectedString.dropLast(2)) // Remove `()` from the end
+        } else {
+            className = selectedString
+        }
+        
+        var updatedText = allText
+        updatedText.append("\n")
+        let newText = ["class \(className) { }\n"]
+        updatedText.append(contentsOf: newText)
+        return updatedText
     }
-    
-    var updatedText = allText
-    updatedText.append("\n")
-    let newText = ["class \(className) { }\n"]
-    updatedText.append(contentsOf: newText)
-    return updatedText
 }
 
 func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
