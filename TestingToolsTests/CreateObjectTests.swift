@@ -15,6 +15,19 @@ struct TestingToolsTests {
                 "class TestClass { }\n"
             ])
         }
+        
+        @Test func selectingWordIncludingBrackets_correctlyCreatesClass() throws {
+            let text = ["let sut = TestClass()\n"]
+            let highlightedText = getRangeOfText("TestClass()", from: text)!
+            
+            let sut = try createObject(.class, allText: text, selectedText: [highlightedText])
+            
+            #expect(sut == [
+                "let sut = TestClass()\n",
+                "\n",
+                "class TestClass { }\n"
+            ])
+        }
     }
     
     struct CreatingClassTests {
