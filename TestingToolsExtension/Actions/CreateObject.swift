@@ -7,15 +7,32 @@ enum ObjectType {
 }
 
 /// Work in progress method for combining `createClass` and `createStruct`.
-func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
-    if type == .class {
-        if let classDefinition = try? createClass(allText: allText, selectedText: selectedText) {
-            var updatedText = allText
-            updatedText.append("") // Add a blank line
-            updatedText.append(classDefinition)
-        }
+func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSourceTextRange]) throws -> [String]? {
+    guard type == .class else { return nil }
+    
+    let numberOfSelectedItems = selectedText.count
+    guard numberOfSelectedItems == 1,
+          let selectedText = selectedText.first else {
+        return nil
+//        throw TestingToolsError.multipleSelectionNotSupported
     }
-    return []
+    
+    let selectionIsMultiline = selectedText.start.line != selectedText.end.line
+    guard selectionIsMultiline == false else {
+        return nil
+//        throw TestingToolsError.multilineSelectionNotSupported
+    }
+
+    guard let lineContainingSelection = allText[safe: selectedText.start.line] else { return nil }
+    let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
+    let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
+    let selectedString = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
+    
+    var updatedText = allText
+    updatedText.append("\n")
+    let newText = ["class \(selectedString) { }\n"]
+    updatedText.append(contentsOf: newText)
+    return updatedText
 }
 
 func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
