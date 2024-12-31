@@ -28,22 +28,18 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let selectedString = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
     
-    // Check for parentheses to identify a call without parameters
+    let className: String
     if selectedString.hasSuffix("()") {
-        let className = String(selectedString.dropLast(2)) // Remove `()` from the end
-        var updatedText = allText
-        updatedText.append("\n")
-        let newText = ["class \(className) { }\n"]
-        updatedText.append(contentsOf: newText)
-        return updatedText
+        className = String(selectedString.dropLast(2)) // Remove `()` from the end
     } else {
-        var updatedText = allText
-        updatedText.append("\n")
-        let newText = ["class \(selectedString) { }\n"]
-        updatedText.append(contentsOf: newText)
-        return updatedText
+        className = selectedString
     }
-
+    
+    var updatedText = allText
+    updatedText.append("\n")
+    let newText = ["class \(className) { }\n"]
+    updatedText.append(contentsOf: newText)
+    return updatedText
 }
 
 func createClass(allText: [String], selectedText: [XCSourceTextRange]) throws -> String? {
