@@ -46,83 +46,40 @@ struct TestingToolsTests {
                 "    }\n",
                 "}\n"
             ])
+        }
+        
+        @Test func selectingClassWithIntInInit_correctlyCreatesClass() throws {
+            let text = ["let sut = TestClass(someInt: 42)\n"]
+            let highlightedText = getRangeOfText("TestClass(someInt: 42)", from: text)!
 
+            let sut = try createObject(.class, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            
+            #expect(sut == [
+                "let sut = TestClass(someInt: 42)\n",
+                "\n",
+                "class TestClass {\n",
+                "    let someInt: Int\n",
+                "\n",
+                "    init(someInt: Int) {\n",
+                "        self.someInt = someInt\n",
+                "    }\n",
+                "}\n"
+            ])
         }
     }
     
     
-//    @Test func selectingClassWithStringInInit_correctlyCreatesClass() throws {
-//        let text = ["let sut = TestClass(someString: \"Hello\")"]
-//        let highlightedText = getRangeOfText("TestClass(someString: \"Hello\")", from: text)!
-//        
-//        let sut = try createClass(allText: text, selectedText: [highlightedText])
-//        
-//        let expectedValue = """
-//        class TestClass {
-//            let someString: String
-//        
-//            init(someString: String) {
-//                self.someString = someString
-//            }
-//        }
-//        """
-//        #expect(sut == expectedValue)
-//    }
+
     
     struct CreatingClassTests {
-        @Test func selectingWordExcludingBrackets_correctlyCreatesClass() throws {
-            let text = ["let sut = TestClass()"]
-            let highlightedText = getRangeOfText("TestClass", from: text)!
-            
-            let sut = try createClass(allText: text, selectedText: [highlightedText])
-            
-            #expect(sut == "class TestClass { }")
-        }
-        
-        @Test func selectingWordIncludingBrackets_correctlyCreatesClass() throws {
-            let text = ["let sut = TestClass()"]
-            let highlightedText = getRangeOfText("TestClass()", from: text)!
-            
-            let sut = try createClass(allText: text, selectedText: [highlightedText])
-            
-            #expect(sut == "class TestClass { }")
-        }
-        
-        @Test func selectingClassWithStringInInit_correctlyCreatesClass() throws {
-            let text = ["let sut = TestClass(someString: \"Hello\")"]
-            let highlightedText = getRangeOfText("TestClass(someString: \"Hello\")", from: text)!
-            
-            let sut = try createClass(allText: text, selectedText: [highlightedText])
-            
-            let expectedValue = """
-            class TestClass {
-                let someString: String
-            
-                init(someString: String) {
-                    self.someString = someString
-                }
-            }
-            """
-            #expect(sut == expectedValue)
-        }
-        
-        @Test func selectingClassWithIntInInit_correctlyCreatesClass() throws {
-            let text = ["let sut = TestClass(someInt: 42)"]
-            let highlightedText = getRangeOfText("TestClass(someInt: 42)", from: text)!
 
-            let sut = try createClass(allText: text, selectedText: [highlightedText])
-            
-            let expectedValue = """
-            class TestClass {
-                let someInt: Int
-            
-                init(someInt: Int) {
-                    self.someInt = someInt
-                }
-            }
-            """
-            #expect(sut == expectedValue)
-        }
+        
+        
+   
+        
+
+        
+
         
         @Test func selectingClassWithDoubleInInit_correctlyCreatesClass() throws {
             let text = ["let sut = TestClass(someDouble: 3.14)"]
