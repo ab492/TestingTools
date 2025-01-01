@@ -78,20 +78,20 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
             objectDefinition.append("\(indentation)}\n")
         }
         objectDefinition.append("}\n")
-
-
-         updatedText.append(contentsOf: objectDefinition)
-         return updatedText
+        
+        updatedText.append(contentsOf: objectDefinition)
+        
     } else {
-        let className: String
+        let objectName: String
         if selectedString.hasSuffix("()") {
-            className = String(selectedString.dropLast(2)) // Remove `()` from the end
+            objectName = String(selectedString.dropLast(2)) // Remove `()` from the end
         } else {
-            className = selectedString
+            objectName = selectedString
         }
         
-        let newText = ["\(type.rawValue) \(className) { }\n"]
-        updatedText.append(contentsOf: newText)
-        return updatedText
+        let objectDefinition = ["\(type.rawValue) \(objectName) { }\n"]
+        
+        updatedText.append(contentsOf: objectDefinition)
     }
+    return updatedText
 }
