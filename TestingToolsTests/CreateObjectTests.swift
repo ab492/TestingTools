@@ -40,6 +40,10 @@ struct TestingToolsTests {
                 "\n",
                 "class TestClass {\n",
                 "    let someString: String\n",
+                "\n",
+                "    init(someString: String) {\n",
+                "        self.someString = someString\n",
+                "    }\n",
                 "}\n"
             ])
 

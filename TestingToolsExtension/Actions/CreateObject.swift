@@ -65,19 +65,30 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
         }
         
         var classDefinition: [String] = []
-        classDefinition.append("class \(className) {\n")
-        
-        for property in properties {
-            let indentation = String(repeating: " ", count: tabWidth)
-            classDefinition.append("\(indentation)let \(property.name): \(property.type)\n")
-        }
-        
-        classDefinition.append("}\n")
-        
-        var updatedText = allText
-        updatedText.append("\n")
-        updatedText.append(contentsOf: classDefinition)
-        return updatedText
+         classDefinition.append("class \(className) {\n")
+         
+         // Add properties
+         for property in properties {
+             let indentation = String(repeating: " ", count: tabWidth)
+             classDefinition.append("\(indentation)let \(property.name): \(property.type)\n")
+         }
+         
+         classDefinition.append("\n")
+         
+         // Add initializer
+         let initIndentation = String(repeating: " ", count: tabWidth)
+         classDefinition.append("\(initIndentation)init(\(properties.map { "\($0.name): \($0.type)" }.joined(separator: ", "))) {\n")
+         for property in properties {
+             classDefinition.append("\(initIndentation)\(initIndentation)self.\(property.name) = \(property.name)\n")
+         }
+         classDefinition.append("\(initIndentation)}\n")
+         
+         classDefinition.append("}\n")
+         
+         var updatedText = allText
+         updatedText.append("\n")
+         updatedText.append(contentsOf: classDefinition)
+         return updatedText
     } else {
         let className: String
         if selectedString.hasSuffix("()") {
