@@ -236,38 +236,40 @@ struct TestingToolsTests {
         
         @Test("Unknown type should expand to editor placeholder - unicode characters required to prevent placeholder expanding in tests")
         func selectingStructWithUnknownParamerInInit_correctlyCreatesStruct() throws {
-            let text = ["let sut = TestStruct(someUnknown: unknownProperty)"]
+            let text = ["let sut = TestStruct(someUnknown: unknownProperty)\n"]
             let highlightedText = getRangeOfText("TestStruct(someUnknown: unknownProperty)", from: text)!
             
-            let sut = try createStruct(allText: text, selectedText: [highlightedText])
-            
-            let expectedValue = """
-            struct TestStruct {
-                let someUnknown: \u{003C}#Type#\u{003E}
-            }
-            """
-            #expect(sut == expectedValue)
+            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+
+            #expect(sut == [
+                "let sut = TestStruct(someUnknown: unknownProperty)\n",
+                "\n",
+                "struct TestStruct {\n",
+                "    let someUnknown: \u{003C}#Type#\u{003E}\n",
+                "}\n"
+            ])
         }
         
         @Test func selectingStructWithMultipleParameters_correctlyCreatesStruct() throws {
-            let text = ["let sut = TestStruct(someBool: true, someInt: 42)"]
+            let text = ["let sut = TestStruct(someBool: true, someInt: 42)\n"]
             let highlightedText = getRangeOfText("TestStruct(someBool: true, someInt: 42)", from: text)!
 
-            let sut = try createStruct(allText: text, selectedText: [highlightedText])
+            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
             
-            let expectedValue = """
-            struct TestStruct {
-                let someBool: Bool
-                let someInt: Int
-            }
-            """
-            #expect(sut == expectedValue)
+            #expect(sut == [
+                "let sut = TestStruct(someBool: true, someInt: 42)\n",
+                "\n",
+                "struct TestStruct {\n",
+                "    let someBool: Bool\n",
+                "    let someInt: Int\n",
+                "}\n"
+            ])
         }
     }
     
-    
     struct ErrorTests {
-        @Test func multipleSelectedText_throwsError() {
+        @Test(arguments: [ObjectType.struct, .class])
+        func multipleSelectedText_throwsError(objectType: ObjectType) {
             let text = ["let sut = TestStruct()"]
             let firstSelection = XCSourceTextRange(
                 start: XCSourceTextPosition(line: 0, column: 0),
@@ -279,7 +281,7 @@ struct TestingToolsTests {
             )
             
             #expect(throws: TestingToolsError.multipleSelectionNotSupported) {
-                try createStruct(allText: text, selectedText: [firstSelection, secondSelection])
+                try createObject(objectType, allText: text, selectedText: [firstSelection, secondSelection], tabWidth: 4)
             }
         }
         

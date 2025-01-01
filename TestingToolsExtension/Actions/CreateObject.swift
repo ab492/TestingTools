@@ -11,8 +11,7 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
     let numberOfSelectedItems = selectedText.count
     guard numberOfSelectedItems == 1,
           let selectedText = selectedText.first else {
-        return nil
-//        throw TestingToolsError.multipleSelectionNotSupported
+        throw TestingToolsError.multipleSelectionNotSupported
     }
     
     let selectionIsMultiline = selectedText.start.line != selectedText.end.line
