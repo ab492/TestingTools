@@ -31,6 +31,7 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
         }
         
         let objectName = String(selectedString[..<rangeOfOpeningBracket.lowerBound])
+        let indentation = String(repeating: " ", count: tabWidth)
         let allParametersString = String(selectedString[rangeOfOpeningBracket.upperBound..<rangeOfClosingBracket.lowerBound])
         let allParametersInArray = allParametersString.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
         
@@ -57,31 +58,28 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
             properties.append((name: propertyName, type: propertyType))
         }
         
-        var classDefinition: [String] = []
-        classDefinition.append("\(type.rawValue) \(objectName) {\n")
+        var objectDefinition: [String] = []
+        objectDefinition.append("\(type.rawValue) \(objectName) {\n")
          
-         // Add properties
          for property in properties {
-             let indentation = String(repeating: " ", count: tabWidth)
-             classDefinition.append("\(indentation)let \(property.name): \(property.type)\n")
+             objectDefinition.append("\(indentation)let \(property.name): \(property.type)\n")
          }
          
         let addInitialiser = type == .class
         if addInitialiser {
-            classDefinition.append("\n")
-            let initIndentation = String(repeating: " ", count: tabWidth)
-            classDefinition.append("\(initIndentation)init(\(properties.map { "\($0.name): \($0.type)" }.joined(separator: ", "))) {\n")
+            objectDefinition.append("\n")
+            objectDefinition.append("\(indentation)init(\(properties.map { "\($0.name): \($0.type)" }.joined(separator: ", "))) {\n")
             for property in properties {
-                classDefinition.append("\(initIndentation)\(initIndentation)self.\(property.name) = \(property.name)\n")
+                objectDefinition.append("\(indentation)\(indentation)self.\(property.name) = \(property.name)\n")
             }
-            classDefinition.append("\(initIndentation)}\n")
+            objectDefinition.append("\(indentation)}\n")
         }
-        classDefinition.append("}\n")
+        objectDefinition.append("}\n")
 
          
          var updatedText = allText
          updatedText.append("\n")
-         updatedText.append(contentsOf: classDefinition)
+         updatedText.append(contentsOf: objectDefinition)
          return updatedText
     } else {
         let className: String
