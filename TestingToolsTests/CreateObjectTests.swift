@@ -285,7 +285,8 @@ struct TestingToolsTests {
             }
         }
         
-        @Test func multipleLineSelectedText_throwsError() {
+        @Test(arguments: [ObjectType.struct, .class])
+        func multipleLineSelectedText_throwsError(objectType: ObjectType) {
             let text = ["let sut = TestStruct()"]
             let multipleLineSelection = XCSourceTextRange(
                 start: XCSourceTextPosition(line: 0, column: 0),
@@ -293,7 +294,7 @@ struct TestingToolsTests {
             )
             
             #expect(throws: TestingToolsError.multilineSelectionNotSupported) {
-                try createStruct(allText: text, selectedText: [multipleLineSelection])
+                try createObject(objectType, allText: text, selectedText: [multipleLineSelection], tabWidth: 4)
             }
         }
         

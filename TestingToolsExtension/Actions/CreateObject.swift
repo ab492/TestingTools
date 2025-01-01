@@ -16,8 +16,7 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
     
     let selectionIsMultiline = selectedText.start.line != selectedText.end.line
     guard selectionIsMultiline == false else {
-        return nil
-//        throw TestingToolsError.multilineSelectionNotSupported
+        throw TestingToolsError.multilineSelectionNotSupported
     }
 
     guard let lineContainingSelection = allText[safe: selectedText.start.line] else { return nil }
