@@ -2,7 +2,7 @@ import Testing
 import XcodeKit
 
 struct TestingToolsTests {
-    struct CreatingClassNewTests {
+    struct CreatingClassTests {
         @Test func selectingWordExcludingBrackets_correctlyCreatesClass() throws {
             let text = ["let sut = TestClass()\n"]
             let highlightedText = getRangeOfText("TestClass", from: text)!
@@ -146,43 +146,32 @@ struct TestingToolsTests {
             ])
         }
     }
-    
-    // Test different tab width
-
-    
-    struct CreatingClassTests {
-
         
-        
-   
-        
-
-        
-
-        
-
-        
-
-        
-
-    }
     struct CreatingStructTests {
         @Test func selectingWordExcludingBrackets_correctlyCreatesStruct() throws {
-            let text = ["let sut = TestStruct()"]
+            let text = ["let sut = TestStruct()\n"]
             let highlightedText = getRangeOfText("TestStruct", from: text)!
             
-            let sut = try createStruct(allText: text, selectedText: [highlightedText])
+            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
             
-            #expect(sut == "struct TestStruct { }")
+            #expect(sut == [
+                "let sut = TestStruct()\n",
+                "\n",
+                "struct TestStruct { }\n"
+            ])
         }
         
         @Test func selectingWordIncludingBrackets_correctlyCreatesStruct() throws {
-            let text = ["let sut = TestStruct()"]
+            let text = ["let sut = TestStruct()\n"]
             let highlightedText = getRangeOfText("TestStruct()", from: text)!
             
-            let sut = try createStruct(allText: text, selectedText: [highlightedText])
-            
-            #expect(sut == "struct TestStruct { }")
+            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+
+            #expect(sut == [
+                "let sut = TestStruct()\n",
+                "\n",
+                "struct TestStruct { }\n"
+            ])
         }
         
         @Test func selectingStructWithStringInInit_correctlyCreatesStruct() throws {
@@ -348,3 +337,6 @@ struct TestingToolsTests {
         }
     }
 }
+
+
+// Test different tab width

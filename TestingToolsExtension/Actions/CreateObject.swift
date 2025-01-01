@@ -8,8 +8,6 @@ enum ObjectType {
 
 /// Work in progress method for combining `createClass` and `createStruct`.
 func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSourceTextRange], tabWidth: Int) throws -> [String]? {
-    guard type == .class else { return nil }
-    
     let numberOfSelectedItems = selectedText.count
     guard numberOfSelectedItems == 1,
           let selectedText = selectedText.first else {
@@ -28,6 +26,8 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let selectedString = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
     
+    let structOrClass = type == .struct ? "struct" : "class"
+
     let hasParameters = selectedString.contains("(") && selectedString.contains(":")
     if hasParameters {
         guard let rangeOfOpeningBracket = selectedString.range(of: "("),
@@ -99,7 +99,7 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
         
         var updatedText = allText
         updatedText.append("\n")
-        let newText = ["class \(className) { }\n"]
+        let newText = ["\(structOrClass) \(className) { }\n"]
         updatedText.append(contentsOf: newText)
         return updatedText
     }
