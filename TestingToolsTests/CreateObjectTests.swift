@@ -124,6 +124,27 @@ struct TestingToolsTests {
                 "}\n"
             ])
         }
+        
+        @Test func selectingClassWithMultipleParameters_correctlyCreatesClass() throws {
+            let text = ["let sut = TestClass(someBool: true, someInt: 42)\n"]
+            let highlightedText = getRangeOfText("TestClass(someBool: true, someInt: 42)", from: text)!
+
+            let sut = try createObject(.class, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            
+            #expect(sut == [
+                "let sut = TestClass(someBool: true, someInt: 42)\n",
+                "\n",
+                "class TestClass {\n",
+                "    let someBool: Bool\n",
+                "    let someInt: Int\n",
+                "\n",
+                "    init(someBool: Bool, someInt: Int) {\n",
+                "        self.someBool = someBool\n",
+                "        self.someInt = someInt\n",
+                "    }\n",
+                "}\n"
+            ])
+        }
     }
     
     // Test different tab width
@@ -143,25 +164,7 @@ struct TestingToolsTests {
         
 
         
-        @Test func selectingClassWithMultipleParameters_correctlyCreatesClass() throws {
-            let text = ["let sut = TestClass(someBool: true, someInt: 42)"]
-            let highlightedText = getRangeOfText("TestClass(someBool: true, someInt: 42)", from: text)!
 
-            let sut = try createClass(allText: text, selectedText: [highlightedText])
-            
-            let expectedValue = """
-            class TestClass {
-                let someBool: Bool
-                let someInt: Int
-            
-                init(someBool: Bool, someInt: Int) {
-                    self.someBool = someBool
-                    self.someInt = someInt
-                }
-            }
-            """
-            #expect(sut == expectedValue)
-        }
     }
     struct CreatingStructTests {
         @Test func selectingWordExcludingBrackets_correctlyCreatesStruct() throws {
