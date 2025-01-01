@@ -35,18 +35,16 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         do {
             switch action {
             case .createStruct:
-                let textToAdd = try createStruct(allText: allLines, selectedText: selections)
+                let textToAdd = try createObject(.struct, allText: allLines, selectedText: selections, tabWidth: buffer.tabWidth)
                 if let textToAdd {
-                    buffer.lines.add("\n")
-                    buffer.lines.add(textToAdd)
-                    completionHandler(nil)
+                    buffer.lines.removeAllObjects()
+                    buffer.lines.addObjects(from: textToAdd)
                 }
             case .createClass:
-                let textToAdd = try createClass(allText: allLines, selectedText: selections)
+                let textToAdd = try createObject(.class, allText: allLines, selectedText: selections, tabWidth: buffer.tabWidth)
                 if let textToAdd {
-                    buffer.lines.add("\n")
-                    buffer.lines.add(textToAdd)
-                    completionHandler(nil)
+                    buffer.lines.removeAllObjects()
+                    buffer.lines.addObjects(from: textToAdd)
                 }
             case .markInProgress:
                 let updatedText = addProgressMarker(.inProgress, allText: allLines, selectedText: selections)

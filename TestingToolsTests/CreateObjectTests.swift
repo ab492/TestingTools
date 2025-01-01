@@ -352,6 +352,3 @@ struct TestingToolsTests {
         }
     }
 }
-
-
-// Test different tab width
