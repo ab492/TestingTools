@@ -1,12 +1,11 @@
 import Foundation
 import XcodeKit
 
-enum ObjectType {
+enum ObjectType: String {
     case `struct`
     case `class`
 }
 
-/// Work in progress method for combining `createClass` and `createStruct`.
 func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSourceTextRange], tabWidth: Int) throws -> [String]? {
     let numberOfSelectedItems = selectedText.count
     guard numberOfSelectedItems == 1,
@@ -24,8 +23,6 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let selectedString = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
     
-    let structOrClass = type == .struct ? "struct" : "class"
-
     let hasParameters = selectedString.contains("(") && selectedString.contains(":")
     if hasParameters {
         guard let rangeOfOpeningBracket = selectedString.range(of: "("),
@@ -62,7 +59,7 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
         }
         
         var classDefinition: [String] = []
-        classDefinition.append("\(structOrClass) \(className) {\n")
+        classDefinition.append("\(type.rawValue) \(className) {\n")
          
          // Add properties
          for property in properties {
@@ -97,7 +94,7 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
         
         var updatedText = allText
         updatedText.append("\n")
-        let newText = ["\(structOrClass) \(className) { }\n"]
+        let newText = ["\(type.rawValue) \(className) { }\n"]
         updatedText.append(contentsOf: newText)
         return updatedText
     }
