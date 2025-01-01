@@ -30,8 +30,7 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
     if hasParameters {
         guard let rangeOfOpeningBracket = selectedString.range(of: "("),
               let rangeOfClosingBracket = selectedString.range(of: ")") else {
-            return nil
-//            throw TestingToolsError.invalidSelection
+            throw TestingToolsError.invalidSelection
         }
         
         let className = String(selectedString[..<rangeOfOpeningBracket.lowerBound])

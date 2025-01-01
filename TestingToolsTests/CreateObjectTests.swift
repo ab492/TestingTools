@@ -298,48 +298,56 @@ struct TestingToolsTests {
             }
         }
         
-        @Test func passingASelectionWhenNoText_returnsNil() throws {
+        @Test(arguments: [ObjectType.struct, .class])
+        func passingASelectionWhenNoText_returnsNil(objectType: ObjectType) throws {
             let emptyPage = [String]()
             let aSelection = XCSourceTextRange(
                 start: XCSourceTextPosition(line: 0, column: 0),
                 end: XCSourceTextPosition(line: 0, column: 10)
             )
             
-            let sut = try createStruct(allText: emptyPage, selectedText: [aSelection])
+            let sut = try createObject(objectType, allText: emptyPage, selectedText: [aSelection], tabWidth: 4)
             
             #expect(sut == nil, "This doesn't throw an error since it's not really a situation that should happen")
         }
         
-        @Test func passingASelectionThatDoesntExistOnPage_returnsNil() throws {
+        @Test(arguments: [ObjectType.struct, .class])
+        func passingASelectionThatDoesntExistOnPage_returnsNil(objectType: ObjectType) throws {
             let text = ["let sut = TestStruct()"]
             let nonExistentSelection = XCSourceTextRange(
                 start: XCSourceTextPosition(line: 1, column: 0),
                 end: XCSourceTextPosition(line: 1, column: 10)
             )
             
-            let sut = try createStruct(allText: text, selectedText: [nonExistentSelection])
+            let sut = try createObject(objectType, allText: text, selectedText: [nonExistentSelection], tabWidth: 4)
             
             #expect(sut == nil, "This doesn't throw an error since it's not really a situation that should happen")
         }
         
         @Test func selectingWordInMultilinePage_returnsStruct() throws {
             let text = [
-                "let sut = TestStruct()",
-                "   let anotherSut = AnotherStruct()"
+                "let sut = TestStruct()\n",
+                "   let anotherSut = AnotherStruct()\n"
             ]
             let highlightedText = getRangeOfText("AnotherStruct", from: text)!
 
-            let sut = try createStruct(allText: text, selectedText: [highlightedText])
-            
-            #expect(sut == "struct AnotherStruct { }")
+            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+                        
+            #expect(sut == [
+                "let sut = TestStruct()\n",
+                "   let anotherSut = AnotherStruct()\n",
+                "\n",
+                "struct AnotherStruct { }\n"
+            ])
         }
         
-        @Test func halfSelectingStructWithProperties_throwsError() throws {
+        @Test(arguments: [ObjectType.struct, .class])
+        func halfSelectingStructWithProperties_throwsError(objectType: ObjectType) throws {
             let text = ["let sut = TestStruct(someInt: 42)"]
             let highlightedText = getRangeOfText("TestStruct(someInt:", from: text)!
 
             #expect(throws: TestingToolsError.invalidSelection) {
-                try createStruct(allText: text, selectedText: [highlightedText])
+                try createObject(objectType, allText: text, selectedText: [highlightedText], tabWidth: 4)
             }
         }
     }
