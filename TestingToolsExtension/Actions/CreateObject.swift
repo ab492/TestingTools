@@ -82,6 +82,7 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
         updatedText.append(contentsOf: objectDefinition)
         
     } else {
+
         let objectName: String
         if selectedString.hasSuffix("()") {
             objectName = String(selectedString.dropLast(2)) // Remove `()` from the end
