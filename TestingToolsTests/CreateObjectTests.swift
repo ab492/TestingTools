@@ -190,17 +190,18 @@ struct TestingToolsTests {
         }
         
         @Test func selectingStructWithIntInInit_correctlyCreatesStruct() throws {
-            let text = ["let sut = TestStruct(someInt: 42)"]
+            let text = ["let sut = TestStruct(someInt: 42)\n"]
             let highlightedText = getRangeOfText("TestStruct(someInt: 42)", from: text)!
 
-            let sut = try createStruct(allText: text, selectedText: [highlightedText])
-            
-            let expectedValue = """
-            struct TestStruct {
-                let someInt: Int
-            }
-            """
-            #expect(sut == expectedValue)
+            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+
+            #expect(sut == [
+                "let sut = TestStruct(someInt: 42)\n",
+                "\n",
+                "struct TestStruct {\n",
+                "    let someInt: Int\n",
+                "}\n"
+            ])
         }
         
         @Test func selectingStructWithDoubleInInit_correctlyCreatesStruct() throws {
