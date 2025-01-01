@@ -30,8 +30,7 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
             throw TestingToolsError.invalidSelection
         }
         
-        let className = String(selectedString[..<rangeOfOpeningBracket.lowerBound])
-        
+        let objectName = String(selectedString[..<rangeOfOpeningBracket.lowerBound])
         let allParametersString = String(selectedString[rangeOfOpeningBracket.upperBound..<rangeOfClosingBracket.lowerBound])
         let allParametersInArray = allParametersString.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
         
@@ -59,7 +58,7 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
         }
         
         var classDefinition: [String] = []
-        classDefinition.append("\(type.rawValue) \(className) {\n")
+        classDefinition.append("\(type.rawValue) \(objectName) {\n")
          
          // Add properties
          for property in properties {
