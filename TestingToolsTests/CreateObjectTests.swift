@@ -205,31 +205,33 @@ struct TestingToolsTests {
         }
         
         @Test func selectingStructWithDoubleInInit_correctlyCreatesStruct() throws {
-            let text = ["let sut = TestStruct(someDouble: 3.14)"]
+            let text = ["let sut = TestStruct(someDouble: 3.14)\n"]
             let highlightedText = getRangeOfText("TestStruct(someDouble: 3.14)", from: text)!
             
-            let sut = try createStruct(allText: text, selectedText: [highlightedText])
-            
-            let expectedValue = """
-            struct TestStruct {
-                let someDouble: Double
-            }
-            """
-            #expect(sut == expectedValue)
+            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+
+            #expect(sut == [
+                "let sut = TestStruct(someDouble: 3.14)\n",
+                "\n",
+                "struct TestStruct {\n",
+                "    let someDouble: Double\n",
+                "}\n"
+            ])
         }
         
         @Test func selectingStructWithBoolInInit_correctlyCreatesStruct() throws {
-            let text = ["let sut = TestStruct(someBool: true)"]
+            let text = ["let sut = TestStruct(someBool: true)\n"]
             let highlightedText = getRangeOfText("TestStruct(someBool: true)", from: text)!
 
-            let sut = try createStruct(allText: text, selectedText: [highlightedText])
-            
-            let expectedValue = """
-            struct TestStruct {
-                let someBool: Bool
-            }
-            """
-            #expect(sut == expectedValue)
+            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+
+            #expect(sut == [
+                "let sut = TestStruct(someBool: true)\n",
+                "\n",
+                "struct TestStruct {\n",
+                "    let someBool: Bool\n",
+                "}\n"
+            ])
         }
         
         @Test("Unknown type should expand to editor placeholder - unicode characters required to prevent placeholder expanding in tests")
