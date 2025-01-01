@@ -17,6 +17,9 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
     guard selectionIsMultiline == false else {
         throw TestingToolsError.multilineSelectionNotSupported
     }
+    
+    var updatedText = allText
+    updatedText.append("\n")
 
     guard let lineContainingSelection = allText[safe: selectedText.start.line] else { return nil }
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
@@ -59,14 +62,14 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
         }
         
         var objectDefinition: [String] = []
-        objectDefinition.append("\(type.rawValue) \(objectName) {\n")
+        objectDefinition.append("\(type.rawValue) \(objectName) {\n") // E.g. class MyClass {
          
          for property in properties {
-             objectDefinition.append("\(indentation)let \(property.name): \(property.type)\n")
+             objectDefinition.append("\(indentation)let \(property.name): \(property.type)\n") // E.g. let string: String
          }
          
-        let addInitialiser = type == .class
-        if addInitialiser {
+        let shouldAddInit = type == .class
+        if shouldAddInit {
             objectDefinition.append("\n")
             objectDefinition.append("\(indentation)init(\(properties.map { "\($0.name): \($0.type)" }.joined(separator: ", "))) {\n")
             for property in properties {
@@ -76,9 +79,7 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
         }
         objectDefinition.append("}\n")
 
-         
-         var updatedText = allText
-         updatedText.append("\n")
+
          updatedText.append(contentsOf: objectDefinition)
          return updatedText
     } else {
@@ -89,8 +90,6 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
             className = selectedString
         }
         
-        var updatedText = allText
-        updatedText.append("\n")
         let newText = ["\(type.rawValue) \(className) { }\n"]
         updatedText.append(contentsOf: newText)
         return updatedText
