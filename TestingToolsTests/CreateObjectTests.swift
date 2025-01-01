@@ -104,9 +104,29 @@ struct TestingToolsTests {
                 "}\n"
             ])
         }
+        
+        @Test("Unknown type should expand to editor placeholder - unicode characters required to prevent placeholder expanding in tests")
+        func selectingClassWithUnknownParameterInInit_correctlyCreatesClass() throws {
+            let text = ["let sut = TestClass(someUnknown: unknownProperty)\n"]
+            let highlightedText = getRangeOfText("TestClass(someUnknown: unknownProperty)", from: text)!
+            
+            let sut = try createObject(.class, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            
+            #expect(sut == [
+                "let sut = TestClass(someUnknown: unknownProperty)\n",
+                "\n",
+                "class TestClass {\n",
+                "    let someUnknown: \u{003C}#Type#\u{003E}\n",
+                "\n",
+                "    init(someUnknown: \u{003C}#Type#\u{003E}) {\n",
+                "        self.someUnknown = someUnknown\n",
+                "    }\n",
+                "}\n"
+            ])
+        }
     }
     
-    
+    // Test different tab width
 
     
     struct CreatingClassTests {
@@ -121,24 +141,7 @@ struct TestingToolsTests {
         
 
         
-        @Test("Unknown type should expand to editor placeholder - unicode characters required to prevent placeholder expanding in tests")
-        func selectingClassWithUnknownParameterInInit_correctlyCreatesClass() throws {
-            let text = ["let sut = TestClass(someUnknown: unknownProperty)"]
-            let highlightedText = getRangeOfText("TestClass(someUnknown: unknownProperty)", from: text)!
-            
-            let sut = try createClass(allText: text, selectedText: [highlightedText])
-            
-            let expectedValue = """
-            class TestClass {
-                let someUnknown: \u{003C}#Type#\u{003E}
-            
-                init(someUnknown: \u{003C}#Type#\u{003E}) {
-                    self.someUnknown = someUnknown
-                }
-            }
-            """
-            #expect(sut == expectedValue)
-        }
+
         
         @Test func selectingClassWithMultipleParameters_correctlyCreatesClass() throws {
             let text = ["let sut = TestClass(someBool: true, someInt: 42)"]
