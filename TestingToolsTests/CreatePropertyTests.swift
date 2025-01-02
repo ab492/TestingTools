@@ -15,21 +15,12 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange], tabWid
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
     
-    // For simplicity, assume highlight.end.line == highlight.start.line
-    let startColumn = selectedText.start.column
-    let endColumn = selectedText.end.column
+ 
     
     // Extract the property name: e.g., "someProperty"
     let originalLine = allText[selectedLineIndex]
-    let nsstring = originalLine as NSString
     
-    // The length of the highlighted text
-    let length = endColumn - startColumn
-    guard length > 0, startColumn + length <= originalLine.count else {
-        return allText
-    }
-//    let propertyName = nsstring.substring(with: NSRange(location: startColumn, length: length))
-    
+
     // Count the leading spaces/tabs of the line so we can preserve indentation
     let leadingWhitespaceCount = originalLine.prefix(while: { $0 == " " || $0 == "\t" }).count
     let leadingWhitespace = String(repeating: " ", count: leadingWhitespaceCount)
