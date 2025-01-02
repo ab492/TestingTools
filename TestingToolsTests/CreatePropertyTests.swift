@@ -7,7 +7,6 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws
         throw TestingToolsError.invalidSelection
     }
     
-    let selectedLineIndex = selectedText.start.line
     
     guard let lineContainingSelection = allText[safe: selectedText.start.line] else { return [] } // return nil instead
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
@@ -15,15 +14,10 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws
     let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
     
  
-    
-    let originalLine = allText[selectedLineIndex]
-    
-
-    // Count the leading spaces/tabs of the line so we can preserve indentation
-    let leadingWhitespaceCount = originalLine.prefix(while: { $0 == " "}).count
+    // Count the leading whitespace so we can preserve indentation
+    let selectedLineIndex = selectedText.start.line
+    let leadingWhitespaceCount = lineContainingSelection.prefix(while: { $0 == " "}).count
     let leadingWhitespace = String(repeating: " ", count: leadingWhitespaceCount)
-    
-    // Create a new line: "    let someProperty =\n"
     let newLine = leadingWhitespace + "let \(propertyName) =\n"
     
     // Insert the new line right before the line that uses the property
