@@ -62,24 +62,27 @@ struct CreatePropertyTests {
             try createProperty(allText: text, selectedText: [])
         }
     }
-//    
-//    @Test(arguments: [ObjectType.struct, .class])
-//    func multipleSelectedText_throwsError(objectType: ObjectType) {
-//        let text = ["let sut = TestStruct()"]
-//        let firstSelection = XCSourceTextRange(
-//            start: XCSourceTextPosition(line: 0, column: 0),
-//            end: XCSourceTextPosition(line: 0, column: 3)
-//        )
-//        let secondSelection = XCSourceTextRange(
-//            start: XCSourceTextPosition(line: 0, column: 5),
-//            end: XCSourceTextPosition(line: 0, column: 10)
-//        )
-//        
-//        #expect(throws: TestingToolsError.multipleSelectionNotSupported) {
-//            try createObject(objectType, allText: text, selectedText: [firstSelection, secondSelection], tabWidth: 4)
-//        }
-//    }
-//    
+    
+    func multipleSelectedText_throwsError() {
+        let text = [
+            "struct TestStruct {\n",
+            "    someProperty.callSomeMethod()\n",
+            "}\n"
+        ]
+        let firstSelection = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 0, column: 0),
+            end: XCSourceTextPosition(line: 0, column: 3)
+        )
+        let secondSelection = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 0, column: 5),
+            end: XCSourceTextPosition(line: 0, column: 10)
+        )
+        
+        #expect(throws: TestingToolsError.multipleSelectionNotSupported) {
+            try createProperty(allText: text, selectedText: [firstSelection, secondSelection])
+        }
+    }
+    
     @Test func multipleLineSelectedText_throwsError() {
         let text = [
             "struct TestStruct {\n",
@@ -102,10 +105,10 @@ struct CreatePropertyTests {
 // TODO
 // Create local variable ✅
 // Throw error if can't get selected text ✅
-// Throw error if multiline selection ⬅️
+// Throw error if multiline selection ✅
 // Throw error if highlight isn't valid (doesn't include .?). Maybe this is just check the highlighted text doesn't contain invalid characters?
 // Test nested create local property
-// Selected text contains multiple text
+// Selected text contains multiple text ⬅️
 // Look into how to handle \t characters (instead of spaces)
 
 
