@@ -1,14 +1,13 @@
 import Testing
 import XcodeKit
 
-func createProperty(allText: [String], selectedText: [XCSourceTextRange], tabWidth: Int) throws -> [String] {
+func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
     
     guard let selectedText = selectedText.first else {
         throw TestingToolsError.invalidSelection
     }
     
     let selectedLineIndex = selectedText.start.line
-//    let propertyName = selectedText
     
     guard let lineContainingSelection = allText[safe: selectedText.start.line] else { return [] } // return nil instead
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
@@ -17,12 +16,11 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange], tabWid
     
  
     
-    // Extract the property name: e.g., "someProperty"
     let originalLine = allText[selectedLineIndex]
     
 
     // Count the leading spaces/tabs of the line so we can preserve indentation
-    let leadingWhitespaceCount = originalLine.prefix(while: { $0 == " " || $0 == "\t" }).count
+    let leadingWhitespaceCount = originalLine.prefix(while: { $0 == " "}).count
     let leadingWhitespace = String(repeating: " ", count: leadingWhitespaceCount)
     
     // Create a new line: "    let someProperty =\n"
@@ -45,7 +43,7 @@ struct CreatePropertyTests {
         let highlightedText = getRangeOfText("someProperty", from: text)!
 
         
-        let sut = try createProperty(allText: text, selectedText: [highlightedText], tabWidth: 4)
+        let sut = try createProperty(allText: text, selectedText: [highlightedText])
         
         #expect(sut == [
             "struct TestStruct {\n",
@@ -63,7 +61,7 @@ struct CreatePropertyTests {
         ]
         
         #expect(throws: TestingToolsError.invalidSelection) {
-            try createProperty(allText: text, selectedText: [], tabWidth: 4)
+            try createProperty(allText: text, selectedText: [])
         }
     }
     
@@ -74,6 +72,7 @@ struct CreatePropertyTests {
 // Throw error if can't get selected text ✅
 // Throw error if multiline selection
 // Throw error if highlight isn't valid (doesn't include .?). Maybe this is just check the highlighted text doesn't contain invalid characters?
+// Look into how to handle \t characters (instead of spaces)
 
 
 
