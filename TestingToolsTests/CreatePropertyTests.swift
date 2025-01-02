@@ -33,8 +33,10 @@ struct CreatePropertyTests {
     @Test func testCreatingLocalProperty() throws {
         let text = [
             "struct TestStruct {\n",
-            "    func someDummyMethod() {\n",
-            "        someProperty.callSomeMethod()\n",
+            "    struct SomeNestedStruct {\n",
+            "        func someDummyMethod() {\n",
+            "            someProperty.callSomeMethod()\n",
+            "        }\n",
             "    }\n",
             "}\n"
         ]
@@ -45,9 +47,11 @@ struct CreatePropertyTests {
         
         #expect(sut == [
             "struct TestStruct {\n",
-            "    func someDummyMethod() {\n",
-            "        let someProperty =\u{003C}#Type#\u{003E}\n",
-            "        someProperty.callSomeMethod()\n",
+            "    struct SomeNestedStruct {\n",
+            "        func someDummyMethod() {\n",
+            "            let someProperty =\u{003C}#Type#\u{003E}\n",
+            "            someProperty.callSomeMethod()\n",
+            "        }\n",
             "    }\n",
             "}\n"
         ])
