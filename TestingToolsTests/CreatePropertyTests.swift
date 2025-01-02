@@ -7,20 +7,20 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange], tabWid
         throw TestingToolsError.invalidSelection
     }
     
-//    // If there's no selection or the lines are out of range, just return original
-//    guard let highlight = selectedText.first,
-//          highlight.start.line < allText.count
-//    else {
-//        return allText
-//    }
-//    
+    let selectedLineIndex = selectedText.start.line
+//    let propertyName = selectedText
+    
+    guard let lineContainingSelection = allText[safe: selectedText.start.line] else { return [] } // return nil instead
+    let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
+    let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
+    let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
+    
     // For simplicity, assume highlight.end.line == highlight.start.line
-    let lineIndex = selectedText.start.line
     let startColumn = selectedText.start.column
     let endColumn = selectedText.end.column
     
     // Extract the property name: e.g., "someProperty"
-    let originalLine = allText[lineIndex]
+    let originalLine = allText[selectedLineIndex]
     let nsstring = originalLine as NSString
     
     // The length of the highlighted text
@@ -28,7 +28,7 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange], tabWid
     guard length > 0, startColumn + length <= originalLine.count else {
         return allText
     }
-    let propertyName = nsstring.substring(with: NSRange(location: startColumn, length: length))
+//    let propertyName = nsstring.substring(with: NSRange(location: startColumn, length: length))
     
     // Count the leading spaces/tabs of the line so we can preserve indentation
     let leadingWhitespaceCount = originalLine.prefix(while: { $0 == " " || $0 == "\t" }).count
@@ -39,7 +39,7 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange], tabWid
     
     // Insert the new line right before the line that uses the property
     var modifiedText = allText
-    modifiedText.insert(newLine, at: lineIndex)
+    modifiedText.insert(newLine, at: selectedLineIndex)
     
     return modifiedText
 }
@@ -80,9 +80,11 @@ struct CreatePropertyTests {
 
 // TODO
 // Create local variable ✅
-// Throw error if can't get selected text ⬅️
+// Throw error if can't get selected text ✅
 // Throw error if multiline selection
-// Throw error if highlight isn't valid (doesn't include .?)
+// Throw error if highlight isn't valid (doesn't include .?). Maybe this is just check the highlighted text doesn't contain invalid characters?
+
+
 
 //struct TestStruct {
 //    func foo() {
