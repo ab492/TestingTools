@@ -18,7 +18,7 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws
     let selectedLineIndex = selectedText.start.line
     let leadingWhitespaceCount = lineContainingSelection.prefix(while: { $0 == " "}).count
     let leadingWhitespace = String(repeating: " ", count: leadingWhitespaceCount)
-    let newLine = leadingWhitespace + "let \(propertyName) =\n"
+    let newLine = leadingWhitespace + "let \(propertyName) =\u{003C}#Type#\u{003E}\n"
     
     // Insert the new line right before the line that uses the property
     var modifiedText = allText
@@ -41,7 +41,7 @@ struct CreatePropertyTests {
         
         #expect(sut == [
             "struct TestStruct {\n",
-            "    let someProperty =\n",
+            "    let someProperty =\u{003C}#Type#\u{003E}\n",
             "    someProperty.callSomeMethod()\n",
             "}\n"
         ])
@@ -64,7 +64,7 @@ struct CreatePropertyTests {
 // TODO
 // Create local variable ✅
 // Throw error if can't get selected text ✅
-// Throw error if multiline selection
+// Throw error if multiline selection ⬅️
 // Throw error if highlight isn't valid (doesn't include .?). Maybe this is just check the highlighted text doesn't contain invalid characters?
 // Look into how to handle \t characters (instead of spaces)
 
