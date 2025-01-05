@@ -26,16 +26,20 @@ struct ProgressMarkerTests {
         ])
     }
     
-    @Test(arguments: zip([ProgressMarker.inProgress, .done], ["⬅️", "✅"]))
+    @Test(arguments: zip([Action.markInProgress, .markAsDone], ["⬅️", "✅"]))
     func addProgressMarkerToMultipleLines(
-        progressMarker: ProgressMarker,
+        action: Action,
         expectedIcon: String
-    ) {
+    ) throws {
         let text = ["My first item to do\n", "My second item to do\n", "My third item to do\n"]
         let secondItem = getRangeOfText("My second item to do", from: text)!
         let thirdItem = getRangeOfText("My third item to do", from: text)!
         
-        let sut = addProgressMarker(progressMarker, allText: text, selectedText: [secondItem, thirdItem])
+        let sut = try CommandActionHandler.handle(
+            action: action,
+            allText: text,
+            selections: [secondItem, thirdItem]
+        )
         
         #expect(sut == [
             "My first item to do\n",
@@ -44,15 +48,19 @@ struct ProgressMarkerTests {
         ])
     }
     
-    @Test(arguments: zip([ProgressMarker.inProgress, .done], ["⬅️", "✅"]))
+    @Test(arguments: zip([Action.markInProgress, .markAsDone], ["⬅️", "✅"]))
     func addProgressMarkerToHalfSelectedLine(
-        progressMarker: ProgressMarker,
+        action: Action,
         expectedIcon: String
-    ) {
+    ) throws {
         let text = ["My first item to do\n", "My second item to do\n", "My third item to do\n"]
         let highlightedText = getRangeOfText("second item", from: text)!
         
-        let sut = addProgressMarker(progressMarker, allText: text, selectedText: [highlightedText])
+        let sut = try CommandActionHandler.handle(
+            action: action,
+            allText: text,
+            selections: [highlightedText]
+        )
         
         #expect(sut == [
             "My first item to do\n",
@@ -61,12 +69,16 @@ struct ProgressMarkerTests {
         ])
     }
     
-    @Test func addingDoneProgressMarkerToInProgressLine_removesInProgressMarkerAndAddsDoneMarker() {
+    @Test func addingDoneProgressMarkerToInProgressLine_removesInProgressMarkerAndAddsDoneMarker() throws {
         let text = ["My first item to do\n", "My second item to do ⬅️\n", "My third item to do\n"]
         let highlightedText = getRangeOfText("My second item to do", from: text)!
         
-        let sut = addProgressMarker(.done, allText: text, selectedText: [highlightedText])
-        
+        let sut = try CommandActionHandler.handle(
+            action: .markAsDone,
+            allText: text,
+            selections: [highlightedText]
+        )
+                
         #expect(sut == [
             "My first item to do\n",
             "My second item to do ✅\n",
@@ -74,11 +86,15 @@ struct ProgressMarkerTests {
         ])
     }
     
-    @Test func addingInProgressMarkerToDoneLine_removesDoneMarkerAndAddsInProgressMarker() {
+    @Test func addingInProgressMarkerToDoneLine_removesDoneMarkerAndAddsInProgressMarker() throws {
         let text = ["My first item to do\n", "My second item to do ✅\n", "My third item to do\n"]
         let highlightedText = getRangeOfText("My second item to do", from: text)!
         
-        let sut = addProgressMarker(.inProgress, allText: text, selectedText: [highlightedText])
+        let sut = try CommandActionHandler.handle(
+            action: .markInProgress,
+            allText: text,
+            selections: [highlightedText]
+        )
         
         #expect(sut == [
             "My first item to do\n",
@@ -86,5 +102,4 @@ struct ProgressMarkerTests {
             "My third item to do\n"
         ])
     }
-    
 }
