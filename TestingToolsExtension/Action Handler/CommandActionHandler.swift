@@ -18,6 +18,14 @@ struct CommandActionHandler {
                 tabWidth: tabWidth
             )
             
+        case .createStruct:
+            return try createObject(
+                .struct,
+                allText: allText,
+                selectedText: selections,
+                tabWidth: tabWidth
+            )
+            
         case .createLocalProperty:
             return try createProperty(
                 allText: allText,
