@@ -25,8 +25,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestClass()\n"]
             let highlightedText = getRangeOfText("TestClass()", from: text)!
             
-            let sut = try createObject(.class, allText: text, selectedText: [highlightedText], tabWidth: 4)
-            
+            let sut = try CommandActionHandler.handle(
+                action: .createClass,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
             #expect(sut == [
                 "let sut = TestClass()\n",
                 "\n",
@@ -38,8 +42,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestClass(someString: \"Hello\")\n"]
             let highlightedText = getRangeOfText("TestClass(someString: \"Hello\")", from: text)!
             
-            let sut = try createObject(.class, allText: text, selectedText: [highlightedText], tabWidth: 4)
-
+            let sut = try CommandActionHandler.handle(
+                action: .createClass,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
             #expect(sut == [
                 "let sut = TestClass(someString: \"Hello\")\n",
                 "\n",
@@ -57,7 +65,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestClass(someInt: 42)\n"]
             let highlightedText = getRangeOfText("TestClass(someInt: 42)", from: text)!
 
-            let sut = try createObject(.class, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createClass,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
             
             #expect(sut == [
                 "let sut = TestClass(someInt: 42)\n",
@@ -76,7 +89,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestClass(someDouble: 3.14)\n"]
             let highlightedText = getRangeOfText("TestClass(someDouble: 3.14)", from: text)!
 
-            let sut = try createObject(.class, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createClass,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
             
             #expect(sut == [
                 "let sut = TestClass(someDouble: 3.14)\n",
@@ -95,7 +113,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestClass(someBool: false)\n"]
             let highlightedText = getRangeOfText("TestClass(someBool: false)", from: text)!
 
-            let sut = try createObject(.class, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createClass,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
             
             #expect(sut == [
                 "let sut = TestClass(someBool: false)\n",
@@ -115,7 +138,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestClass(someUnknown: unknownProperty)\n"]
             let highlightedText = getRangeOfText("TestClass(someUnknown: unknownProperty)", from: text)!
             
-            let sut = try createObject(.class, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createClass,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
             
             #expect(sut == [
                 "let sut = TestClass(someUnknown: unknownProperty)\n",
@@ -134,7 +162,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestClass(someBool: true, someInt: 42)\n"]
             let highlightedText = getRangeOfText("TestClass(someBool: true, someInt: 42)", from: text)!
 
-            let sut = try createObject(.class, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createClass,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
             
             #expect(sut == [
                 "let sut = TestClass(someBool: true, someInt: 42)\n",
