@@ -4,6 +4,7 @@ import XcodeKit
 enum Action: String, CaseIterable {
     case createStruct = "testingtools.createStruct"
     case createClass = "testingtools.createClass"
+    case createLocalProperty = "testingtools.createLocalProperty"
     case markInProgress = "testingtools.markInProgress"
     case markAsDone = "testingtools.markAsDone"
     
@@ -15,6 +16,7 @@ enum Action: String, CaseIterable {
         switch self {
         case .createStruct: return "Create Struct"
         case .createClass: return "Create Class"
+        case .createLocalProperty: return "Create Local Property"
         case .markInProgress: return "Mark in Progress ⬅️"
         case .markAsDone: return "Mark as Done ✅"
         }
@@ -64,7 +66,3 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         }
     }
 }
-
-// 1 First item to do
-// 2 Second item to do ⬅️
-// 3 Third item to do ✅
