@@ -7,7 +7,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestClass()\n"]
             let highlightedText = getRangeOfText("TestClass", from: text)!
             
-            let sut = try createObject(.class, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createClass,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
             
             #expect(sut == [
                 "let sut = TestClass()\n",
