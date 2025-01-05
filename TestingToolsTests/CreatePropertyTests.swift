@@ -1,5 +1,7 @@
 import Testing
 import XcodeKit
+@testable import TestingTools
+
 
 struct CreatePropertyTests {
     
@@ -16,7 +18,11 @@ struct CreatePropertyTests {
         let highlightedText = getRangeOfText("someProperty", from: text)!
 
         
-        let sut = try createProperty(allText: text, selectedText: [highlightedText])
+        let sut = try CommandActionHandler.handle(
+            action: .createLocalProperty,
+            allText: text,
+            selections: [highlightedText]
+        )
         
         #expect(sut == [
             "struct TestStruct {\n",

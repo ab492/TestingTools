@@ -76,9 +76,11 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Actions/AddProgressMarker.swift,
+				Actions/CommandActionHandler.swift,
 				Actions/CreateObject.swift,
 				Actions/CreateProperty.swift,
 				"Extensions/Array+SafeAccess.swift",
+				SourceEditorCommand.swift,
 				TestingToolsError.swift,
 			);
 			target = ADA80AC32CF317FD005FE717 /* Testing Tools Tests */;
