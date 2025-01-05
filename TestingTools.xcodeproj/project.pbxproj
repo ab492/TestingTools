@@ -68,6 +68,7 @@
 		AD1397512CF297AA00497008 /* Exceptions for "TestingToolsExtension" folder in "Testing Tools Extension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Action Handler/Actions/CreatePropertyTests.swift",
 				Info.plist,
 			);
 			target = AD1397402CF297AA00497008 /* Testing Tools Extension */;
@@ -75,10 +76,11 @@
 		AD43C8282CF5A834002484E8 /* Exceptions for "TestingToolsExtension" folder in "Testing Tools Tests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Actions/AddProgressMarker.swift,
-				Actions/CommandActionHandler.swift,
-				Actions/CreateObject.swift,
-				Actions/CreateProperty.swift,
+				"Action Handler/Actions/AddProgressMarker.swift",
+				"Action Handler/Actions/CreateObject.swift",
+				"Action Handler/Actions/CreateProperty.swift",
+				"Action Handler/Actions/CreatePropertyTests.swift",
+				"Action Handler/CommandActionHandler.swift",
 				"Extensions/Array+SafeAccess.swift",
 				SourceEditorCommand.swift,
 				TestingToolsError.swift,
