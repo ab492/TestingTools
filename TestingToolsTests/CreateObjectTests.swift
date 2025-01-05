@@ -346,8 +346,8 @@ struct TestingToolsTests {
     }
     
     struct ErrorTests {
-        @Test(arguments: [ObjectType.struct, .class])
-        func multipleSelectedText_throwsError(objectType: ObjectType) {
+        @Test(arguments: [Action.createStruct, .createClass])
+        func multipleSelectedText_throwsError(action: Action) {
             let text = ["let sut = TestStruct()"]
             let firstSelection = XCSourceTextRange(
                 start: XCSourceTextPosition(line: 0, column: 0),
@@ -359,12 +359,17 @@ struct TestingToolsTests {
             )
             
             #expect(throws: TestingToolsError.multipleSelectionNotSupported) {
-                try createObject(objectType, allText: text, selectedText: [firstSelection, secondSelection], tabWidth: 4)
+                try CommandActionHandler.handle(
+                    action: action,
+                    allText: text,
+                    selections: [firstSelection, secondSelection],
+                    tabWidth: 4
+                )
             }
         }
         
-        @Test(arguments: [ObjectType.struct, .class])
-        func multipleLineSelectedText_throwsError(objectType: ObjectType) {
+        @Test(arguments: [Action.createStruct, .createClass])
+        func multipleLineSelectedText_throwsError(action: Action) {
             let text = ["let sut = TestStruct()"]
             let multipleLineSelection = XCSourceTextRange(
                 start: XCSourceTextPosition(line: 0, column: 0),
@@ -372,17 +377,17 @@ struct TestingToolsTests {
             )
             
             #expect(throws: TestingToolsError.multilineSelectionNotSupported) {
-                try createObject(
-                    objectType,
+                try CommandActionHandler.handle(
+                    action: action,
                     allText: text,
-                    selectedText: [multipleLineSelection],
+                    selections: [multipleLineSelection],
                     tabWidth: 4
                 )
             }
         }
         
-        @Test(arguments: [ObjectType.struct, .class])
-        func passingASelectionWhenNoText_throwsError(objectType: ObjectType) throws {
+        @Test(arguments: [Action.createStruct, .createClass])
+        func passingASelectionWhenNoText_throwsError(action: Action) throws {
             let emptyPage = [String]()
             let aSelection = XCSourceTextRange(
                 start: XCSourceTextPosition(line: 0, column: 0),
@@ -390,17 +395,17 @@ struct TestingToolsTests {
             )
             
             #expect(throws: TestingToolsError.invalidSelection) {
-                try createObject(
-                    objectType,
+                try CommandActionHandler.handle(
+                    action: action,
                     allText: emptyPage,
-                    selectedText: [aSelection],
+                    selections: [aSelection],
                     tabWidth: 4
                 )
             }
         }
         
-        @Test(arguments: [ObjectType.struct, .class])
-        func passingASelectionThatDoesntExistOnPage_throwsError(objectType: ObjectType) throws {
+        @Test(arguments: [Action.createStruct, .createClass])
+        func passingASelectionThatDoesntExistOnPage_throwsError(action: Action) throws {
             let text = ["let sut = TestStruct()"]
             let nonExistentSelection = XCSourceTextRange(
                 start: XCSourceTextPosition(line: 1, column: 0),
@@ -408,10 +413,10 @@ struct TestingToolsTests {
             )
             
             #expect(throws: TestingToolsError.invalidSelection) {
-                try createObject(
-                    objectType,
+                try CommandActionHandler.handle(
+                    action: action,
                     allText: text,
-                    selectedText: [nonExistentSelection],
+                    selections: [nonExistentSelection],
                     tabWidth: 4
                 )
             }
@@ -424,8 +429,13 @@ struct TestingToolsTests {
             ]
             let highlightedText = getRangeOfText("AnotherStruct", from: text)!
 
-            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
-                        
+            let sut = try CommandActionHandler.handle(
+                action: .createStruct,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
+            
             #expect(sut == [
                 "let sut = TestStruct()\n",
                 "   let anotherSut = AnotherStruct()\n",
@@ -434,13 +444,18 @@ struct TestingToolsTests {
             ])
         }
         
-        @Test(arguments: [ObjectType.struct, .class])
-        func halfSelectingStructWithProperties_throwsError(objectType: ObjectType) throws {
+        @Test(arguments: [Action.createStruct, .createClass])
+        func halfSelectingStructWithProperties_throwsError(action: Action) throws {
             let text = ["let sut = TestStruct(someInt: 42)"]
             let highlightedText = getRangeOfText("TestStruct(someInt:", from: text)!
 
             #expect(throws: TestingToolsError.invalidSelection) {
-                try createObject(objectType, allText: text, selectedText: [highlightedText], tabWidth: 4)
+                try CommandActionHandler.handle(
+                    action: action,
+                    allText: text,
+                    selections: [highlightedText],
+                    tabWidth: 4
+                )
             }
         }
     }
