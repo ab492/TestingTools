@@ -1,6 +1,6 @@
 import Testing
 
-struct ProgressMarkerTests {
+struct AddProgressMarkerTests {
     @Test(arguments: zip([Action.markInProgress, .markAsDone], ["⬅️", "✅"]))
     func addProgressMarkerToSingleLineWithinMultipleLines(
         action: Action,
