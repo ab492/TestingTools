@@ -28,7 +28,7 @@ struct CreatePropertyTests {
             "struct TestStruct {\n",
             "    struct SomeNestedStruct {\n",
             "        func someDummyMethod() {\n",
-            "            let someProperty =\u{003C}#Type#\u{003E}\n",
+            "            let someProperty = \u{003C}#Type#\u{003E}\n",
             "            someProperty.callSomeMethod()\n",
             "        }\n",
             "    }\n",

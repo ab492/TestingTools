@@ -19,7 +19,7 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws
     let selectedLineIndex = selectedText.start.line
     let leadingWhitespaceCount = lineContainingSelection.prefix(while: { $0 == " "}).count
     let leadingWhitespace = String(repeating: " ", count: leadingWhitespaceCount)
-    let newLine = leadingWhitespace + "let \(propertyName) =\u{003C}#Type#\u{003E}\n"
+    let newLine = leadingWhitespace + "let \(propertyName) = \u{003C}#Type#\u{003E}\n"
     
     // Insert the new line right before the line that uses the property
     var modifiedText = allText
