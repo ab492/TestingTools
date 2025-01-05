@@ -9,12 +9,35 @@ struct CommandActionHandler {
         tabWidth: Int = 4
     ) throws -> [String] {
         switch action {
+            
+        case .createClass:
+            return try createObject(
+                .class,
+                allText: allText,
+                selectedText: selections,
+                tabWidth: tabWidth
+            )
+            
         case .createLocalProperty:
-            return try createProperty(allText: allText, selectedText: selections)
+            return try createProperty(
+                allText: allText,
+                selectedText: selections
+            )
+            
         case .markAsDone:
-            return addProgressMarker(.done, allText: allText, selectedText: selections)
+            return addProgressMarker(
+                .done,
+                allText: allText,
+                selectedText: selections
+            )
+            
         case .markInProgress:
-            return addProgressMarker(.inProgress, allText: allText, selectedText: selections)
+            return addProgressMarker(
+                .inProgress,
+                allText: allText,
+                selectedText: selections
+            )
+            
         default: return []
         }
     }
