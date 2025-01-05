@@ -294,34 +294,49 @@ struct TestingToolsTests {
             )
             
             #expect(throws: TestingToolsError.multilineSelectionNotSupported) {
-                try createObject(objectType, allText: text, selectedText: [multipleLineSelection], tabWidth: 4)
+                try createObject(
+                    objectType,
+                    allText: text,
+                    selectedText: [multipleLineSelection],
+                    tabWidth: 4
+                )
             }
         }
         
         @Test(arguments: [ObjectType.struct, .class])
-        func passingASelectionWhenNoText_returnsNil(objectType: ObjectType) throws {
+        func passingASelectionWhenNoText_throwsError(objectType: ObjectType) throws {
             let emptyPage = [String]()
             let aSelection = XCSourceTextRange(
                 start: XCSourceTextPosition(line: 0, column: 0),
                 end: XCSourceTextPosition(line: 0, column: 10)
             )
             
-            let sut = try createObject(objectType, allText: emptyPage, selectedText: [aSelection], tabWidth: 4)
-            
-            #expect(sut == nil, "This doesn't throw an error since it's not really a situation that should happen")
+            #expect(throws: TestingToolsError.invalidSelection) {
+                try createObject(
+                    objectType,
+                    allText: emptyPage,
+                    selectedText: [aSelection],
+                    tabWidth: 4
+                )
+            }
         }
         
         @Test(arguments: [ObjectType.struct, .class])
-        func passingASelectionThatDoesntExistOnPage_returnsNil(objectType: ObjectType) throws {
+        func passingASelectionThatDoesntExistOnPage_throwsError(objectType: ObjectType) throws {
             let text = ["let sut = TestStruct()"]
             let nonExistentSelection = XCSourceTextRange(
                 start: XCSourceTextPosition(line: 1, column: 0),
                 end: XCSourceTextPosition(line: 1, column: 10)
             )
             
-            let sut = try createObject(objectType, allText: text, selectedText: [nonExistentSelection], tabWidth: 4)
-            
-            #expect(sut == nil, "This doesn't throw an error since it's not really a situation that should happen")
+            #expect(throws: TestingToolsError.invalidSelection) {
+                try createObject(
+                    objectType,
+                    allText: text,
+                    selectedText: [nonExistentSelection],
+                    tabWidth: 4
+                )
+            }
         }
         
         @Test func selectingWordInMultilinePage_returnsStruct() throws {

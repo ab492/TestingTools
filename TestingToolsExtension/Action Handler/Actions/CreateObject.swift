@@ -20,7 +20,9 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
     var updatedText = allText
     updatedText.append("\n")
 
-    guard let lineContainingSelection = allText[safe: selectedText.start.line] else { return nil }
+    guard let lineContainingSelection = allText[safe: selectedText.start.line] else {
+        throw TestingToolsError.invalidSelection
+    }
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let selectedString = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
