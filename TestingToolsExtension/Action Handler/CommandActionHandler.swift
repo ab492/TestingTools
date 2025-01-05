@@ -45,8 +45,6 @@ struct CommandActionHandler {
                 allText: allText,
                 selectedText: selections
             )
-            
-        default: return []
         }
     }
 }

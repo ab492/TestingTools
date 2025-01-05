@@ -190,7 +190,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestStruct()\n"]
             let highlightedText = getRangeOfText("TestStruct", from: text)!
             
-            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createStruct,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
             
             #expect(sut == [
                 "let sut = TestStruct()\n",
@@ -203,7 +208,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestStruct()\n"]
             let highlightedText = getRangeOfText("TestStruct()", from: text)!
             
-            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createStruct,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
 
             #expect(sut == [
                 "let sut = TestStruct()\n",
@@ -216,7 +226,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestStruct(someString: \"Hello\")\n"]
             let highlightedText = getRangeOfText("TestStruct(someString: \"Hello\")", from: text)!
             
-            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createStruct,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
             
             #expect(sut == [
                 "let sut = TestStruct(someString: \"Hello\")\n",
@@ -231,7 +246,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestStruct(someInt: 42)\n"]
             let highlightedText = getRangeOfText("TestStruct(someInt: 42)", from: text)!
 
-            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createStruct,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
 
             #expect(sut == [
                 "let sut = TestStruct(someInt: 42)\n",
@@ -246,7 +266,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestStruct(someDouble: 3.14)\n"]
             let highlightedText = getRangeOfText("TestStruct(someDouble: 3.14)", from: text)!
             
-            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createStruct,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
 
             #expect(sut == [
                 "let sut = TestStruct(someDouble: 3.14)\n",
@@ -261,7 +286,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestStruct(someBool: true)\n"]
             let highlightedText = getRangeOfText("TestStruct(someBool: true)", from: text)!
 
-            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createStruct,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
 
             #expect(sut == [
                 "let sut = TestStruct(someBool: true)\n",
@@ -277,7 +307,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestStruct(someUnknown: unknownProperty)\n"]
             let highlightedText = getRangeOfText("TestStruct(someUnknown: unknownProperty)", from: text)!
             
-            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createStruct,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
 
             #expect(sut == [
                 "let sut = TestStruct(someUnknown: unknownProperty)\n",
@@ -292,7 +327,12 @@ struct TestingToolsTests {
             let text = ["let sut = TestStruct(someBool: true, someInt: 42)\n"]
             let highlightedText = getRangeOfText("TestStruct(someBool: true, someInt: 42)", from: text)!
 
-            let sut = try createObject(.struct, allText: text, selectedText: [highlightedText], tabWidth: 4)
+            let sut = try CommandActionHandler.handle(
+                action: .createStruct,
+                allText: text,
+                selections: [highlightedText],
+                tabWidth: 4
+            )
             
             #expect(sut == [
                 "let sut = TestStruct(someBool: true, someInt: 42)\n",
