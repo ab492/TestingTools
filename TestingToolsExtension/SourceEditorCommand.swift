@@ -59,6 +59,9 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
                  buffer.lines.removeAllObjects()
                  buffer.lines.addObjects(from: updatedText)
                  completionHandler(nil)
+            
+            case .createLocalProperty:
+                break
             }
 
         } catch {
