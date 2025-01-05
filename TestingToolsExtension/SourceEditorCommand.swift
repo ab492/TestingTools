@@ -59,9 +59,11 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
                  buffer.lines.removeAllObjects()
                  buffer.lines.addObjects(from: updatedText)
                  completionHandler(nil)
-            
+                
             case .createLocalProperty:
-                break
+                let updatedText = try CommandActionHandler.handle(action: .createLocalProperty, allText: allLines, selections: selections)
+                buffer.lines.removeAllObjects()
+                buffer.lines.addObjects(from: updatedText)
             }
 
         } catch {
