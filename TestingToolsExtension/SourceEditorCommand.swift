@@ -41,12 +41,14 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
                 if let textToAdd {
                     buffer.lines.removeAllObjects()
                     buffer.lines.addObjects(from: textToAdd)
+                    completionHandler(nil)
                 }
             case .createClass:
                 let textToAdd = try createObject(.class, allText: allLines, selectedText: selections, tabWidth: buffer.tabWidth)
                 if let textToAdd {
                     buffer.lines.removeAllObjects()
                     buffer.lines.addObjects(from: textToAdd)
+                    completionHandler(nil)
                 }
             case .markInProgress:
                 let updatedText = addProgressMarker(.inProgress, allText: allLines, selectedText: selections)
@@ -64,6 +66,7 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
                 let updatedText = try CommandActionHandler.handle(action: .createLocalProperty, allText: allLines, selections: selections)
                 buffer.lines.removeAllObjects()
                 buffer.lines.addObjects(from: updatedText)
+                completionHandler(nil)
             }
 
         } catch {
