@@ -1,15 +1,23 @@
 import Testing
 
 struct ProgressMarkerTests {
-    @Test(arguments: zip([ProgressMarker.inProgress, .done], ["⬅️", "✅"]))
+    @Test(arguments: zip([Action.markInProgress, .markAsDone], ["⬅️", "✅"]))
     func addProgressMarkerToSingleLineWithinMultipleLines(
-        progressMarker: ProgressMarker,
+        action: Action,
         expectedIcon: String
-    ) {
-        let text = ["My first item to do\n", "My second item to do\n", "My third item to do\n"]
+    ) throws {
+        let text = [
+            "My first item to do\n",
+            "My second item to do\n",
+            "My third item to do\n"
+        ]
         let highlightedText = getRangeOfText("My second item to do", from: text)!
         
-        let sut = addProgressMarker(progressMarker, allText: text, selectedText: [highlightedText])
+        let sut = try CommandActionHandler.handle(
+            action: action,
+            allText: text,
+            selections: [highlightedText]
+        )
         
         #expect(sut == [
             "My first item to do\n",

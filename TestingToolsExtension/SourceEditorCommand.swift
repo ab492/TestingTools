@@ -63,7 +63,12 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
                  completionHandler(nil)
                 
             case .createLocalProperty:
-                let updatedText = try CommandActionHandler.handle(action: .createLocalProperty, allText: allLines, selections: selections)
+                let updatedText = try CommandActionHandler.handle(
+                    action: .createLocalProperty,
+                    allText: allLines,
+                    selections: selections,
+                    tabWidth: buffer.tabWidth
+                )
                 buffer.lines.removeAllObjects()
                 buffer.lines.addObjects(from: updatedText)
                 completionHandler(nil)
