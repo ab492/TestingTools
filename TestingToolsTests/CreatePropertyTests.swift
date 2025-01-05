@@ -44,7 +44,11 @@ struct CreatePropertyTests {
         ]
         
         #expect(throws: TestingToolsError.invalidSelection) {
-            try createProperty(allText: text, selectedText: [])
+            try CommandActionHandler.handle(
+                action: .createLocalProperty,
+                allText: text,
+                selections: []
+            )
         }
     }
     
@@ -64,7 +68,11 @@ struct CreatePropertyTests {
         )
         
         #expect(throws: TestingToolsError.multipleSelectionNotSupported) {
-            try createProperty(allText: text, selectedText: [firstSelection, secondSelection])
+            try CommandActionHandler.handle(
+                action: .createLocalProperty,
+                allText: text,
+                selections: [firstSelection, secondSelection]
+            )
         }
     }
     
@@ -80,7 +88,11 @@ struct CreatePropertyTests {
         )
         
         #expect(throws: TestingToolsError.multilineSelectionNotSupported) {
-            try createProperty(allText: text, selectedText: [multipleLineSelection])
+            try CommandActionHandler.handle(
+                action: .createLocalProperty,
+                allText: text,
+                selections: [multipleLineSelection]
+            )
         }
     }
 }
