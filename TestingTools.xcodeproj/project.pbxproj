@@ -69,6 +69,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Action Handler/Actions/AddProgressMarkerTests.swift",
+				"Action Handler/Actions/CreateObjectTests.swift",
 				"Action Handler/Actions/CreatePropertyTests.swift",
 				Info.plist,
 			);
@@ -80,6 +81,7 @@
 				"Action Handler/Actions/AddProgressMarker.swift",
 				"Action Handler/Actions/AddProgressMarkerTests.swift",
 				"Action Handler/Actions/CreateObject.swift",
+				"Action Handler/Actions/CreateObjectTests.swift",
 				"Action Handler/Actions/CreateProperty.swift",
 				"Action Handler/Actions/CreatePropertyTests.swift",
 				"Action Handler/CommandActionHandler.swift",
