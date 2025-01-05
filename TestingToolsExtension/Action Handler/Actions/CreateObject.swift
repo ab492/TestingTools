@@ -6,7 +6,7 @@ enum ObjectType: String {
     case `class`
 }
 
-func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSourceTextRange], tabWidth: Int) throws -> [String]? {
+func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSourceTextRange], tabWidth: Int) throws -> [String] {
     let numberOfSelectedItems = selectedText.count
     guard numberOfSelectedItems == 1,
           let selectedText = selectedText.first else {
@@ -43,7 +43,7 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
         
         for parameter in allParametersInArray {
             let components = parameter.split(separator: ":").map { $0.trimmingCharacters(in: .whitespaces) }
-            guard components.count == 2 else { return nil }
+            guard components.count == 2 else { throw TestingToolsError.invalidSelection }
             let propertyName = components[0]
             let propertyValue = components[1]
             
