@@ -31,7 +31,7 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws
 func createGlobalProperty(allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
     // 1. Validate the selection.
     guard let selection = selectedText.first else {
-        return [] // or throw TestingToolsError.invalidSelection
+        throw TestingToolsError.invalidSelection
     }
 
     // 2. Extract the property name from the selected text range.

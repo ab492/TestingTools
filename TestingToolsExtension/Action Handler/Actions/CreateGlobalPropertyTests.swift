@@ -60,6 +60,18 @@ struct CreateGlobalPropertyTests {
             "}\n"
         ])
     }
+    
+    @Test func testErrorIsThrownIfNoSelectionIsMade() {
+        let text = [
+            "struct TestStruct {\n",
+            "    someProperty.callSomeMethod()\n",
+            "}\n"
+        ]
+        
+        #expect(throws: TestingToolsError.invalidSelection) {
+            try makeSut(allText: text, selections: [])
+        }
+    }
 
 }
 
