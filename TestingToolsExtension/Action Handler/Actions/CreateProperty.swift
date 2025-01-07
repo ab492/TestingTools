@@ -37,11 +37,11 @@ func createGlobalProperty(allText: [String], selectedText: [XCSourceTextRange]) 
         throw TestingToolsError.multipleSelectionNotSupported
     }
 
-    // 2. Validate the selection is on a single line (no multiline).
+//    // 2. Validate the selection is on a single line (no multiline).
     let selection = selectedText[0]
-    guard selection.start.line == selection.end.line else {
-        throw TestingToolsError.multilineSelectionNotSupported
-    }
+//    guard selection.start.line == selection.end.line else {
+//        throw TestingToolsError.multilineSelectionNotSupported
+//    }
 
     // 3. Extract the property name from that single selection.
     guard let lineContainingSelection = allText[safe: selection.start.line] else {
