@@ -30,11 +30,10 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
     
     switch type {
     case .global:
-
-        // 5. Find insertion point after all import lines.
+        // Find insertion point after all import lines.
         var insertionIndex = 0
         for (index, line) in allText.enumerated() {
-            if line.trimmingCharacters(in: .whitespacesAndNewlines).hasPrefix("import ") {
+            if line.hasPrefix("import ") {
                 insertionIndex = index + 1
             } else {
                 // Once we see a line that's not an `import`, we break.
