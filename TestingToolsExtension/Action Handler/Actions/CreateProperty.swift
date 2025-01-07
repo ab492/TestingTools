@@ -1,7 +1,21 @@
 import Foundation
 import XcodeKit
 
-func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
+enum PropertyType {
+    case local
+    case global
+}
+
+func createProperty(type: PropertyType, allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
+    switch type {
+    case .global:
+        try createGlobalProperty(allText: allText, selectedText: selectedText)
+    case .local:
+        try createProperty(allText: allText, selectedText: selectedText)
+    }
+}
+
+private func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
     if selectedText.count > 1 {
         throw TestingToolsError.multipleSelectionNotSupported
     }
@@ -35,7 +49,7 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws
     return modifiedText
 }
 
-func createGlobalProperty(allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
+private func createGlobalProperty(allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
     if selectedText.count > 1 {
         throw TestingToolsError.multipleSelectionNotSupported
     }

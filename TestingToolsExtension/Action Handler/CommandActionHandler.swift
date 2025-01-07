@@ -28,12 +28,14 @@ struct CommandActionHandler {
             
         case .createLocalProperty:
             return try createProperty(
+                type: .local,
                 allText: allText,
                 selectedText: selections
             )
             
         case .createGlobalProperty:
-            return try createGlobalProperty(
+            return try createProperty(
+                type: .global,
                 allText: allText,
                 selectedText: selections
             )
