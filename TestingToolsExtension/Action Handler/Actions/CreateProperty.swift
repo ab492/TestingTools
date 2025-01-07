@@ -28,6 +28,8 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
     let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
     let propertyDefinition = "let \(propertyName) = \u{003C}#Type#\u{003E}\n"
     
+    var updatedText = allText
+    
     switch type {
     case .global:
         // Find insertion point after all import lines.
@@ -36,13 +38,11 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
             if line.hasPrefix("import ") {
                 insertionIndex = index + 1
             } else {
-                // Once we see a line that's not an `import`, we break.
+                // Once we find a line that's not an `import`, we break.
                 break
             }
         }
 
-        // 6. Insert the global property + extra blank line.
-        var updatedText = allText
         if insertionIndex < updatedText.count,
            updatedText[insertionIndex].trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             insertionIndex += 1
@@ -50,7 +50,6 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
         updatedText.insert(propertyDefinition, at: insertionIndex)
         updatedText.insert("\n", at: insertionIndex + 1)
 
-        return updatedText
     case .local:
 
         
@@ -61,11 +60,11 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
         let newLine = leadingWhitespace + propertyDefinition
         
         // Insert the new line right before the line that uses the property
-        var modifiedText = allText
-        modifiedText.insert(newLine, at: selectedLineIndex)
+        updatedText.insert(newLine, at: selectedLineIndex)
         
-        return modifiedText
     }
+    return updatedText
+
 }
 
 private func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
