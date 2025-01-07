@@ -6,12 +6,8 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws
         throw TestingToolsError.multipleSelectionNotSupported
     }
     
-    guard selectedText.count == 1 else {
-        throw TestingToolsError.invalidSelection
-    }
-    
     guard let selectedText = selectedText.first else {
-        fatalError()
+        throw TestingToolsError.invalidSelection
     }
     
     guard selectedText.start.line == selectedText.end.line else {
@@ -19,7 +15,7 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws
     }
     
     guard let lineContainingSelection = allText[safe: selectedText.start.line] else {
-        throw TestingToolsError.invalidSelection // is this part tested?
+        throw TestingToolsError.invalidSelection
     }
     
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
@@ -40,28 +36,25 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws
 }
 
 func createGlobalProperty(allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
-    // 1. Ensure there is exactly one selection.
-    guard let selection = selectedText.first else {
+    if selectedText.count > 1 {
+        throw TestingToolsError.multipleSelectionNotSupported
+    }
+    
+    guard let selectedText = selectedText.first else {
         throw TestingToolsError.invalidSelection
     }
     
-    guard selectedText.count == 1 else {
-        throw TestingToolsError.multipleSelectionNotSupported
+    guard selectedText.start.line == selectedText.end.line else {
+        throw TestingToolsError.multilineSelectionNotSupported
     }
-
-//    // 2. Validate the selection is on a single line (no multiline).
-//    let selection = selectedText[0]
-
-
-    // 3. Extract the property name from that single selection.
-    guard let lineContainingSelection = allText[safe: selection.start.line] else {
+    
+    guard let lineContainingSelection = allText[safe: selectedText.start.line] else {
         throw TestingToolsError.invalidSelection
     }
-    let startIndex = lineContainingSelection.index(lineContainingSelection.startIndex,
-                                                  offsetBy: selection.start.column)
-    let endIndex = lineContainingSelection.index(lineContainingSelection.startIndex,
-                                                offsetBy: selection.end.column)
-    let propertyName = String(lineContainingSelection[startIndex..<endIndex])
+    
+    let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
+    let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
+    let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
 
     // 4. Build the global property declaration.
     let globalProperty = "let \(propertyName) = <#Type#>\n"

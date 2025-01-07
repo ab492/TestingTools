@@ -72,30 +72,60 @@ struct CreateGlobalPropertyTests {
             try makeSut(allText: text, selections: [])
         }
     }
-//    
-//    func multipleSelectedText_throwsError() {
-//        let text = [
-//            "struct TestStruct {\n",
-//            "    someProperty.callSomeMethod()\n",
-//            "}\n"
-//        ]
-//        let firstSelection = XCSourceTextRange(
-//            start: XCSourceTextPosition(line: 0, column: 0),
-//            end: XCSourceTextPosition(line: 0, column: 3)
-//        )
-//        let secondSelection = XCSourceTextRange(
-//            start: XCSourceTextPosition(line: 0, column: 5),
-//            end: XCSourceTextPosition(line: 0, column: 10)
-//        )
-//        
-//        #expect(throws: TestingToolsError.multipleSelectionNotSupported) {
-//            try CommandActionHandler.handle(
-//                action: .createGlobalProperty,
-//                allText: text,
-//                selections: [firstSelection, secondSelection]
-//            )
-//        }
-//    }
+    
+    @Test func multipleSelectedText_throwsError() {
+        let text = [
+            "struct TestStruct {\n",
+            "    someProperty.callSomeMethod()\n",
+            "}\n"
+        ]
+        let firstSelection = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 0, column: 0),
+            end: XCSourceTextPosition(line: 0, column: 3)
+        )
+        let secondSelection = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 0, column: 5),
+            end: XCSourceTextPosition(line: 0, column: 10)
+        )
+        
+        #expect(throws: TestingToolsError.multipleSelectionNotSupported) {
+            try makeSut(allText: text, selections: [firstSelection, secondSelection])
+        }
+    }
+    
+    @Test func multipleLineSelectedText_throwsError() {
+        let text = [
+            "struct TestStruct {\n",
+            "    someProperty.callSomeMethod()\n",
+            "}\n"
+        ]
+        let multipleLineSelection = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 0, column: 0),
+            end: XCSourceTextPosition(line: 1, column: 10)
+        )
+        
+        #expect(throws: TestingToolsError.multilineSelectionNotSupported) {
+            try makeSut(allText: text, selections: [multipleLineSelection])
+        }
+    }
+    
+    @Test func testOutOfBoundsLineIndex_throwsError() {
+        let text = [
+            "struct TestStruct {\n",
+            "    someProperty.callSomeMethod()\n",
+            "}\n"
+        ]
+        
+        // Notice "line: 4" is out of range
+        let outOfBoundsSelection = XCSourceTextRange(
+            start: XCSourceTextPosition(line: 4, column: 0),
+            end: XCSourceTextPosition(line: 4, column: 3)
+        )
+        
+        #expect(throws: TestingToolsError.invalidSelection) {
+            try makeSut(allText: text, selections: [outOfBoundsSelection])
+        }
+    }
 }
 
 private func makeSut(allText: [String], selections: [XCSourceTextRange]) throws -> [String] {
