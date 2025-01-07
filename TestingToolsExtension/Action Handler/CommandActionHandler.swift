@@ -45,6 +45,8 @@ struct CommandActionHandler {
                 allText: allText,
                 selectedText: selections
             )
+        case .createGlobalProperty:
+            return []
         }
     }
 }

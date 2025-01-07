@@ -2,11 +2,17 @@ import Foundation
 import XcodeKit
 
 enum Action: String, CaseIterable {
-    case createStruct = "testingtools.createStruct"
-    case createClass = "testingtools.createClass"
-    case createLocalProperty = "testingtools.createLocalProperty"
-    case markInProgress = "testingtools.markInProgress"
-    case markAsDone = "testingtools.markAsDone"
+    case createStruct
+    case createClass
+    case createLocalProperty
+    case createGlobalProperty
+    case markInProgress
+    case markAsDone
+    
+    
+    var rawValue: String {
+        return "testingtools.\(self)" // E.g. "testingtools.createStruct"
+    }
     
     var identifier: String {
         self.rawValue
@@ -17,6 +23,7 @@ enum Action: String, CaseIterable {
         case .createStruct: return "Create Struct"
         case .createClass: return "Create Class"
         case .createLocalProperty: return "Create Local Property"
+        case .createGlobalProperty: return "Create Global Property"
         case .markInProgress: return "Mark in Progress ⬅️"
         case .markAsDone: return "Mark as Done ✅"
         }
