@@ -73,7 +73,7 @@ struct CreateGlobalPropertyTests {
         }
     }
     
-    func multipleSelectedText_throwsError() {
+    @Test func multipleSelectedText_throwsError() {
         let text = [
             "struct TestStruct {\n",
             "    someProperty.callSomeMethod()\n",

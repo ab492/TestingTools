@@ -29,14 +29,23 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws
 }
 
 func createGlobalProperty(allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
-    // 1. Validate the selection.
-    guard let selection = selectedText.first else {
+    // 1. Ensure there is exactly one selection.
+    guard !selectedText.isEmpty else {
         throw TestingToolsError.invalidSelection
     }
+    guard selectedText.count == 1 else {
+        throw TestingToolsError.multipleSelectionNotSupported
+    }
 
-    // 2. Extract the property name from the selected text range.
+    // 2. Validate the selection is on a single line (no multiline).
+    let selection = selectedText[0]
+    guard selection.start.line == selection.end.line else {
+        throw TestingToolsError.multilineSelectionNotSupported
+    }
+
+    // 3. Extract the property name from that single selection.
     guard let lineContainingSelection = allText[safe: selection.start.line] else {
-        return []
+        throw TestingToolsError.invalidSelection
     }
     let startIndex = lineContainingSelection.index(lineContainingSelection.startIndex,
                                                   offsetBy: selection.start.column)
@@ -44,34 +53,27 @@ func createGlobalProperty(allText: [String], selectedText: [XCSourceTextRange]) 
                                                 offsetBy: selection.end.column)
     let propertyName = String(lineContainingSelection[startIndex..<endIndex])
 
-    // 3. Build the global property declaration.
+    // 4. Build the global property declaration.
     let globalProperty = "let \(propertyName) = <#Type#>\n"
 
-    // 4. Figure out where to insert the property.
-    //    We move insertionIndex past all import lines.
+    // 5. Find insertion point after all import lines.
     var insertionIndex = 0
     for (index, line) in allText.enumerated() {
         if line.trimmingCharacters(in: .whitespacesAndNewlines).hasPrefix("import ") {
             insertionIndex = index + 1
         } else {
-            // Once we see a line that's not an `import`, stop.
+            // Once we see a line that's not an `import`, we break.
             break
         }
     }
 
+    // 6. Insert the global property + extra blank line.
     var updatedText = allText
-
-    // 5. If the next line after imports is blank, skip it so the property
-    //    goes *after* that blank line.
     if insertionIndex < updatedText.count,
        updatedText[insertionIndex].trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
         insertionIndex += 1
     }
-
-    // 6. Insert the new property.
     updatedText.insert(globalProperty, at: insertionIndex)
-
-    // 7. Insert another blank line right after the property.
     updatedText.insert("\n", at: insertionIndex + 1)
 
     return updatedText
