@@ -1,4 +1,5 @@
 import Testing
+import XcodeKit
 
 struct CreateGlobalPropertyTests {
 
@@ -16,11 +17,7 @@ struct CreateGlobalPropertyTests {
         ]
         let highlightedText = getRangeOfText("someProperty", from: text)!
 
-        let sut = try CommandActionHandler.handle(
-            action: .createGlobalProperty,
-            allText: text,
-            selections: [highlightedText]
-        )
+        let sut = try makeSut(allText: text, selections: [highlightedText])
         
         #expect(sut == [
             "import SomeLibrary\n",
@@ -37,4 +34,12 @@ struct CreateGlobalPropertyTests {
         ])
     }
 
+}
+
+private func makeSut(allText: [String], selections: [XCSourceTextRange]) throws -> [String] {
+    try CommandActionHandler.handle(
+        action: .createGlobalProperty,
+        allText: allText,
+        selections: selections
+    )
 }
