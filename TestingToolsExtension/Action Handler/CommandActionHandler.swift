@@ -32,6 +32,12 @@ struct CommandActionHandler {
                 selectedText: selections
             )
             
+        case .createGlobalProperty:
+            return try createGlobalProperty(
+                allText: allText,
+                selectedText: selections
+            )
+            
         case .markAsDone:
             return addProgressMarker(
                 .done,
@@ -45,8 +51,6 @@ struct CommandActionHandler {
                 allText: allText,
                 selectedText: selections
             )
-        case .createGlobalProperty:
-            return []
         }
     }
 }
