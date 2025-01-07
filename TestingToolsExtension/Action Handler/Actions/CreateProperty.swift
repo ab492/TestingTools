@@ -2,15 +2,28 @@ import Foundation
 import XcodeKit
 
 func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
-    guard let selectedText = selectedText.first else {
+    if selectedText.count > 1 {
+        throw TestingToolsError.multipleSelectionNotSupported
+    }
+    
+    guard selectedText.count == 1 else {
         throw TestingToolsError.invalidSelection
+    }
+    
+    let numberOfSelectedItems = selectedText.count
+    guard numberOfSelectedItems == 1,
+          let selectedText = selectedText.first else {
+        throw TestingToolsError.multipleSelectionNotSupported
     }
     
     guard selectedText.start.line == selectedText.end.line else {
         throw TestingToolsError.multilineSelectionNotSupported
     }
     
-    guard let lineContainingSelection = allText[safe: selectedText.start.line] else { return [] } // return nil instead
+    guard let lineContainingSelection = allText[safe: selectedText.start.line] else {
+        throw TestingToolsError.invalidSelection
+    }
+    
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])

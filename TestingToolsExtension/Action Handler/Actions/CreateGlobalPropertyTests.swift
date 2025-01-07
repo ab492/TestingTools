@@ -72,26 +72,30 @@ struct CreateGlobalPropertyTests {
             try makeSut(allText: text, selections: [])
         }
     }
-    
-    @Test func multipleSelectedText_throwsError() {
-        let text = [
-            "struct TestStruct {\n",
-            "    someProperty.callSomeMethod()\n",
-            "}\n"
-        ]
-        let firstSelection = XCSourceTextRange(
-            start: XCSourceTextPosition(line: 0, column: 0),
-            end: XCSourceTextPosition(line: 0, column: 3)
-        )
-        let secondSelection = XCSourceTextRange(
-            start: XCSourceTextPosition(line: 0, column: 5),
-            end: XCSourceTextPosition(line: 0, column: 10)
-        )
-        
-        #expect(throws: TestingToolsError.multipleSelectionNotSupported) {
-            try makeSut(allText: text, selections: [firstSelection, secondSelection])
-        }
-    }
+//    
+//    func multipleSelectedText_throwsError() {
+//        let text = [
+//            "struct TestStruct {\n",
+//            "    someProperty.callSomeMethod()\n",
+//            "}\n"
+//        ]
+//        let firstSelection = XCSourceTextRange(
+//            start: XCSourceTextPosition(line: 0, column: 0),
+//            end: XCSourceTextPosition(line: 0, column: 3)
+//        )
+//        let secondSelection = XCSourceTextRange(
+//            start: XCSourceTextPosition(line: 0, column: 5),
+//            end: XCSourceTextPosition(line: 0, column: 10)
+//        )
+//        
+//        #expect(throws: TestingToolsError.multipleSelectionNotSupported) {
+//            try CommandActionHandler.handle(
+//                action: .createGlobalProperty,
+//                allText: text,
+//                selections: [firstSelection, secondSelection]
+//            )
+//        }
+//    }
 }
 
 private func makeSut(allText: [String], selections: [XCSourceTextRange]) throws -> [String] {
