@@ -26,11 +26,11 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
+    let propertyDefinition = "let \(propertyName) = \u{003C}#Type#\u{003E}\n"
     
     switch type {
     case .global:
-        // 4. Build the global property declaration.
-        let globalProperty = "let \(propertyName) = <#Type#>\n"
+        let globalProperty = propertyDefinition
 
         // 5. Find insertion point after all import lines.
         var insertionIndex = 0
@@ -60,7 +60,7 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
         let selectedLineIndex = selectedText.start.line
         let leadingWhitespaceCount = lineContainingSelection.prefix(while: { $0 == " "}).count
         let leadingWhitespace = String(repeating: " ", count: leadingWhitespaceCount)
-        let newLine = leadingWhitespace + "let \(propertyName) = \u{003C}#Type#\u{003E}\n"
+        let newLine = leadingWhitespace + propertyDefinition
         
         // Insert the new line right before the line that uses the property
         var modifiedText = allText
