@@ -3,6 +3,38 @@ import XcodeKit
 
 struct CreateGlobalPropertyTests {
 
+    @Test func testCreatingLocalProperty() throws {
+        let text = [
+            "struct TestStruct {\n",
+            "    struct SomeNestedStruct {\n",
+            "        func someDummyMethod() {\n",
+            "            someProperty.callSomeMethod()\n",
+            "        }\n",
+            "    }\n",
+            "}\n"
+        ]
+        let highlightedText = getRangeOfText("someProperty", from: text)!
+
+        
+        let sut = try makeSut(
+            action: .createLocalProperty,
+            allText: text,
+            selections: [highlightedText]
+        )
+        
+        #expect(sut == [
+            "struct TestStruct {\n",
+            "    struct SomeNestedStruct {\n",
+            "        func someDummyMethod() {\n",
+            "            let someProperty = \u{003C}#Type#\u{003E}\n",
+            "            someProperty.callSomeMethod()\n",
+            "        }\n",
+            "    }\n",
+            "}\n"
+        ])
+    }
+    
+    
     @Test func testCreatingGlobalPropertyWhenThereAreImportStatements() throws {
         let text = [
             "import SomeLibrary\n",
@@ -154,7 +186,7 @@ struct CreateGlobalPropertyTests {
 
 private func makeSut(action: Action, allText: [String], selections: [XCSourceTextRange]) throws -> [String] {
     try CommandActionHandler.handle(
-        action: .createGlobalProperty,
+        action: action,
         allText: allText,
         selections: selections
     )
