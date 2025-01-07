@@ -30,7 +30,6 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
     
     switch type {
     case .global:
-        let globalProperty = propertyDefinition
 
         // 5. Find insertion point after all import lines.
         var insertionIndex = 0
@@ -49,7 +48,7 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
            updatedText[insertionIndex].trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             insertionIndex += 1
         }
-        updatedText.insert(globalProperty, at: insertionIndex)
+        updatedText.insert(propertyDefinition, at: insertionIndex)
         updatedText.insert("\n", at: insertionIndex + 1)
 
         return updatedText
