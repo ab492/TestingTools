@@ -23,12 +23,12 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
         throw TestingToolsError.invalidSelection
     }
     
+    let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
+    let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
+    let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
+    
     switch type {
     case .global:
-        let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
-        let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
-        let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
-
         // 4. Build the global property declaration.
         let globalProperty = "let \(propertyName) = <#Type#>\n"
 
@@ -52,10 +52,9 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
         updatedText.insert(globalProperty, at: insertionIndex)
         updatedText.insert("\n", at: insertionIndex + 1)
 
-        return updatedText    case .local:
-        let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
-        let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
-        let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
+        return updatedText
+    case .local:
+
         
         // Count the leading whitespace so we can preserve indentation
         let selectedLineIndex = selectedText.start.line
