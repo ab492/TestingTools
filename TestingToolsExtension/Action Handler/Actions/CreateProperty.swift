@@ -10,10 +10,8 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws
         throw TestingToolsError.invalidSelection
     }
     
-    let numberOfSelectedItems = selectedText.count
-    guard numberOfSelectedItems == 1,
-          let selectedText = selectedText.first else {
-        throw TestingToolsError.multipleSelectionNotSupported
+    guard let selectedText = selectedText.first else {
+        fatalError()
     }
     
     guard selectedText.start.line == selectedText.end.line else {
@@ -21,7 +19,7 @@ func createProperty(allText: [String], selectedText: [XCSourceTextRange]) throws
     }
     
     guard let lineContainingSelection = allText[safe: selectedText.start.line] else {
-        throw TestingToolsError.invalidSelection
+        throw TestingToolsError.invalidSelection // is this part tested?
     }
     
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
