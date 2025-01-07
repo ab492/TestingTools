@@ -96,12 +96,3 @@ struct CreatePropertyTests {
         }
     }
 }
-
-// TODO
-// Create local variable ✅
-// Throw error if can't get selected text ✅
-// Throw error if multiline selection ✅
-// Throw error if highlight isn't valid (doesn't include .?). Maybe this is just check the highlighted text doesn't contain invalid characters?
-// Test nested create local property ✅
-// Selected text contains multiple text ✅
-// Look into how to handle \t characters (instead of spaces)
