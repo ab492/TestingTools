@@ -576,7 +576,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andybrown.TestingTools;
 				PRODUCT_NAME = TestingTools;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -610,7 +610,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andybrown.TestingTools;
 				PRODUCT_NAME = TestingTools;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -638,7 +638,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andybrown.TestingTools.TestingToolsExtension;
 				PRODUCT_NAME = "Testing Tools";
 				SKIP_INSTALL = YES;
@@ -667,7 +667,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.andybrown.TestingTools.TestingToolsExtension;
 				PRODUCT_NAME = "Testing Tools";
 				PROVISIONING_PROFILE_SPECIFIER = "";
