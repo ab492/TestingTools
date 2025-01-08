@@ -301,7 +301,7 @@ struct CreatePropertyTests {
     }
 }
 
-private func makeSut(action: Action, allText: [String], selections: [XCSourceTextRange]) throws -> [String] {
+func makeSut(action: Action, allText: [String], selections: [XCSourceTextRange]) throws -> [String] {
     try CommandActionHandler.handle(
         action: action,
         allText: allText,

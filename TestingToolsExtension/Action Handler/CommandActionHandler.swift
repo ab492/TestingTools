@@ -6,7 +6,7 @@ struct CommandActionHandler {
         action: Action,
         allText: [String],
         selections: [XCSourceTextRange],
-        tabWidth: Int = 4
+        tabWidth: Int
     ) throws -> [String] {
         switch action {
             

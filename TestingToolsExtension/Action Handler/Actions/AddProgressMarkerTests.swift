@@ -13,7 +13,7 @@ struct AddProgressMarkerTests {
         ]
         let highlightedText = getRangeOfText("My second item to do", from: text)!
         
-        let sut = try CommandActionHandler.handle(
+        let sut = try makeSut(
             action: action,
             allText: text,
             selections: [highlightedText]
@@ -35,7 +35,7 @@ struct AddProgressMarkerTests {
         let secondItem = getRangeOfText("My second item to do", from: text)!
         let thirdItem = getRangeOfText("My third item to do", from: text)!
         
-        let sut = try CommandActionHandler.handle(
+        let sut = try makeSut(
             action: action,
             allText: text,
             selections: [secondItem, thirdItem]
@@ -56,7 +56,7 @@ struct AddProgressMarkerTests {
         let text = ["My first item to do\n", "My second item to do\n", "My third item to do\n"]
         let highlightedText = getRangeOfText("second item", from: text)!
         
-        let sut = try CommandActionHandler.handle(
+        let sut = try makeSut(
             action: action,
             allText: text,
             selections: [highlightedText]
@@ -73,7 +73,7 @@ struct AddProgressMarkerTests {
         let text = ["My first item to do\n", "My second item to do ⬅️\n", "My third item to do\n"]
         let highlightedText = getRangeOfText("My second item to do", from: text)!
         
-        let sut = try CommandActionHandler.handle(
+        let sut = try makeSut(
             action: .markAsDone,
             allText: text,
             selections: [highlightedText]
@@ -90,7 +90,7 @@ struct AddProgressMarkerTests {
         let text = ["My first item to do\n", "My second item to do ✅\n", "My third item to do\n"]
         let highlightedText = getRangeOfText("My second item to do", from: text)!
         
-        let sut = try CommandActionHandler.handle(
+        let sut = try makeSut(
             action: .markInProgress,
             allText: text,
             selections: [highlightedText]
