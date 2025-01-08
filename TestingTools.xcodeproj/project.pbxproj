@@ -33,9 +33,8 @@
 		AD564E582D2CFBBF00A9CBEF /* Array+SafeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD564E3E2D2CFBBF00A9CBEF /* Array+SafeAccess.swift */; };
 		AD564E592D2CFBBF00A9CBEF /* TestingToolsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD564E432D2CFBBF00A9CBEF /* TestingToolsError.swift */; };
 		AD564E5A2D2CFBBF00A9CBEF /* AddProgressMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD564E352D2CFBBF00A9CBEF /* AddProgressMarker.swift */; };
-		AD564E5B2D2CFBBF00A9CBEF /* CreatePropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD564E3A2D2CFBBF00A9CBEF /* CreatePropertyTests.swift */; };
 		AD564E5E2D2CFBD000A9CBEF /* TestHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD564E5C2D2CFBD000A9CBEF /* TestHelperTests.swift */; };
-		AD564E612D2CFD2000A9CBEF /* CreateGlobalPropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD564E5F2D2CFD2000A9CBEF /* CreateGlobalPropertyTests.swift */; };
+		AD564E612D2CFD2000A9CBEF /* CreatePropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD564E5F2D2CFD2000A9CBEF /* CreatePropertyTests.swift */; };
 		ADFAC95F2D2E4E3D006DA130 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFAC95E2D2E4E3D006DA130 /* Action.swift */; };
 		ADFAC9602D2E4E3D006DA130 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFAC95E2D2E4E3D006DA130 /* Action.swift */; };
 		ADFAC9632D2E4E88006DA130 /* ActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFAC9612D2E4E88006DA130 /* ActionTests.swift */; };
@@ -99,7 +98,6 @@
 		AD564E372D2CFBBF00A9CBEF /* CreateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateObject.swift; sourceTree = "<group>"; };
 		AD564E382D2CFBBF00A9CBEF /* CreateObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateObjectTests.swift; sourceTree = "<group>"; };
 		AD564E392D2CFBBF00A9CBEF /* CreateProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProperty.swift; sourceTree = "<group>"; };
-		AD564E3A2D2CFBBF00A9CBEF /* CreatePropertyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePropertyTests.swift; sourceTree = "<group>"; };
 		AD564E3C2D2CFBBF00A9CBEF /* CommandActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandActionHandler.swift; sourceTree = "<group>"; };
 		AD564E3E2D2CFBBF00A9CBEF /* Array+SafeAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+SafeAccess.swift"; sourceTree = "<group>"; };
 		AD564E402D2CFBBF00A9CBEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -108,7 +106,7 @@
 		AD564E432D2CFBBF00A9CBEF /* TestingToolsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingToolsError.swift; sourceTree = "<group>"; };
 		AD564E442D2CFBBF00A9CBEF /* TestingToolsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TestingToolsExtension.entitlements; sourceTree = "<group>"; };
 		AD564E5C2D2CFBD000A9CBEF /* TestHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelperTests.swift; sourceTree = "<group>"; };
-		AD564E5F2D2CFD2000A9CBEF /* CreateGlobalPropertyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGlobalPropertyTests.swift; sourceTree = "<group>"; };
+		AD564E5F2D2CFD2000A9CBEF /* CreatePropertyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePropertyTests.swift; sourceTree = "<group>"; };
 		ADA80AC42CF317FD005FE717 /* Testing Tools Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Testing Tools Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADFAC95E2D2E4E3D006DA130 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		ADFAC9612D2E4E88006DA130 /* ActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTests.swift; sourceTree = "<group>"; };
@@ -201,8 +199,7 @@
 				AD564E372D2CFBBF00A9CBEF /* CreateObject.swift */,
 				AD564E382D2CFBBF00A9CBEF /* CreateObjectTests.swift */,
 				AD564E392D2CFBBF00A9CBEF /* CreateProperty.swift */,
-				AD564E5F2D2CFD2000A9CBEF /* CreateGlobalPropertyTests.swift */,
-				AD564E3A2D2CFBBF00A9CBEF /* CreatePropertyTests.swift */,
+				AD564E5F2D2CFD2000A9CBEF /* CreatePropertyTests.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -423,8 +420,7 @@
 				AD564E592D2CFBBF00A9CBEF /* TestingToolsError.swift in Sources */,
 				AD564E5E2D2CFBD000A9CBEF /* TestHelperTests.swift in Sources */,
 				AD564E5A2D2CFBBF00A9CBEF /* AddProgressMarker.swift in Sources */,
-				AD564E5B2D2CFBBF00A9CBEF /* CreatePropertyTests.swift in Sources */,
-				AD564E612D2CFD2000A9CBEF /* CreateGlobalPropertyTests.swift in Sources */,
+				AD564E612D2CFD2000A9CBEF /* CreatePropertyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
