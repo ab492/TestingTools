@@ -3,7 +3,7 @@ import XcodeKit
 
 struct CreatePropertyTests {
     struct InstancePropertyTests {
-        @Test func testCreatingInstanceProperty() throws {
+        @Test func testCreatingInstancePropertyOnStruct() throws {
             let text = [
                 "import SomeLibrary\n",
                 "\n",
@@ -35,6 +35,35 @@ struct CreatePropertyTests {
                 "        func someDummyMethod() {\n",
                 "            someProperty.callSomeMethod()\n",
                 "        }\n",
+                "    }\n",
+                "}\n"
+            ])
+        }
+        
+        @Test func testCreatingInstancePropertyOnClass() throws {
+            let text = [
+                "class TestClass {\n",
+                "    func someDummyMethod() {\n",
+                "        someProperty.callSomeMethod()\n",
+                "    }\n",
+                "}\n"
+            ]
+            let highlightedText = getRangeOfText("someProperty", from: text)!
+
+            
+            let sut = try makeSut(
+                action: .createInstanceProperty,
+                allText: text,
+                selections: [highlightedText]
+            )
+            
+            #expect(sut == [
+                "class TestClass {\n",
+                "\n",
+                "    let someProperty = \u{003C}#Type#\u{003E}\n",
+                "\n",
+                "    func someDummyMethod() {\n",
+                "        someProperty.callSomeMethod()\n",
                 "    }\n",
                 "}\n"
             ])
