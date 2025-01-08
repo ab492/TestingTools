@@ -232,9 +232,9 @@
 				AD564E422D2CFBBF00A9CBEF /* SourceEditorExtension.swift */,
 				AD564E412D2CFBBF00A9CBEF /* SourceEditorCommand.swift */,
 				AD564E3D2D2CFBBF00A9CBEF /* Action Handler */,
+				AD564E432D2CFBBF00A9CBEF /* TestingToolsError.swift */,
 				AD564E3F2D2CFBBF00A9CBEF /* Extensions */,
 				AD564E402D2CFBBF00A9CBEF /* Info.plist */,
-				AD564E432D2CFBBF00A9CBEF /* TestingToolsError.swift */,
 				AD564E442D2CFBBF00A9CBEF /* TestingToolsExtension.entitlements */,
 			);
 			path = TestingToolsExtension;

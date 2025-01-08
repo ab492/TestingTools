@@ -5,7 +5,8 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
     func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void ) -> Void {
         
         guard let action = Action(rawValue: invocation.commandIdentifier) else {
-            return completionHandler(nil)
+            let error = TestingToolsError.fatalError
+            return completionHandler(error)
         }
         
         let buffer = invocation.buffer

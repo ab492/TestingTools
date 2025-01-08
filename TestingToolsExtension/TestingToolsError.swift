@@ -4,6 +4,7 @@ enum TestingToolsError: Error, LocalizedError, CustomNSError {
     case multipleSelectionNotSupported
     case multilineSelectionNotSupported
     case invalidSelection
+    case fatalError
     
     var localizedDescription: String {
         switch self {
@@ -13,6 +14,8 @@ enum TestingToolsError: Error, LocalizedError, CustomNSError {
             return "Multiline text selections are not supported"
         case .invalidSelection:
             return "Invalid selection"
+        case .fatalError:
+            return "An unexpected error occurred, please email andy@bramblytech.co.uk to log a bug."
         }
     }
     
