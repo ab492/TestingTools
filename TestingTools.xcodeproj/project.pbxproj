@@ -36,6 +36,9 @@
 		AD564E5B2D2CFBBF00A9CBEF /* CreatePropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD564E3A2D2CFBBF00A9CBEF /* CreatePropertyTests.swift */; };
 		AD564E5E2D2CFBD000A9CBEF /* TestHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD564E5C2D2CFBD000A9CBEF /* TestHelperTests.swift */; };
 		AD564E612D2CFD2000A9CBEF /* CreateGlobalPropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD564E5F2D2CFD2000A9CBEF /* CreateGlobalPropertyTests.swift */; };
+		ADFAC95F2D2E4E3D006DA130 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFAC95E2D2E4E3D006DA130 /* Action.swift */; };
+		ADFAC9602D2E4E3D006DA130 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFAC95E2D2E4E3D006DA130 /* Action.swift */; };
+		ADFAC9632D2E4E88006DA130 /* ActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADFAC9612D2E4E88006DA130 /* ActionTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +110,8 @@
 		AD564E5C2D2CFBD000A9CBEF /* TestHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelperTests.swift; sourceTree = "<group>"; };
 		AD564E5F2D2CFD2000A9CBEF /* CreateGlobalPropertyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGlobalPropertyTests.swift; sourceTree = "<group>"; };
 		ADA80AC42CF317FD005FE717 /* Testing Tools Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Testing Tools Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADFAC95E2D2E4E3D006DA130 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		ADFAC9612D2E4E88006DA130 /* ActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +210,8 @@
 		AD564E3D2D2CFBBF00A9CBEF /* Action Handler */ = {
 			isa = PBXGroup;
 			children = (
+				ADFAC95E2D2E4E3D006DA130 /* Action.swift */,
+				ADFAC9612D2E4E88006DA130 /* ActionTests.swift */,
 				AD564E3C2D2CFBBF00A9CBEF /* CommandActionHandler.swift */,
 				AD564E3B2D2CFBBF00A9CBEF /* Actions */,
 			);
@@ -222,11 +229,11 @@
 		AD564E452D2CFBBF00A9CBEF /* TestingToolsExtension */ = {
 			isa = PBXGroup;
 			children = (
+				AD564E422D2CFBBF00A9CBEF /* SourceEditorExtension.swift */,
+				AD564E412D2CFBBF00A9CBEF /* SourceEditorCommand.swift */,
 				AD564E3D2D2CFBBF00A9CBEF /* Action Handler */,
 				AD564E3F2D2CFBBF00A9CBEF /* Extensions */,
 				AD564E402D2CFBBF00A9CBEF /* Info.plist */,
-				AD564E412D2CFBBF00A9CBEF /* SourceEditorCommand.swift */,
-				AD564E422D2CFBBF00A9CBEF /* SourceEditorExtension.swift */,
 				AD564E432D2CFBBF00A9CBEF /* TestingToolsError.swift */,
 				AD564E442D2CFBBF00A9CBEF /* TestingToolsExtension.entitlements */,
 			);
@@ -389,6 +396,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD564E472D2CFBBF00A9CBEF /* AddProgressMarker.swift in Sources */,
+				ADFAC9602D2E4E3D006DA130 /* Action.swift in Sources */,
 				AD564E492D2CFBBF00A9CBEF /* CreateObject.swift in Sources */,
 				AD564E4B2D2CFBBF00A9CBEF /* CreateProperty.swift in Sources */,
 				AD564E4D2D2CFBBF00A9CBEF /* CommandActionHandler.swift in Sources */,
@@ -404,9 +412,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD564E522D2CFBBF00A9CBEF /* CreateObjectTests.swift in Sources */,
+				ADFAC95F2D2E4E3D006DA130 /* Action.swift in Sources */,
 				AD564E532D2CFBBF00A9CBEF /* CreateProperty.swift in Sources */,
 				AD564E542D2CFBBF00A9CBEF /* AddProgressMarkerTests.swift in Sources */,
 				AD564E552D2CFBBF00A9CBEF /* CreateObject.swift in Sources */,
+				ADFAC9632D2E4E88006DA130 /* ActionTests.swift in Sources */,
 				AD564E562D2CFBBF00A9CBEF /* CommandActionHandler.swift in Sources */,
 				AD564E572D2CFBBF00A9CBEF /* SourceEditorCommand.swift in Sources */,
 				AD564E582D2CFBBF00A9CBEF /* Array+SafeAccess.swift in Sources */,
