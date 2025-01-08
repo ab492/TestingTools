@@ -81,10 +81,8 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
             }
         }
         
-        // If we can't find a struct/class/enum line, bail out or just return unchanged:
         guard let structLineIndex else {
-            // TODO: Add error here
-            return updatedText
+            throw TestingToolsError.noObjectToCreateInstancePropertyOn
         }
         
         let structLine = updatedText[structLineIndex]

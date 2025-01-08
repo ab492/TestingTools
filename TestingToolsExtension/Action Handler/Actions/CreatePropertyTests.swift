@@ -68,6 +68,23 @@ struct CreatePropertyTests {
                 "}\n"
             ])
         }
+        
+        @Test func creatingInstancePropertyWithNoStructOrClassThrowsAndError() {
+            let text = [
+                "import SomeLibrary\n",
+                "\n",
+                "someProperty.callSomeMethod()\n"
+            ]
+            let highlightedText = getRangeOfText("someProperty", from: text)!
+            
+            #expect(throws: TestingToolsError.noObjectToCreateInstancePropertyOn) {
+                try makeSut(
+                    action: .createInstanceProperty,
+                    allText: text,
+                    selections: [highlightedText]
+                )
+            }
+        }
     }
     
     struct LocalPropertyTests {
@@ -171,7 +188,7 @@ struct CreatePropertyTests {
         }
     }
     
-    struct ErrorHandling {
+    struct GeneralErrorHandling {
         @Test(
             arguments: [
                 Action.createLocalProperty,
