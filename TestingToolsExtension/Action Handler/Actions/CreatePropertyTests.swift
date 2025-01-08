@@ -143,7 +143,13 @@ struct CreatePropertyTests {
     }
     
     struct ErrorHandling {
-        @Test(arguments: [Action.createLocalProperty, .createGlobalProperty])
+        @Test(
+            arguments: [
+                Action.createLocalProperty,
+                .createGlobalProperty,
+                .createInstanceProperty
+            ]
+        )
         func testErrorIsThrownIfNoSelectionIsMade(action: Action) {
             let text = [
                 "struct TestStruct {\n",
@@ -160,7 +166,13 @@ struct CreatePropertyTests {
             }
         }
         
-        @Test(arguments: [Action.createLocalProperty, .createGlobalProperty])
+        @Test(
+            arguments: [
+                Action.createLocalProperty,
+                .createGlobalProperty,
+                .createInstanceProperty
+            ]
+        )
         func multipleSelectedText_throwsError(action: Action) {
             let text = [
                 "struct TestStruct {\n",
@@ -185,7 +197,13 @@ struct CreatePropertyTests {
             }
         }
         
-        @Test(arguments: [Action.createLocalProperty, .createGlobalProperty])
+        @Test(
+            arguments: [
+                Action.createLocalProperty,
+                .createGlobalProperty,
+                .createInstanceProperty
+            ]
+        )
         func multipleLineSelectedText_throwsError(action: Action) {
             let text = [
                 "struct TestStruct {\n",
@@ -206,7 +224,13 @@ struct CreatePropertyTests {
             }
         }
         
-        @Test(arguments: [Action.createLocalProperty, .createGlobalProperty])
+        @Test(
+            arguments: [
+                Action.createLocalProperty,
+                .createGlobalProperty,
+                .createInstanceProperty
+            ]
+        )
         func testOutOfBoundsLineIndex_throwsError(action: Action) {
             let text = [
                 "struct TestStruct {\n",
