@@ -91,22 +91,10 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
         let structIndentCount = structLine.prefix(while: { $0 == " " }).count
         let propertyIndentCount = structIndentCount + tabWidth
         let propertyIndentation = String(repeating: " ", count: propertyIndentCount)
-        
-        // 5) Insert the blank lines & property line:
-        //
-        // We want:
-        //    line:    struct SomeNestedStruct {
-        //    line+1:  \n
-        //    line+2:  [propertyIndentation] + "let someProperty = <#Type#>\n"
-        //    line+3:  \n
-        //    line+4:  "        func someDummyMethod() {"
-        //
-        // So:
+    
         updatedText.insert("\n", at: structLineIndex + 1)
         updatedText.insert(propertyIndentation + propertyDeclaration, at: structLineIndex + 2)
-        updatedText.insert("\n", at: structLineIndex + 3)
-        
-        return updatedText
+        updatedText.insert("\n", at: structLineIndex + 3)        
     }
     return updatedText
 }
