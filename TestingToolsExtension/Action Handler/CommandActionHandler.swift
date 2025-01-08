@@ -30,20 +30,23 @@ struct CommandActionHandler {
             return try createProperty(
                 type: .instance,
                 allText: allText,
-                selectedText: selections
+                selectedText: selections,
+                tabWidth: tabWidth
             )
         case .createLocalProperty:
             return try createProperty(
                 type: .local,
                 allText: allText,
-                selectedText: selections
+                selectedText: selections,
+                tabWidth: tabWidth
             )
             
         case .createGlobalProperty:
             return try createProperty(
                 type: .global,
                 allText: allText,
-                selectedText: selections
+                selectedText: selections,
+                tabWidth: tabWidth
             )
             
         case .markAsDone:

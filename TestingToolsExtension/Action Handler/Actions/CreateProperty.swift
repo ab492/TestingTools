@@ -7,7 +7,7 @@ enum PropertyType {
     case global
 }
 
-func createProperty(type: PropertyType, allText: [String], selectedText: [XCSourceTextRange]) throws -> [String] {
+func createProperty(type: PropertyType, allText: [String], selectedText: [XCSourceTextRange], tabWidth: Int) throws -> [String] {
     if selectedText.count > 1 {
         throw TestingToolsError.multipleSelectionNotSupported
     }
@@ -82,22 +82,14 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
         }
         
         // If we can't find a struct/class/enum line, bail out or just return unchanged:
-        guard let insertionLine = structLineIndex else {
+        guard let structLineIndex else {
+            // TODO: Add error here
             return updatedText
         }
         
-        // 4) Figure out indentation for the property line:
-        //    According to your test, you want 8 spaces in front of the property
-        //    if the struct line has 4 spaces. So let’s figure out
-        //    how many spaces the *function* lines use and see if we can
-        //    replicate that. Or we might simply do: struct indent + 4 spaces.
-        
-        // Count the leading spaces of the struct line:
-        let structLine = updatedText[insertionLine]
+        let structLine = updatedText[structLineIndex]
         let structIndentCount = structLine.prefix(while: { $0 == " " }).count
-        // The test snippet has 4 spaces for 'struct SomeNestedStruct {' and
-        // 8 spaces for the property. So we can do:
-        let propertyIndentCount = structIndentCount + 4
+        let propertyIndentCount = structIndentCount + tabWidth
         let propertyIndentation = String(repeating: " ", count: propertyIndentCount)
         
         // 5) Insert the blank lines & property line:
@@ -110,9 +102,9 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
         //    line+4:  "        func someDummyMethod() {"
         //
         // So:
-        updatedText.insert("\n", at: insertionLine + 1)
-        updatedText.insert(propertyIndentation + propertyDeclaration, at: insertionLine + 2)
-        updatedText.insert("\n", at: insertionLine + 3)
+        updatedText.insert("\n", at: structLineIndex + 1)
+        updatedText.insert(propertyIndentation + propertyDeclaration, at: structLineIndex + 2)
+        updatedText.insert("\n", at: structLineIndex + 3)
         
         return updatedText
     }

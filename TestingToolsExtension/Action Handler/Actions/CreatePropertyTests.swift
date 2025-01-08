@@ -288,6 +288,7 @@ private func makeSut(action: Action, allText: [String], selections: [XCSourceTex
     try CommandActionHandler.handle(
         action: action,
         allText: allText,
-        selections: selections
+        selections: selections,
+        tabWidth: 4
     )
 }
