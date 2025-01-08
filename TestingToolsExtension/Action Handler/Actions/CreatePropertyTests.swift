@@ -2,6 +2,44 @@ import Testing
 import XcodeKit
 
 struct CreatePropertyTests {
+    struct InstancePropertyTests {
+        @Test func testCreatingInstanceProperty() throws {
+            let text = [
+                "import SomeLibrary\n",
+                "\n",
+                "struct TestStruct {\n",
+                "    struct SomeNestedStruct {\n",
+                "        func someDummyMethod() {\n",
+                "            someProperty.callSomeMethod()\n",
+                "        }\n",
+                "    }\n",
+                "}\n"
+            ]
+            let highlightedText = getRangeOfText("someProperty", from: text)!
+
+            
+            let sut = try makeSut(
+                action: .createInstanceProperty,
+                allText: text,
+                selections: [highlightedText]
+            )
+            
+            #expect(sut == [
+                "import SomeLibrary\n",
+                "\n",
+                "struct TestStruct {\n",
+                "    struct SomeNestedStruct {\n",
+                "\n",
+                "        let someProperty = \u{003C}#Type#\u{003E}\n",
+                "\n",
+                "        func someDummyMethod() {\n",
+                "            someProperty.callSomeMethod()\n",
+                "        }\n",
+                "    }\n",
+                "}\n"
+            ])
+        }
+    }
     
     struct LocalPropertyTests {
         @Test func testCreatingLocalProperty() throws {

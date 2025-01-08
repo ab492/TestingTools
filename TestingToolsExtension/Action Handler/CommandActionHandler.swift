@@ -26,6 +26,12 @@ struct CommandActionHandler {
                 tabWidth: tabWidth
             )
             
+        case .createInstanceProperty:
+            return try createProperty(
+                type: .instance,
+                allText: allText,
+                selectedText: selections
+            )
         case .createLocalProperty:
             return try createProperty(
                 type: .local,

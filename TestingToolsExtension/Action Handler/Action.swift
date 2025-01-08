@@ -3,6 +3,7 @@ import Foundation
 enum Action: String, CaseIterable {
     case createStruct = "testingtools.createStruct"
     case createClass = "testingtools.createClass"
+    case createInstanceProperty = "testingtools.createInstanceProperty"
     case createLocalProperty = "testingtools.createLocalProperty"
     case createGlobalProperty = "testingtools.createGlobalProperty"
     case markInProgress = "testingtools.markInProgress"
@@ -16,6 +17,7 @@ enum Action: String, CaseIterable {
         switch self {
         case .createStruct: return "Create Struct"
         case .createClass: return "Create Class"
+        case .createInstanceProperty: return "Create Instance Property"
         case .createLocalProperty: return "Create Local Property"
         case .createGlobalProperty: return "Create Global Property"
         case .markInProgress: return "Mark in Progress ⬅️"
