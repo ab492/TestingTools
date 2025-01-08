@@ -62,29 +62,21 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
         updatedText.insert(newLine, at: selectedLineIndex)
         
     case .instance:
-        // 1) Identify the line where the property is used:
-        let usageLineIndex = selectedText.start.line
+        let indexOfLineWherePropertyUsed = selectedText.start.line
         
-        // 2) We want the indentation to match the struct scope or the next-larger scope.
-        //    But let's just hardcode or check for 'struct' lines specifically
-        //    to find where to insert the property.
+        // We want the indentation to match the scope of the enclosing struct or class.
+        // These could be nested types themselves, so we work backwards from the index of
+        // the selected property to find the class/struct definition.
         
-        // 3) Find the "struct ... {" line going up from usageLineIndex,
-        //    ignoring lines that end with "{" but are not struct/class/enum/extension lines.
         var structLineIndex: Int? = nil
-        for i in stride(from: usageLineIndex, through: 0, by: -1) {
-            let trimmed = updatedText[i].trimmingCharacters(in: .whitespacesAndNewlines)
+        for index in stride(from: indexOfLineWherePropertyUsed, through: 0, by: -1) {
+            let trimmed = allText[index].trimmingCharacters(in: .whitespacesAndNewlines)
             
-            // We only consider it a "type-opening brace" if it has
-            // 'struct', 'class', 'enum', or 'extension' in it, and ends with '{'.
-            let isTypeOpening = trimmed.hasSuffix("{")
-                && (trimmed.contains("struct ")
-                    || trimmed.contains("class ")
-                    || trimmed.contains("enum ")
-                    || trimmed.contains("extension "))
-            
+            let lineContainsStructOrClass = (trimmed.contains("struct ") || trimmed.contains("class "))
+            let isTypeOpening = lineContainsStructOrClass && trimmed.hasSuffix("{")
+           
             if isTypeOpening {
-                structLineIndex = i
+                structLineIndex = index
                 break
             }
         }
