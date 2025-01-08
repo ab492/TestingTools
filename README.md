@@ -12,6 +12,8 @@ You can [download the extension from the App Store](https://apps.apple.com/gb/ap
 ## Evolutionary Design
 I'm using evolutionary design while building this. You can see my current progress [here](https://miro.com/app/board/uXjVLAoPVW4=/?moveToWidget=3458764612074251538&cot=14).
 
+![Create Struct](assets/Create_Struct.gif)
+
 ## Important Notes on Developing Xcode Extensions
 - It's not documented anywhere, but to test your extension you need to 'Embed and Sign' the `XcodeKit.framework` on the extension target. 
 - As per [NSHipster](https://nshipster.com/xcode-source-extensions/), I added my frameworks path to 'Framework Search Paths' in 'Build Settings' to allow `XcodeKit` to show up in tests.
