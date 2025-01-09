@@ -8,6 +8,7 @@ enum Action: String, CaseIterable {
     case createGlobalProperty = "testingtools.createGlobalProperty"
     case markInProgress = "testingtools.markInProgress"
     case markAsDone = "testingtools.markAsDone"
+    case addPropertyToObject = "testingtools.addPropertyToObject"
     
     var identifier: String {
         self.rawValue
@@ -22,6 +23,7 @@ enum Action: String, CaseIterable {
         case .createGlobalProperty: return "Create Global Property"
         case .markInProgress: return "Mark in Progress ⬅️"
         case .markAsDone: return "Mark as Done ✅"
+        case .addPropertyToObject: return "Add Property To Object"
         }
     }
 }

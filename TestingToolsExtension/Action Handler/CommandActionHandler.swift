@@ -62,6 +62,14 @@ struct CommandActionHandler {
                 allText: allText,
                 selectedText: selections
             )
+            
+        case .addPropertyToObject:
+            return try enhanceObject(
+                allText: allText,
+                selectedText: selections,
+                tabWidth: tabWidth
+            )
         }
+        
     }
 }
