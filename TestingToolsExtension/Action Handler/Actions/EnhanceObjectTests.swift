@@ -1,5 +1,8 @@
 import Testing
 
+// TODO
+// Make the initial test case simpler for easier refactoring ⬅️
+// Handle let/var definitions
 struct EnhanceObjectTests {
     
     @Test func testCreatingIntPropertyOnStructDefinedOnOneLine() throws {
