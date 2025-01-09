@@ -2,7 +2,7 @@ import Testing
 
 struct EnhanceObjectTests {
 
-    @Test func testCreatingPropertyOnStructDefinedOnOneLine() throws {
+    @Test func testCreatingIntPropertyOnStructDefinedOnOneLine() throws {
         let text = [
             "struct MyStruct { }\n",
             "\n",
@@ -36,7 +36,7 @@ struct EnhanceObjectTests {
         ])
     }
     
-    @Test func testCreatingPropertyOnStructDefinedAcrossMultipleLines() throws {
+    @Test func testCreatingStringPropertyOnStructDefinedAcrossMultipleLines() throws {
         let text = [
             "struct MyStruct {\n",
             "    let somePreExistingProperty: String\n",
@@ -45,11 +45,11 @@ struct EnhanceObjectTests {
             "struct SomeTestFile {\n",
             "    func testSomething() {\n",
             "        let myStruct = MyStruct()\n",
-            "        myString.intProperty = 4",
+            "        myString.stringProperty = \"String property\"",
             "    }\n",
             "}\n"
         ]
-        let highlightedText = getRangeOfText("intProperty", from: text)!
+        let highlightedText = getRangeOfText("stringProperty", from: text)!
 
         
         let sut = try makeSut(
@@ -61,13 +61,13 @@ struct EnhanceObjectTests {
         #expect(sut == [
             "struct MyStruct {\n",
             "    let somePreExistingProperty: String\n",
-            "    let intProperty: Int",
+            "    let stringProperty: String",
             "}\n",
             "\n",
             "struct SomeTestFile {\n",
             "    func testSomething() {\n",
             "        let myStruct = MyStruct()\n",
-            "        myString.intProperty = 4",
+            "        myString.stringProperty = \"String property\"",
             "    }\n",
             "}\n"
         ])
