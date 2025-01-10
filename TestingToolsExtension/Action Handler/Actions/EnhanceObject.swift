@@ -11,6 +11,11 @@ func enhanceObject(
     let selectedText = selectedText.first!
     let lineContainingSelection = allText[safe: selectedText.start.line]!
     let objectPropertyName = lineContainingSelection.components(separatedBy: ".").first!.trimmingCharacters(in: .whitespaces)
+    
+    
+    let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
+    let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
+    let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
 
     // Regular expression to match variable definitions (e.g., "let myStruct = ...")
     let pattern = "\\b(let)\\s+\(objectPropertyName)\\b"
@@ -34,6 +39,7 @@ func enhanceObject(
     let propertyValue = lineContainingSelection.components(separatedBy: "=").last!.trimmingCharacters(in: .whitespaces)
     
     let isInt = Int(propertyValue) != nil
+    
 //    let propertyDeclaration = "let \(selec)"
     
     print("HERE: \(objectPropertyName)")
@@ -44,7 +50,7 @@ func enhanceObject(
         if trimmedLine == "struct \(objectName!) { }" {
             // Replace this single line with the multi-line definition
             result.append("struct \(objectName!) {\n")
-            result.append("    let intProperty: Int\n")
+            result.append("    let \(propertyName): Int\n")
             result.append("}\n")
         } else {
             // Keep the line unchanged
