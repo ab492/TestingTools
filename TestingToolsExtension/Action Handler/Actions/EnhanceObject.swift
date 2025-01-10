@@ -41,17 +41,6 @@ func enhanceObject(
     
     let isInt = Int(propertyValue) != nil
     
-//    if let structDefinitionLine = allText.first(where: { $0.contains("struct \(objectName!)")}) {
-//        let trimmedLine = structDefinitionLine.trimmingCharacters(in: .whitespacesAndNewlines)
-//        
-//        if trimmedLine == "struct \(objectName!) { }" {
-//            // Replace this single line with the multi-line definition
-//            result.append("struct \(objectName!) {\n")
-//            result.append("    let \(propertyName): Int\n")
-//            result.append("}\n")
-//        }
-//    }
-    
     let structDefinition = "struct \(objectName!)"
     let structDefinitionLineIndex = allText.firstIndex(where: { $0.contains(structDefinition)})!
     let allTextOnStructDefinitionLine = allText[structDefinitionLineIndex]
@@ -64,22 +53,5 @@ func enhanceObject(
         updatedText.insert("}\n", at: structDefinitionLineIndex + 2)
     }
     
-    
-    print("HERE: \(allTextOnStructDefinitionLine)")
-    for line in allText {
-        // Remove all whitespace & newlines from the start/end.
-        let trimmedLine = line.trimmingCharacters(in: .whitespacesAndNewlines)
-
-        if trimmedLine == "struct \(objectName!) { }" {
-            // Replace this single line with the multi-line definition
-            result.append("struct \(objectName!) {\n")
-            result.append("    let \(propertyName): Int\n")
-//            result.append("}\n")
-        } else {
-            // Keep the line unchanged
-            result.append(line)
-        }
-    }
-
     return updatedText
 }
