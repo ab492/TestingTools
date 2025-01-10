@@ -39,7 +39,7 @@ struct EnhanceObjectTests {
         ])
     }
 }
-//
+
 //    @Test func testCreatingStringPropertyOnStructDefinedAcrossMultipleLines() throws {
 //        let text = [
 //            "struct MyStruct {\n",
