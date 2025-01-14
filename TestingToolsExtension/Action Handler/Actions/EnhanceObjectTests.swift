@@ -1,7 +1,7 @@
 import Testing
 
 // TODO
-// Make the initial test case simpler for easier refactoring ⬅️
+// Make the initial test case simpler for easier refactoring ✅
 // Handle let/var definitions
 struct EnhanceObjectTests {
     
@@ -38,8 +38,7 @@ struct EnhanceObjectTests {
             "}\n"
         ])
     }
-}
-
+    
     @Test func testCreatingStringPropertyOnStructDefinedAcrossMultipleLines() throws {
         let text = [
             "struct MyStruct {\n",
@@ -54,7 +53,7 @@ struct EnhanceObjectTests {
             "}\n"
         ]
         let highlightedText = getRangeOfText("stringProperty", from: text)!
-
+        
         
         let sut = try makeSut(
             action: .addPropertyToObject,
@@ -76,43 +75,43 @@ struct EnhanceObjectTests {
             "}\n"
         ])
     }
-//    
-//    @Test func testCreatingBoolPropertyOnClassDefinedAcrossMultipleLines() throws {
-//        let text = [
-//            "class SomeClassName {\n",
-//            "    \n",
-//            "    let somePreExistingProperty: String\n",
-//            "}\n",
-//            "\n",
-//            "struct SomeTestFile {\n",
-//            "    func testSomething() {\n",
-//            "        let myClass = SomeClassName()\n",
-//            "        myClass.boolProperty = true\n",
-//            "    }\n",
-//            "}\n"
-//        ]
-//        let highlightedText = getRangeOfText("boolProperty", from: text)!
-//
-//        
-//        let sut = try makeSut(
-//            action: .addPropertyToObject,
-//            allText: text,
-//            selections: [highlightedText]
-//        )
-//        
-//        #expect(sut == [
-//            "class SomeClassName {\n",
-//            "    \n",
-//            "    let somePreExistingProperty: String\n",
-//            "    let boolProperty: Bool\n",
-//            "}\n",
-//            "\n",
-//            "struct SomeTestFile {\n",
-//            "    func testSomething() {\n",
-//            "        let myClass = SomeClassName()\n",
-//            "        myClass.boolProperty = true\n",
-//            "    }\n",
-//            "}\n"
-//        ])
-//    }
-//}
+    
+    @Test func testCreatingBoolPropertyOnClassDefinedAcrossMultipleLines() throws {
+        let text = [
+            "class SomeClassName {\n",
+            "\n",
+            "    var somePreExistingProperty: String\n",
+            "}\n",
+            "\n",
+            "struct SomeTestFile {\n",
+            "    func testSomething() {\n",
+            "        let myClass = SomeClassName()\n",
+            "        myClass.boolProperty = true\n",
+            "    }\n",
+            "}\n"
+        ]
+        let highlightedText = getRangeOfText("boolProperty", from: text)!
+        
+        
+        let sut = try makeSut(
+            action: .addPropertyToObject,
+            allText: text,
+            selections: [highlightedText]
+        )
+        
+        #expect(sut == [
+            "class SomeClassName {\n",
+            "\n",
+            "    var somePreExistingProperty: String\n",
+            "    let boolProperty: Bool\n",
+            "}\n",
+            "\n",
+            "struct SomeTestFile {\n",
+            "    func testSomething() {\n",
+            "        let myClass = SomeClassName()\n",
+            "        myClass.boolProperty = true\n",
+            "    }\n",
+            "}\n"
+        ])
+    }
+}

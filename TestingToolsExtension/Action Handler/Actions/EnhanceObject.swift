@@ -37,38 +37,39 @@ func enhanceObject(
         }
     }
     
-    let propertyValue = lineContainingSelection.components(separatedBy: "=").last!.trimmingCharacters(in: .whitespaces)
+    let propertyValue = lineContainingSelection.components(separatedBy: "=").last!.trimmingCharacters(in: .whitespacesAndNewlines)
     
-    let isInt = Int(propertyValue) != nil
-    let isString = String(propertyValue) != nil
+    let propertyDefinition = determinePropertyDefinition(from: propertyValue, propertyName: propertyName)
     
-    let structDefinition = "struct \(objectName!)"
-    let structDefinitionLineIndex = allText.firstIndex(where: { $0.contains(structDefinition)})!
+    let structOrClassDefinition = ["struct \(objectName!)", "class \(objectName!)"]
+    let structDefinitionLineIndex = allText.firstIndex { line in
+        structOrClassDefinition.contains { line.contains($0) }
+    }!
     let allTextOnStructDefinitionLine = allText[structDefinitionLineIndex]
     
     let structDefinedOnOneLine = allTextOnStructDefinitionLine.contains(where: { $0 == "{"}) && allTextOnStructDefinitionLine.contains(where: { $0 == "}"})
     
     if structDefinedOnOneLine {
         updatedText[structDefinitionLineIndex] = "struct \(objectName!) {\n"
-        updatedText.insert("    let \(propertyName): Int\n", at: structDefinitionLineIndex + 1)
+        updatedText.insert("    \(propertyDefinition)\n", at: structDefinitionLineIndex + 1)
         updatedText.insert("}\n", at: structDefinitionLineIndex + 2)
     } else {
         
-        var lastLetIndex: Int? = nil
+        var lastPropertyIndex: Int? = nil
 
-        // Look for lines containing "let " after structIndex
+        // Look for lines containing "let " or "var " after structIndex
         for i in (structDefinitionLineIndex + 1)..<allText.count {
             if allText[i].contains("}") {
                 // Stop the loop when encountering a closing brace
                 break
             }
-            if allText[i].contains("let ") {
-                lastLetIndex = i
+            if allText[i].contains("let ") || allText[i].contains("var ") {
+                lastPropertyIndex = i
             }
         }
         
-        if let lastLetIndex {
-            updatedText.insert("    let \(propertyName): String\n", at: lastLetIndex + 1)
+        if let lastPropertyIndex {
+            updatedText.insert("    \(propertyDefinition)\n", at: lastPropertyIndex + 1)
 
         }
         
@@ -77,4 +78,14 @@ func enhanceObject(
     }
     
     return updatedText
+}
+
+private func determinePropertyDefinition(from value: String, propertyName: String) -> String {
+    if Int(value) != nil {
+        return "let \(propertyName): Int"
+    } else if value == "true" || value == "false" {
+        return "let \(propertyName): Bool"
+    } else {
+        return "let \(propertyName): String"
+    }
 }
