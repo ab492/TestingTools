@@ -40,42 +40,42 @@ struct EnhanceObjectTests {
     }
 }
 
-//    @Test func testCreatingStringPropertyOnStructDefinedAcrossMultipleLines() throws {
-//        let text = [
-//            "struct MyStruct {\n",
-//            "    let somePreExistingProperty: String\n",
-//            "}\n",
-//            "\n",
-//            "struct SomeTestFile {\n",
-//            "    func testSomething() {\n",
-//            "        let myStruct = MyStruct()\n",
-//            "        myStruct.stringProperty = \"String property\"",
-//            "    }\n",
-//            "}\n"
-//        ]
-//        let highlightedText = getRangeOfText("stringProperty", from: text)!
-//
-//        
-//        let sut = try makeSut(
-//            action: .addPropertyToObject,
-//            allText: text,
-//            selections: [highlightedText]
-//        )
-//        
-//        #expect(sut == [
-//            "struct MyStruct {\n",
-//            "    let somePreExistingProperty: String\n",
-//            "    let stringProperty: String",
-//            "}\n",
-//            "\n",
-//            "struct SomeTestFile {\n",
-//            "    func testSomething() {\n",
-//            "        let myStruct = MyStruct()\n",
-//            "        myStruct.stringProperty = \"String property\"",
-//            "    }\n",
-//            "}\n"
-//        ])
-//    }
+    @Test func testCreatingStringPropertyOnStructDefinedAcrossMultipleLines() throws {
+        let text = [
+            "struct MyStruct {\n",
+            "    let somePreExistingProperty: String\n",
+            "}\n",
+            "\n",
+            "struct SomeTestFile {\n",
+            "    func testSomething() {\n",
+            "        let myStruct = MyStruct()\n",
+            "        myStruct.stringProperty = \"String property\"",
+            "    }\n",
+            "}\n"
+        ]
+        let highlightedText = getRangeOfText("stringProperty", from: text)!
+
+        
+        let sut = try makeSut(
+            action: .addPropertyToObject,
+            allText: text,
+            selections: [highlightedText]
+        )
+        
+        #expect(sut == [
+            "struct MyStruct {\n",
+            "    let somePreExistingProperty: String\n",
+            "    let stringProperty: String\n",
+            "}\n",
+            "\n",
+            "struct SomeTestFile {\n",
+            "    func testSomething() {\n",
+            "        let myStruct = MyStruct()\n",
+            "        myStruct.stringProperty = \"String property\"",
+            "    }\n",
+            "}\n"
+        ])
+    }
 //    
 //    @Test func testCreatingBoolPropertyOnClassDefinedAcrossMultipleLines() throws {
 //        let text = [

@@ -40,6 +40,7 @@ func enhanceObject(
     let propertyValue = lineContainingSelection.components(separatedBy: "=").last!.trimmingCharacters(in: .whitespaces)
     
     let isInt = Int(propertyValue) != nil
+    let isString = String(propertyValue) != nil
     
     let structDefinition = "struct \(objectName!)"
     let structDefinitionLineIndex = allText.firstIndex(where: { $0.contains(structDefinition)})!
@@ -51,6 +52,28 @@ func enhanceObject(
         updatedText[structDefinitionLineIndex] = "struct \(objectName!) {\n"
         updatedText.insert("    let \(propertyName): Int\n", at: structDefinitionLineIndex + 1)
         updatedText.insert("}\n", at: structDefinitionLineIndex + 2)
+    } else {
+        
+        var lastLetIndex: Int? = nil
+
+        // Look for lines containing "let " after structIndex
+        for i in (structDefinitionLineIndex + 1)..<allText.count {
+            if allText[i].contains("}") {
+                // Stop the loop when encountering a closing brace
+                break
+            }
+            if allText[i].contains("let ") {
+                lastLetIndex = i
+            }
+        }
+        
+        if let lastLetIndex {
+            updatedText.insert("    let \(propertyName): String\n", at: lastLetIndex + 1)
+
+        }
+        
+
+        
     }
     
     return updatedText
