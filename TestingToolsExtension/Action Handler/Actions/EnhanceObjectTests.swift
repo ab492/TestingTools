@@ -4,8 +4,8 @@ import Testing
 // Make the initial test case simpler for easier refactoring ✅
 // Handle let/var definitions ✅
 // More property types
-// object wit init
-// object elsewhere in file ⬅️
+// object wit init - PUNT THIS ONE (MAYBE ADD AN ERROR CASE?)
+// object elsewhere in file ✅
 // Error cases
 struct EnhanceObjectTests {
     
@@ -155,4 +155,42 @@ struct EnhanceObjectTests {
             "}\n"
         ])
     }
+    
+    @Test(.disabled())
+    func creatingUnknownPropertyTypeOnStruct() throws {
+        let text = [
+            "struct MyStruct { }\n",
+            "\n",
+            "struct SomeTestFile {\n",
+            "    func testSomething() {\n",
+            "        let myStruct = MyStruct()\n",
+            "        myStruct.unknownProperty = someUnknownObject\n",
+            "    }\n",
+            "}\n"
+        ]
+        let highlightedText = getRangeOfText("unknownProperty", from: text)!
+        
+        
+        let sut = try makeSut(
+            action: .addPropertyToObject,
+            allText: text,
+            selections: [highlightedText]
+        )
+        
+        #expect(sut == [
+            "struct MyStruct {\n",
+            "    let unknownProperty: \u{003C}#Type#\u{003E}\n",
+            "}\n",
+            "\n",
+            "struct SomeTestFile {\n",
+            "    func testSomething() {\n",
+            "        let myStruct = MyStruct()\n",
+            "        myStruct.unknownProperty = someUnknownObject\n",
+            "    }\n",
+            "}\n"
+        ])
+    }
 }
+
+
+
