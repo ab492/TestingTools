@@ -83,6 +83,8 @@ func enhanceObject(
 private func determinePropertyDefinition(from value: String, propertyName: String) -> String {
     if Int(value) != nil {
         return "let \(propertyName): Int"
+    } else if Double(value) != nil {
+        return "let \(propertyName): Double"
     } else if value == "true" || value == "false" {
         return "let \(propertyName): Bool"
     } else {
