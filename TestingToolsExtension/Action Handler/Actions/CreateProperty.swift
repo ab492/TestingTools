@@ -7,6 +7,13 @@ enum PropertyType {
     case global
 }
 
+//func getSelectedText(allText: [String], selectedText: [XCSourceTextRange]) throws -> String {
+//    guard let selectedText = selectedText.first else {
+//        throw TestingToolsError.invalidSelection
+//    }
+//    return selectedText
+//}
+
 func createProperty(type: PropertyType, allText: [String], selectedText: [XCSourceTextRange], tabWidth: Int) throws -> [String] {
     if selectedText.count > 1 {
         throw TestingToolsError.multipleSelectionNotSupported

@@ -3,10 +3,10 @@ import Testing
 // TODO
 // Make the initial test case simpler for easier refactoring ✅
 // Handle let/var definitions ✅
-// More property types
+// More property types ✅
 // object wit init - PUNT THIS ONE (MAYBE ADD AN ERROR CASE?)
 // object elsewhere in file ✅
-// Error cases
+// Error cases ⬅️
 struct EnhanceObjectTests {
     
     @Test func creatingIntPropertyOnStructDefinedOnOneLine() throws {
@@ -190,7 +190,45 @@ struct EnhanceObjectTests {
             "}\n"
         ])
     }
+    
+    struct ErrorHandling {
+        @Test func errorIsThrownIfNoSelectionIsMade() {
+            let text = [
+                "struct MyStruct { }\n",
+                "\n",
+                "struct SomeTestFile {\n",
+                "    func testSomething() {\n",
+                "        let myStruct = MyStruct()\n",
+                "        myStruct.intProperty = 4",
+                "    }\n",
+                "}\n"
+            ]
+            
+            #expect(throws: TestingToolsError.invalidSelection) {
+                try makeSut(
+                    action: .addPropertyToObject,
+                    allText: text,
+                    selections: []
+                )
+            }
+        }
+    }
 }
 
 
 
+//func testErrorIsThrownIfNoSelectionIsMade(action: Action) {
+//    let text = [
+//        "struct TestStruct {\n",
+//        "    someProperty.callSomeMethod()\n",
+//        "}\n"
+//    ]
+//    
+//    #expect(throws: TestingToolsError.invalidSelection) {
+//        try makeSut(
+//            action: action,
+//            allText: text,
+//            selections: []
+//        )
+//    }
+//}

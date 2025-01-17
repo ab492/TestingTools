@@ -9,7 +9,10 @@ func enhanceObject(
     var result = [String]()
     var updatedText = allText
     
-    let selectedText = selectedText.first!
+    guard let selectedText = selectedText.first else {
+        throw TestingToolsError.invalidSelection
+    }
+    
     let lineContainingSelection = allText[safe: selectedText.start.line]!
     let objectPropertyName = lineContainingSelection.components(separatedBy: ".").first!.trimmingCharacters(in: .whitespaces)
     
