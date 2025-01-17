@@ -241,5 +241,30 @@ struct EnhanceObjectTests {
                 )
             }
         }
+        
+        @Test func multipleLineSelectedText_throwsError() {
+            let text = [
+                "struct MyStruct { }\n",
+                "\n",
+                "struct SomeTestFile {\n",
+                "    func testSomething() {\n",
+                "        let myStruct = MyStruct()\n",
+                "        myStruct.intProperty = 4",
+                "    }\n",
+                "}\n"
+            ]
+            let multipleLineSelection = XCSourceTextRange(
+                start: XCSourceTextPosition(line: 0, column: 0),
+                end: XCSourceTextPosition(line: 1, column: 10)
+            )
+            
+            #expect(throws: TestingToolsError.multilineSelectionNotSupported) {
+                try makeSut(
+                    action: .addPropertyToObject,
+                    allText: text,
+                    selections: [multipleLineSelection]
+                )
+            }
+        }
     }
 }

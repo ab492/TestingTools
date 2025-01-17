@@ -16,7 +16,15 @@ func enhanceObject(
     guard let selectedText = selectedText.first else {
         throw TestingToolsError.invalidSelection
     }
-    let lineContainingSelection = allText[safe: selectedText.start.line]!
+    
+    guard selectedText.start.line == selectedText.end.line else {
+        throw TestingToolsError.multilineSelectionNotSupported
+    }
+    
+    guard let lineContainingSelection = allText[safe: selectedText.start.line] else {
+        throw TestingToolsError.invalidSelection
+    }
+    
     let objectPropertyName = lineContainingSelection.components(separatedBy: ".").first!.trimmingCharacters(in: .whitespaces)
     
     
