@@ -8,6 +8,8 @@ func enhanceObject(
     tabWidth: Int
 ) throws -> [String] {
     var updatedText = allText
+    
+    
 
     let objectPropertyName = lineContainingSelection.components(separatedBy: ".").first!.trimmingCharacters(in: .whitespaces)
     

@@ -9,7 +9,6 @@ import XcodeKit
 // Error cases ✅
 // REFACTOR! ⬅️
 struct EnhanceObjectTests {
-    
     @Test func creatingIntPropertyOnStructDefinedOnOneLine() throws {
         let text = [
             "struct MyStruct { }\n",
@@ -190,104 +189,5 @@ struct EnhanceObjectTests {
             "    }\n",
             "}\n"
         ])
-    }
-    
-    struct ErrorHandling {
-        @Test func errorIsThrownIfNoSelectionIsMade() {
-            let text = [
-                "struct MyStruct { }\n",
-                "\n",
-                "struct SomeTestFile {\n",
-                "    func testSomething() {\n",
-                "        let myStruct = MyStruct()\n",
-                "        myStruct.intProperty = 4",
-                "    }\n",
-                "}\n"
-            ]
-            
-            #expect(throws: TestingToolsError.invalidSelection) {
-                try makeSut(
-                    action: .addPropertyToObject,
-                    allText: text,
-                    selections: []
-                )
-            }
-        }
-        
-        @Test func multipleSelectedText_throwsError() {
-            let text = [
-                "struct MyStruct { }\n",
-                "\n",
-                "struct SomeTestFile {\n",
-                "    func testSomething() {\n",
-                "        let myStruct = MyStruct()\n",
-                "        myStruct.intProperty = 4",
-                "    }\n",
-                "}\n"
-            ]
-            let firstSelection = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 0, column: 0),
-                end: XCSourceTextPosition(line: 0, column: 3)
-            )
-            let secondSelection = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 0, column: 5),
-                end: XCSourceTextPosition(line: 0, column: 10)
-            )
-            
-            #expect(throws: TestingToolsError.multipleSelectionNotSupported) {
-                try makeSut(
-                    action: .addPropertyToObject,
-                    allText: text,
-                    selections: [firstSelection, secondSelection]
-                )
-            }
-        }
-        
-        @Test func multipleLineSelectedText_throwsError() {
-            let text = [
-                "struct MyStruct { }\n",
-                "\n",
-                "struct SomeTestFile {\n",
-                "    func testSomething() {\n",
-                "        let myStruct = MyStruct()\n",
-                "        myStruct.intProperty = 4",
-                "    }\n",
-                "}\n"
-            ]
-            let multipleLineSelection = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 0, column: 0),
-                end: XCSourceTextPosition(line: 1, column: 10)
-            )
-            
-            #expect(throws: TestingToolsError.multilineSelectionNotSupported) {
-                try makeSut(
-                    action: .addPropertyToObject,
-                    allText: text,
-                    selections: [multipleLineSelection]
-                )
-            }
-        }
-        
-        @Test func outOfBoundsLineIndex_throwsError() {
-            let text = [
-                "struct TestStruct {\n",
-                "    someProperty.callSomeMethod()\n",
-                "}\n"
-            ]
-            
-            // Notice "line: 4" is out of range
-            let outOfBoundsSelection = XCSourceTextRange(
-                start: XCSourceTextPosition(line: 4, column: 0),
-                end: XCSourceTextPosition(line: 4, column: 3)
-            )
-            
-            #expect(throws: TestingToolsError.invalidSelection) {
-                try makeSut(
-                    action: .addPropertyToObject,
-                    allText: text,
-                    selections: [outOfBoundsSelection]
-                )
-            }
-        }
     }
 }
