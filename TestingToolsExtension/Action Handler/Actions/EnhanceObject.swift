@@ -9,9 +9,11 @@ func enhanceObject(
 ) throws -> [String] {
     var updatedText = allText
     
+    var trimmedLineContainingSelection = lineContainingSelection.trimmingCharacters(in: .whitespaces)
     
-
-    let objectPropertyName = lineContainingSelection.components(separatedBy: ".").first!.trimmingCharacters(in: .whitespaces)
+    
+    // someObject.propertyName -> someObject
+    let objectPropertyName = trimmedLineContainingSelection.components(separatedBy: ".").first!
     
     
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
