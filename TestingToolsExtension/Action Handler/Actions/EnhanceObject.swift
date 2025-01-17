@@ -1,6 +1,22 @@
 import Foundation
 import XcodeKit
 
+enum EnhanceObjectError: Error, LocalizedError, CustomNSError {
+    case noPropertyToCreate
+    
+    var localizedDescription: String {
+        switch self {
+        case .noPropertyToCreate:
+            return "No property to create - have you selected a property on an object? (someObject.someProperty = value)"
+        }
+        
+        var errorUserInfo: [String: Any] {
+            [NSLocalizedDescriptionKey: localizedDescription]
+        }
+    }
+}
+
+
 func enhanceObject(
     allText: [String],
     selectedText: XCSourceTextRange,
@@ -13,7 +29,13 @@ func enhanceObject(
     
     
     // someObject.propertyName -> someObject
-    let objectPropertyName = trimmedLineContainingSelection.components(separatedBy: ".").first!
+    guard trimmedLineContainingSelection.components(separatedBy: ".").count > 1,
+          let objectPropertyName = trimmedLineContainingSelection.components(separatedBy: ".").first
+    else {
+        throw EnhanceObjectError.noPropertyToCreate
+    }
+    
+    
     
     
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)

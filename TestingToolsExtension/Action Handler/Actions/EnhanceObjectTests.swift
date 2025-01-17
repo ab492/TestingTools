@@ -22,7 +22,6 @@ struct EnhanceObjectTests {
         ]
         let highlightedText = getRangeOfText("intProperty", from: text)!
         
-        
         let sut = try makeSut(
             action: .addPropertyToObject,
             allText: text,
@@ -57,7 +56,6 @@ struct EnhanceObjectTests {
             "}\n"
         ]
         let highlightedText = getRangeOfText("stringProperty", from: text)!
-        
         
         let sut = try makeSut(
             action: .addPropertyToObject,
@@ -96,7 +94,6 @@ struct EnhanceObjectTests {
         ]
         let highlightedText = getRangeOfText("boolProperty", from: text)!
         
-        
         let sut = try makeSut(
             action: .addPropertyToObject,
             allText: text,
@@ -134,7 +131,6 @@ struct EnhanceObjectTests {
         ]
         let highlightedText = getRangeOfText("doubleProperty", from: text)!
         
-        
         let sut = try makeSut(
             action: .addPropertyToObject,
             allText: text,
@@ -170,7 +166,6 @@ struct EnhanceObjectTests {
         ]
         let highlightedText = getRangeOfText("unknownProperty", from: text)!
         
-        
         let sut = try makeSut(
             action: .addPropertyToObject,
             allText: text,
@@ -189,5 +184,29 @@ struct EnhanceObjectTests {
             "    }\n",
             "}\n"
         ])
+    }
+    
+    struct ErrorHandling {
+        @Test func errorIsThrownIfNoSelectionIsMade() {
+            let text = [
+                "struct MyStruct { }\n",
+                "\n",
+                "struct SomeTestFile {\n",
+                "    func testSomething() {\n",
+                "        let myStruct = MyStruct()\n",
+                "    }\n",
+                "}\n"
+            ]
+            let highlightedText = getRangeOfText("myStruct", from: text)!
+
+            
+            #expect(throws: EnhanceObjectError.noPropertyToCreate) {
+                try makeSut(
+                    action: .addPropertyToObject,
+                    allText: text,
+                    selections: [highlightedText]
+                )
+            }
+        }
     }
 }
