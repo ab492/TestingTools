@@ -29,9 +29,8 @@ func enhanceObject(
     
     
     // someObject.propertyName -> someObject
-    guard trimmedLineContainingSelection.components(separatedBy: ".").count > 1,
-          let objectPropertyName = trimmedLineContainingSelection.components(separatedBy: ".").first
-    else {
+    let components = trimmedLineContainingSelection.components(separatedBy: ".")
+    guard components.count > 1, let objectPropertyName = components.first else {
         throw EnhanceObjectError.noPropertyToCreate
     }
     
