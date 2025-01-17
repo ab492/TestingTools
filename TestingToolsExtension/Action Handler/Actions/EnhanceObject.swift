@@ -3,23 +3,22 @@ import XcodeKit
 
 func enhanceObject(
     allText: [String],
-    selectedText: [XCSourceTextRange],
+    selectedText: XCSourceTextRange,
     tabWidth: Int
 ) throws -> [String] {
-    var result = [String]()
     var updatedText = allText
     
-    if selectedText.count > 1 {
-        throw TestingToolsError.multipleSelectionNotSupported
-    }
+//    if selectedText.count > 1 {
+//        throw TestingToolsError.multipleSelectionNotSupported
+//    }
     
-    guard let selectedText = selectedText.first else {
-        throw TestingToolsError.invalidSelection
-    }
-    
-    guard selectedText.start.line == selectedText.end.line else {
-        throw TestingToolsError.multilineSelectionNotSupported
-    }
+//    guard let selectedText = selectedText.first else {
+//        throw TestingToolsError.invalidSelection
+//    }
+//    
+//    guard selectedText.start.line == selectedText.end.line else {
+//        throw TestingToolsError.multilineSelectionNotSupported
+//    }
     
     guard let lineContainingSelection = allText[safe: selectedText.start.line] else {
         throw TestingToolsError.invalidSelection

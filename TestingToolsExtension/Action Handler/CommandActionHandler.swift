@@ -83,7 +83,7 @@ struct CommandActionHandler {
         case .addPropertyToObject:
             return try enhanceObject(
                 allText: allText,
-                selectedText: selections,
+                selectedText: selectedText,
                 tabWidth: tabWidth
             )
         }
