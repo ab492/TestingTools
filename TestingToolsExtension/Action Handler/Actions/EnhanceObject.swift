@@ -87,7 +87,9 @@ private func determinePropertyDefinition(from value: String, propertyName: Strin
         return "let \(propertyName): Double"
     } else if value == "true" || value == "false" {
         return "let \(propertyName): Bool"
-    } else {
+    } else if value.hasPrefix("\"") && value.hasSuffix("\"") {
         return "let \(propertyName): String"
+    } else {
+        return "let \(propertyName): \u{003C}#Type#\u{003E}"
     }
 }

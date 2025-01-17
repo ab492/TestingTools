@@ -156,7 +156,7 @@ struct EnhanceObjectTests {
         ])
     }
     
-    @Test(.disabled())
+    @Test
     func creatingUnknownPropertyTypeOnStruct() throws {
         let text = [
             "struct MyStruct { }\n",
