@@ -6,7 +6,8 @@ import XcodeKit
 // More property types ✅
 // object wit init - PUNT THIS ONE (MAYBE ADD AN ERROR CASE?)
 // object elsewhere in file ✅
-// Error cases ⬅️
+// Error cases ✅
+// REFACTOR! ⬅️
 struct EnhanceObjectTests {
     
     @Test func creatingIntPropertyOnStructDefinedOnOneLine() throws {
