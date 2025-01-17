@@ -9,10 +9,13 @@ func enhanceObject(
     var result = [String]()
     var updatedText = allText
     
+    if selectedText.count > 1 {
+        throw TestingToolsError.multipleSelectionNotSupported
+    }
+    
     guard let selectedText = selectedText.first else {
         throw TestingToolsError.invalidSelection
     }
-    
     let lineContainingSelection = allText[safe: selectedText.start.line]!
     let objectPropertyName = lineContainingSelection.components(separatedBy: ".").first!.trimmingCharacters(in: .whitespaces)
     

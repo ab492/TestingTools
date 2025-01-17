@@ -1,5 +1,5 @@
 import Testing
-
+import XcodeKit
 // TODO
 // Make the initial test case simpler for easier refactoring ✅
 // Handle let/var definitions ✅
@@ -212,23 +212,34 @@ struct EnhanceObjectTests {
                 )
             }
         }
+        
+        @Test func multipleSelectedText_throwsError() {
+            let text = [
+                "struct MyStruct { }\n",
+                "\n",
+                "struct SomeTestFile {\n",
+                "    func testSomething() {\n",
+                "        let myStruct = MyStruct()\n",
+                "        myStruct.intProperty = 4",
+                "    }\n",
+                "}\n"
+            ]
+            let firstSelection = XCSourceTextRange(
+                start: XCSourceTextPosition(line: 0, column: 0),
+                end: XCSourceTextPosition(line: 0, column: 3)
+            )
+            let secondSelection = XCSourceTextRange(
+                start: XCSourceTextPosition(line: 0, column: 5),
+                end: XCSourceTextPosition(line: 0, column: 10)
+            )
+            
+            #expect(throws: TestingToolsError.multipleSelectionNotSupported) {
+                try makeSut(
+                    action: .addPropertyToObject,
+                    allText: text,
+                    selections: [firstSelection, secondSelection]
+                )
+            }
+        }
     }
 }
-
-
-
-//func testErrorIsThrownIfNoSelectionIsMade(action: Action) {
-//    let text = [
-//        "struct TestStruct {\n",
-//        "    someProperty.callSomeMethod()\n",
-//        "}\n"
-//    ]
-//    
-//    #expect(throws: TestingToolsError.invalidSelection) {
-//        try makeSut(
-//            action: action,
-//            allText: text,
-//            selections: []
-//        )
-//    }
-//}
