@@ -188,7 +188,7 @@ struct EnhanceObjectTests {
     }
     
     struct ErrorHandling {
-        @Test func errorIsThrownIfNoSelectionIsMade() {
+        @Test func errorIsThrownIfNoPropertyIsSelectedToCreate() {
             let text = [
                 "struct MyStruct { }\n",
                 "\n",
@@ -202,6 +202,26 @@ struct EnhanceObjectTests {
 
             
             #expect(throws: EnhanceObjectError.noPropertyToCreate) {
+                try makeSut(
+                    action: .addPropertyToObject,
+                    allText: text,
+                    selections: [highlightedText]
+                )
+            }
+        }
+        
+        @Test func errorIsThrownIfNoObjectIsInitialised() {
+            let text = [
+                "struct SomeTestFile {\n",
+                "    func testSomething() {\n",
+                "        myStruct.intProperty = 4",
+                "    }\n",
+                "}\n"
+            ]
+            let highlightedText = getRangeOfText("intProperty", from: text)!
+
+            
+            #expect(throws: EnhanceObjectError.objectNotFound) {
                 try makeSut(
                     action: .addPropertyToObject,
                     allText: text,

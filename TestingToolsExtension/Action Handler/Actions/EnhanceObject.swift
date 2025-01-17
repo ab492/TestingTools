@@ -3,19 +3,24 @@ import XcodeKit
 
 enum EnhanceObjectError: Error, LocalizedError, CustomNSError {
     case noPropertyToCreate
+    case objectNotFound
+    case unableToFindObjectDefinition
     
     var localizedDescription: String {
         switch self {
         case .noPropertyToCreate:
             return "No property to create - have you selected a property on an object? (someObject.someProperty = value)"
-        }
-        
-        var errorUserInfo: [String: Any] {
-            [NSLocalizedDescriptionKey: localizedDescription]
+        case .unableToFindObjectDefinition:
+            return "Unable to find object definition. It must exist in this file due to a limitation of Xcode Extensions."
+        case .objectNotFound:
+            return "Unable to find object definition. Is it initialised?"
         }
     }
+    
+    var errorUserInfo: [String: Any] {
+        [NSLocalizedDescriptionKey: localizedDescription]
+    }
 }
-
 
 func enhanceObject(
     allText: [String],
@@ -39,20 +44,24 @@ func enhanceObject(
     }
     
 
-    // Find where the object is defined -> "let someObject = ..."
+    // Find where the object is initialised -> "let someObject = ..."
     let pattern = "\\b(let)\\s+\(objectPropertyName)\\b"
     var objectTypeToAddPropertyTo: String?
     
     for line in allText {
-        if line.range(of: pattern, options: .regularExpression) != nil {
+        if line.range(of: pattern, options: .regularExpression) != nil,
+           let indexOfEquals = line.firstIndex(of: "="),
+           let indexOfOpenParen = line.firstIndex(of: "(") {
             // If we're here, we should have "let someObject = SomeObject()"
             // Now we're trying to just the object name (i.e. SomeObject)
-            let indexOfEquals = line.firstIndex(of: "=")!
-            let indexOfOpenParen = line.firstIndex(of: "(")!
             let objectType = line[line.index(after: indexOfEquals)..<indexOfOpenParen].trimmingCharacters(in: .whitespaces)
             objectTypeToAddPropertyTo = objectType
             break
         }
+    }
+
+    guard let objectTypeToAddPropertyTo else {
+        throw EnhanceObjectError.objectNotFound
     }
 //
 //    var objectName: String?
@@ -75,7 +84,7 @@ func enhanceObject(
     
     let propertyDefinition = determinePropertyDefinition(from: propertyValue, propertyName: propertyName)
     
-    let structOrClassDefinition = ["struct \(objectTypeToAddPropertyTo!)", "class \(objectTypeToAddPropertyTo!)"]
+    let structOrClassDefinition = ["struct \(objectTypeToAddPropertyTo)", "class \(objectTypeToAddPropertyTo)"]
     let structDefinitionLineIndex = allText.firstIndex { line in
         structOrClassDefinition.contains { line.contains($0) }
     }!
@@ -84,7 +93,7 @@ func enhanceObject(
     let structDefinedOnOneLine = allTextOnStructDefinitionLine.contains(where: { $0 == "{"}) && allTextOnStructDefinitionLine.contains(where: { $0 == "}"})
     
     if structDefinedOnOneLine {
-        updatedText[structDefinitionLineIndex] = "struct \(objectTypeToAddPropertyTo!) {\n"
+        updatedText[structDefinitionLineIndex] = "struct \(objectTypeToAddPropertyTo) {\n"
         updatedText.insert("    \(propertyDefinition)\n", at: structDefinitionLineIndex + 1)
         updatedText.insert("}\n", at: structDefinitionLineIndex + 2)
     } else {
