@@ -72,12 +72,16 @@ func enhanceObject(
         throw EnhanceObjectError.unableToFindPropertyValue
     }
     
-    let propertyDefinition = determinePropertyDefinition(from: propertyValue, propertyName: propertyName)
+    let propertyDefinition = inferPropertyDefinition(from: propertyValue, propertyName: propertyName)
     
-    let structOrClassDefinition = ["struct \(typeName)", "class \(typeName)"]
+    let possibleObjectDefinitions = ["struct \(typeName)", "class \(typeName)"]
     let structDefinitionLineIndex = allText.firstIndex { line in
-        structOrClassDefinition.contains { line.contains($0) }
-    }!
+        possibleObjectDefinitions.contains { line.contains($0) }
+    }
+    
+    guard let structDefinitionLineIndex else {
+        throw EnhanceObjectError.unableToFindObjectDefinition
+    }
     let allTextOnStructDefinitionLine = allText[structDefinitionLineIndex]
     
     let structDefinedOnOneLine = allTextOnStructDefinitionLine.contains(where: { $0 == "{"}) && allTextOnStructDefinitionLine.contains(where: { $0 == "}"})
@@ -113,7 +117,7 @@ func enhanceObject(
     return updatedText
 }
 
-private func determinePropertyDefinition(from value: String, propertyName: String) -> String {
+private func inferPropertyDefinition(from value: String, propertyName: String) -> String {
     if Int(value) != nil {
         return "let \(propertyName): Int"
     } else if Double(value) != nil {

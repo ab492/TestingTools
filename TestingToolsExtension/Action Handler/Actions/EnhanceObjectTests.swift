@@ -252,5 +252,26 @@ struct EnhanceObjectTests {
                 )
             }
         }
+        
+        @Test func errorIsThrownIfNoValidObjectExists() {
+            let text = [
+                "struct SomeTestFile {\n",
+                "    func testSomething() {\n",
+                "        let myStruct = MyStruct()\n",
+                "        myStruct.intProperty = 4",
+                "    }\n",
+                "}\n"
+            ]
+            let highlightedText = getRangeOfText("intProperty", from: text)!
+
+            
+            #expect(throws: EnhanceObjectError.unableToFindObjectDefinition) {
+                try makeSut(
+                    action: .addPropertyToObject,
+                    allText: text,
+                    selections: [highlightedText]
+                )
+            }
+        }
     }
 }
