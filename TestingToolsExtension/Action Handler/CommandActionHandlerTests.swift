@@ -6,7 +6,8 @@ struct CommandActionHandlerTests {
         arguments: [
             Action.createLocalProperty,
             .createGlobalProperty,
-            .createInstanceProperty
+            .createInstanceProperty,
+            .addPropertyToObject
         ]
     )
     func testErrorIsThrownIfNoSelectionIsMade(action: Action) {
@@ -29,7 +30,8 @@ struct CommandActionHandlerTests {
         arguments: [
             Action.createLocalProperty,
             .createGlobalProperty,
-            .createInstanceProperty
+            .createInstanceProperty,
+            .addPropertyToObject
         ]
     )
     func multipleSelectedText_throwsError(action: Action) {
@@ -60,7 +62,8 @@ struct CommandActionHandlerTests {
         arguments: [
             Action.createLocalProperty,
             .createGlobalProperty,
-            .createInstanceProperty
+            .createInstanceProperty,
+            .addPropertyToObject
         ]
     )
     func multipleLineSelectedText_throwsError(action: Action) {
@@ -87,7 +90,8 @@ struct CommandActionHandlerTests {
         arguments: [
             Action.createLocalProperty,
             .createGlobalProperty,
-            .createInstanceProperty
+            .createInstanceProperty,
+            .addPropertyToObject
         ]
     )
     func testOutOfBoundsLineIndex_throwsError(action: Action) {
