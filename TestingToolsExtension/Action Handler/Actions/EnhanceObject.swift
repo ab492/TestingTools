@@ -43,10 +43,9 @@ func enhanceObject(
         throw EnhanceObjectError.noPropertyToCreate
     }
     
-
     // Find where the object is initialised -> "let someObject = ..."
     let pattern = "\\b(let)\\s+\(objectPropertyName)\\b"
-    var objectTypeToAddPropertyTo: String?
+    var typeName: String?
     
     for line in allText {
         if line.range(of: pattern, options: .regularExpression) != nil,
@@ -55,12 +54,12 @@ func enhanceObject(
             // If we're here, we should have "let someObject = SomeObject()"
             // Now we're trying to just the object name (i.e. SomeObject)
             let objectType = line[line.index(after: indexOfEquals)..<indexOfOpenParen].trimmingCharacters(in: .whitespaces)
-            objectTypeToAddPropertyTo = objectType
+            typeName = objectType
             break
         }
     }
 
-    guard let objectTypeToAddPropertyTo else {
+    guard let typeName else {
         throw EnhanceObjectError.objectNotFound
     }
 //
@@ -84,7 +83,7 @@ func enhanceObject(
     
     let propertyDefinition = determinePropertyDefinition(from: propertyValue, propertyName: propertyName)
     
-    let structOrClassDefinition = ["struct \(objectTypeToAddPropertyTo)", "class \(objectTypeToAddPropertyTo)"]
+    let structOrClassDefinition = ["struct \(typeName)", "class \(typeName)"]
     let structDefinitionLineIndex = allText.firstIndex { line in
         structOrClassDefinition.contains { line.contains($0) }
     }!
@@ -93,7 +92,7 @@ func enhanceObject(
     let structDefinedOnOneLine = allTextOnStructDefinitionLine.contains(where: { $0 == "{"}) && allTextOnStructDefinitionLine.contains(where: { $0 == "}"})
     
     if structDefinedOnOneLine {
-        updatedText[structDefinitionLineIndex] = "struct \(objectTypeToAddPropertyTo) {\n"
+        updatedText[structDefinitionLineIndex] = "struct \(typeName) {\n"
         updatedText.insert("    \(propertyDefinition)\n", at: structDefinitionLineIndex + 1)
         updatedText.insert("}\n", at: structDefinitionLineIndex + 2)
     } else {
