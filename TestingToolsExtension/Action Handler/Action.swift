@@ -26,4 +26,11 @@ enum Action: String, CaseIterable {
         case .addPropertyToObject: return "Add Property To Object"
         }
     }
+    
+    var isProgressMarker: Bool {
+        switch self {
+        case .markAsDone, .markInProgress: return true
+        default: return false
+        }
+    }
 }

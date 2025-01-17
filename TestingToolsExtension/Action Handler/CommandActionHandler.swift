@@ -8,6 +8,23 @@ struct CommandActionHandler {
         selections: [XCSourceTextRange],
         tabWidth: Int
     ) throws -> [String] {
+        
+        if selections.count > 1, action.isProgressMarker == false {
+            throw TestingToolsError.multipleSelectionNotSupported
+        }
+        
+        guard let selectedText = selections.first else {
+            throw TestingToolsError.invalidSelection
+        }
+        
+        guard selectedText.start.line == selectedText.end.line else {
+            throw TestingToolsError.multilineSelectionNotSupported
+        }
+        
+        guard let lineContainingSelection = allText[safe: selectedText.start.line] else {
+            throw TestingToolsError.invalidSelection
+        }
+        
         switch action {
             
         case .createClass:
