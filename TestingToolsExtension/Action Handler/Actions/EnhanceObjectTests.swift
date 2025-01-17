@@ -8,6 +8,7 @@ import XcodeKit
 // object elsewhere in file ✅
 // Error cases ✅
 // REFACTOR! ⬅️
+// Add test case for var myStruct = ...
 struct EnhanceObjectTests {
     @Test func creatingIntPropertyOnStructDefinedOnOneLine() throws {
         let text = [

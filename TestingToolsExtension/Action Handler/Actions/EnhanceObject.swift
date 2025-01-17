@@ -23,48 +23,59 @@ func enhanceObject(
     lineContainingSelection: String,
     tabWidth: Int
 ) throws -> [String] {
+    // Examples will be based on a line like this: someObject.propertyName = somePropertyValue
+    
     var updatedText = allText
     
-    var trimmedLineContainingSelection = lineContainingSelection.trimmingCharacters(in: .whitespaces)
-    
+    // someObject.propertyName -> propertyName
+    let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
+    let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
+    let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
     
     // someObject.propertyName -> someObject
-    let components = trimmedLineContainingSelection.components(separatedBy: ".")
+    let components = lineContainingSelection.trimmingCharacters(in: .whitespaces).components(separatedBy: ".")
     guard components.count > 1, let objectPropertyName = components.first else {
         throw EnhanceObjectError.noPropertyToCreate
     }
     
-    
-    
-    
-    let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
-    let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
-    let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
 
-    // Regular expression to match variable definitions (e.g., "let myStruct = ...")
+    // Find where the object is defined -> "let someObject = ..."
     let pattern = "\\b(let)\\s+\(objectPropertyName)\\b"
-
-    var objectName: String?
-    // Search through the lines
-    for (index, line) in allText.enumerated() {
-        if let _ = line.range(of: pattern, options: .regularExpression) {
-            let equalIndex = line.firstIndex(of: "=")!
-            let openParenIndex = line.firstIndex(of: "(")!
-            let start = line.index(after: equalIndex) // Skip the "="
-            let range = start..<openParenIndex
-            let result = line[range].trimmingCharacters(in: .whitespaces)
-            objectName = result
-            print("STRUCT NAME: \(result)")
-            
+    var objectTypeToAddPropertyTo: String?
+    
+    for line in allText {
+        if line.range(of: pattern, options: .regularExpression) != nil {
+            // If we're here, we should have "let someObject = SomeObject()"
+            // Now we're trying to just the object name (i.e. SomeObject)
+            let indexOfEquals = line.firstIndex(of: "=")!
+            let indexOfOpenParen = line.firstIndex(of: "(")!
+            let objectType = line[line.index(after: indexOfEquals)..<indexOfOpenParen].trimmingCharacters(in: .whitespaces)
+            objectTypeToAddPropertyTo = objectType
             break
         }
     }
-    
+//
+//    var objectName: String?
+//    // Search through the lines
+//    for (index, line) in allText.enumerated() {
+//        if let _ = line.range(of: pattern, options: .regularExpression) {
+//            let equalIndex = line.firstIndex(of: "=")!
+//            let openParenIndex = line.firstIndex(of: "(")!
+//            let start = line.index(after: equalIndex) // Skip the "="
+//            let range = start..<openParenIndex
+//            let result = line[range].trimmingCharacters(in: .whitespaces)
+//            objectName = result
+//            print("STRUCT NAME: \(result)")
+//            
+//            break
+//        }
+//    }
+//    
     let propertyValue = lineContainingSelection.components(separatedBy: "=").last!.trimmingCharacters(in: .whitespacesAndNewlines)
     
     let propertyDefinition = determinePropertyDefinition(from: propertyValue, propertyName: propertyName)
     
-    let structOrClassDefinition = ["struct \(objectName!)", "class \(objectName!)"]
+    let structOrClassDefinition = ["struct \(objectTypeToAddPropertyTo!)", "class \(objectTypeToAddPropertyTo!)"]
     let structDefinitionLineIndex = allText.firstIndex { line in
         structOrClassDefinition.contains { line.contains($0) }
     }!
@@ -73,7 +84,7 @@ func enhanceObject(
     let structDefinedOnOneLine = allTextOnStructDefinitionLine.contains(where: { $0 == "{"}) && allTextOnStructDefinitionLine.contains(where: { $0 == "}"})
     
     if structDefinedOnOneLine {
-        updatedText[structDefinitionLineIndex] = "struct \(objectName!) {\n"
+        updatedText[structDefinitionLineIndex] = "struct \(objectTypeToAddPropertyTo!) {\n"
         updatedText.insert("    \(propertyDefinition)\n", at: structDefinitionLineIndex + 1)
         updatedText.insert("}\n", at: structDefinitionLineIndex + 2)
     } else {
