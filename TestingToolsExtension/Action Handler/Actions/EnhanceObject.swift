@@ -73,15 +73,17 @@ func enhanceObject(
     }
     
     let propertyDefinition = inferPropertyDefinition(from: propertyValue, propertyName: propertyName)
-    
+   
     let possibleObjectDefinitions = ["struct \(typeName)", "class \(typeName)"]
-    let structDefinitionLineIndex = allText.firstIndex { line in
+
+    guard let structDefinitionLineIndex = allText.firstIndex(where: { line in
         possibleObjectDefinitions.contains { line.contains($0) }
-    }
-    
-    guard let structDefinitionLineIndex else {
+    }) else {
         throw EnhanceObjectError.unableToFindObjectDefinition
     }
+    
+    
+    
     let allTextOnStructDefinitionLine = allText[structDefinitionLineIndex]
     
     let structDefinedOnOneLine = allTextOnStructDefinitionLine.contains(where: { $0 == "{"}) && allTextOnStructDefinitionLine.contains(where: { $0 == "}"})
