@@ -4,26 +4,11 @@ import XcodeKit
 func enhanceObject(
     allText: [String],
     selectedText: XCSourceTextRange,
+    lineContainingSelection: String,
     tabWidth: Int
 ) throws -> [String] {
     var updatedText = allText
-    
-//    if selectedText.count > 1 {
-//        throw TestingToolsError.multipleSelectionNotSupported
-//    }
-    
-//    guard let selectedText = selectedText.first else {
-//        throw TestingToolsError.invalidSelection
-//    }
-//    
-//    guard selectedText.start.line == selectedText.end.line else {
-//        throw TestingToolsError.multilineSelectionNotSupported
-//    }
-    
-    guard let lineContainingSelection = allText[safe: selectedText.start.line] else {
-        throw TestingToolsError.invalidSelection
-    }
-    
+
     let objectPropertyName = lineContainingSelection.components(separatedBy: ".").first!.trimmingCharacters(in: .whitespaces)
     
     

@@ -84,6 +84,7 @@ struct CommandActionHandler {
             return try enhanceObject(
                 allText: allText,
                 selectedText: selectedText,
+                lineContainingSelection: lineContainingSelection,
                 tabWidth: tabWidth
             )
         }
