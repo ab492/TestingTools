@@ -266,5 +266,27 @@ struct EnhanceObjectTests {
                 )
             }
         }
+        
+        @Test func outOfBoundsLineIndex_throwsError() {
+            let text = [
+                "struct TestStruct {\n",
+                "    someProperty.callSomeMethod()\n",
+                "}\n"
+            ]
+            
+            // Notice "line: 4" is out of range
+            let outOfBoundsSelection = XCSourceTextRange(
+                start: XCSourceTextPosition(line: 4, column: 0),
+                end: XCSourceTextPosition(line: 4, column: 3)
+            )
+            
+            #expect(throws: TestingToolsError.invalidSelection) {
+                try makeSut(
+                    action: .addPropertyToObject,
+                    allText: text,
+                    selections: [outOfBoundsSelection]
+                )
+            }
+        }
     }
 }
