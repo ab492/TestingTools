@@ -5,6 +5,7 @@ enum EnhanceObjectError: Error, LocalizedError, CustomNSError {
     case noPropertyToCreate
     case objectNotFound
     case unableToFindObjectDefinition
+    case unableToFindPropertyValue
     
     var localizedDescription: String {
         switch self {
@@ -14,6 +15,8 @@ enum EnhanceObjectError: Error, LocalizedError, CustomNSError {
             return "Unable to find object definition. It must exist in this file due to a limitation of Xcode Extensions."
         case .objectNotFound:
             return "Unable to find object definition. Is it initialised?"
+        case .unableToFindPropertyValue:
+            return "Unable to find property value. Have you assigned a value to your property name?"
         }
     }
     
@@ -28,16 +31,16 @@ func enhanceObject(
     lineContainingSelection: String,
     tabWidth: Int
 ) throws -> [String] {
-    // Examples will be based on a line like this: someObject.propertyName = somePropertyValue
+    // Examples will be based on a line like this: "someObject.propertyName = somePropertyValue"
     
     var updatedText = allText
     
-    // someObject.propertyName -> propertyName
+    // "someObject.propertyName = somePropertyValue" -> "propertyName"
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
     
-    // someObject.propertyName -> someObject
+    // "someObject.propertyName = somePropertyValue" -> "someObject"
     let components = lineContainingSelection.trimmingCharacters(in: .whitespaces).components(separatedBy: ".")
     guard components.count > 1, let objectPropertyName = components.first else {
         throw EnhanceObjectError.noPropertyToCreate
@@ -62,24 +65,12 @@ func enhanceObject(
     guard let typeName else {
         throw EnhanceObjectError.objectNotFound
     }
-//
-//    var objectName: String?
-//    // Search through the lines
-//    for (index, line) in allText.enumerated() {
-//        if let _ = line.range(of: pattern, options: .regularExpression) {
-//            let equalIndex = line.firstIndex(of: "=")!
-//            let openParenIndex = line.firstIndex(of: "(")!
-//            let start = line.index(after: equalIndex) // Skip the "="
-//            let range = start..<openParenIndex
-//            let result = line[range].trimmingCharacters(in: .whitespaces)
-//            objectName = result
-//            print("STRUCT NAME: \(result)")
-//            
-//            break
-//        }
-//    }
-//    
-    let propertyValue = lineContainingSelection.components(separatedBy: "=").last!.trimmingCharacters(in: .whitespacesAndNewlines)
+
+    // "someObject.propertyName = somePropertyValue" -> "somePropertyValue"
+    guard lineContainingSelection.contains(where: { $0 == "=" }),
+        let propertyValue = lineContainingSelection.components(separatedBy: "=").last?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+        throw EnhanceObjectError.unableToFindPropertyValue
+    }
     
     let propertyDefinition = determinePropertyDefinition(from: propertyValue, propertyName: propertyName)
     

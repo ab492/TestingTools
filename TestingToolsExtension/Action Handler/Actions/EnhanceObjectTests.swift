@@ -229,5 +229,28 @@ struct EnhanceObjectTests {
                 )
             }
         }
+        
+        @Test func errorIsThrownIfNoPropertyValueGiven() {
+            let text = [
+                "struct MyStruct { }\n",
+                "\n",
+                "struct SomeTestFile {\n",
+                "    func testSomething() {\n",
+                "        let myStruct = MyStruct()\n",
+                "        myStruct.intProperty",
+                "    }\n",
+                "}\n"
+            ]
+            let highlightedText = getRangeOfText("intProperty", from: text)!
+
+            
+            #expect(throws: EnhanceObjectError.unableToFindPropertyValue) {
+                try makeSut(
+                    action: .addPropertyToObject,
+                    allText: text,
+                    selections: [highlightedText]
+                )
+            }
+        }
     }
 }
