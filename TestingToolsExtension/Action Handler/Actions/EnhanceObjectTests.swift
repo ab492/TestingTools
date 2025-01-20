@@ -1,14 +1,6 @@
 import Testing
 import XcodeKit
-// TODO
-// Make the initial test case simpler for easier refactoring ✅
-// Handle let/var definitions ✅
-// More property types ✅
-// object wit init - PUNT THIS ONE (MAYBE ADD AN ERROR CASE?)
-// object elsewhere in file ✅
-// Error cases ✅
-// REFACTOR! ✅
-// Add test case for single line class definition ✅
+
 struct EnhanceObjectTests {
     @Test func creatingIntPropertyOnStructDefinedOnOneLine() throws {
         let text = [

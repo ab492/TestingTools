@@ -7,13 +7,6 @@ enum PropertyType {
     case global
 }
 
-//func getSelectedText(allText: [String], selectedText: [XCSourceTextRange]) throws -> String {
-//    guard let selectedText = selectedText.first else {
-//        throw TestingToolsError.invalidSelection
-//    }
-//    return selectedText
-//}
-
 func createProperty(type: PropertyType, allText: [String], selectedText: [XCSourceTextRange], tabWidth: Int) throws -> [String] {
     if selectedText.count > 1 {
         throw TestingToolsError.multipleSelectionNotSupported
@@ -34,7 +27,7 @@ func createProperty(type: PropertyType, allText: [String], selectedText: [XCSour
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])
-    let propertyDeclaration = "let \(propertyName) = \u{003C}#Type#\u{003E}\n"
+    let propertyDeclaration = "let \(propertyName) = \(unknownTypePlaceholder)\n"
     
     var updatedText = allText
     
