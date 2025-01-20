@@ -83,7 +83,6 @@ func enhanceObject(
         throw EnhanceObjectError.unableToFindObjectDefinition
     }
     
-    
     // Example: "struct SomeObject { }"
     let allTextOnStructDefinitionLine = allText[objectDefinitionLineIndex]
     let objectIsDefinedOnOneLineOnly = allTextOnStructDefinitionLine.contains(where: { $0 == "{"}) && allTextOnStructDefinitionLine.contains(where: { $0 == "}"})
@@ -121,15 +120,20 @@ func enhanceObject(
 }
 
 private func inferPropertyDefinition(from value: String, propertyName: String) -> String {
+    let propertyType = inferPropertyType(from: value)
+    return "let \(propertyName): \(propertyType)"
+}
+
+func inferPropertyType(from value: String) -> String {
     if Int(value) != nil {
-        return "let \(propertyName): Int"
+        return "Int"
     } else if Double(value) != nil {
-        return "let \(propertyName): Double"
+        return "Double"
     } else if value == "true" || value == "false" {
-        return "let \(propertyName): Bool"
+        return "Bool"
     } else if value.hasPrefix("\"") && value.hasSuffix("\"") {
-        return "let \(propertyName): String"
+        return "String"
     } else {
-        return "let \(propertyName): \u{003C}#Type#\u{003E}"
+        return "\u{003C}#Type#\u{003E}"
     }
 }
