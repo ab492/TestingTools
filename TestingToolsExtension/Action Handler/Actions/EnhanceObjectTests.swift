@@ -9,6 +9,7 @@ import XcodeKit
 // Error cases ✅
 // REFACTOR! ⬅️
 // Add test case for var myStruct = ...
+// Add test case for single line class definition
 struct EnhanceObjectTests {
     @Test func creatingIntPropertyOnStructDefinedOnOneLine() throws {
         let text = [
@@ -38,6 +39,39 @@ struct EnhanceObjectTests {
             "    func testSomething() {\n",
             "        let myStruct = MyStruct()\n",
             "        myStruct.intProperty = 4",
+            "    }\n",
+            "}\n"
+        ])
+    }
+    
+    @Test func creatingIntPropertyOnClassDefinedOnOneLine() throws {
+        let text = [
+            "class MyClass { }\n",
+            "\n",
+            "struct SomeTestFile {\n",
+            "    func testSomething() {\n",
+            "        let myClass = MyClass()\n",
+            "        myClass.intProperty = 4",
+            "    }\n",
+            "}\n"
+        ]
+        let highlightedText = getRangeOfText("intProperty", from: text)!
+        
+        let sut = try makeSut(
+            action: .addPropertyToObject,
+            allText: text,
+            selections: [highlightedText]
+        )
+        
+        #expect(sut == [
+            "class MyClass {\n",
+            "    let intProperty: Int\n",
+            "}\n",
+            "\n",
+            "struct SomeTestFile {\n",
+            "    func testSomething() {\n",
+            "        let myClass = MyClass()\n",
+            "        myClass.intProperty = 4",
             "    }\n",
             "}\n"
         ])

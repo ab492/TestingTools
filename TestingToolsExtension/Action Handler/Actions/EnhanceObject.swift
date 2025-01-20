@@ -76,44 +76,45 @@ func enhanceObject(
    
     let possibleObjectDefinitions = ["struct \(typeName)", "class \(typeName)"]
 
-    guard let structDefinitionLineIndex = allText.firstIndex(where: { line in
+    guard let objectDefinitionLineIndex = allText.firstIndex(where: { line in
         possibleObjectDefinitions.contains { line.contains($0) }
-    }) else {
+    }),
+    let objectType = ["struct", "class"].first(where: { allText[objectDefinitionLineIndex].contains("\($0) ") }) else {
         throw EnhanceObjectError.unableToFindObjectDefinition
     }
     
     
-    
-    let allTextOnStructDefinitionLine = allText[structDefinitionLineIndex]
-    
-    let structDefinedOnOneLine = allTextOnStructDefinitionLine.contains(where: { $0 == "{"}) && allTextOnStructDefinitionLine.contains(where: { $0 == "}"})
-    
-    if structDefinedOnOneLine {
-        updatedText[structDefinitionLineIndex] = "struct \(typeName) {\n"
-        updatedText.insert("    \(propertyDefinition)\n", at: structDefinitionLineIndex + 1)
-        updatedText.insert("}\n", at: structDefinitionLineIndex + 2)
-    } else {
-        
-        var lastPropertyIndex: Int? = nil
+    // Example: "struct SomeObject { }"
+    let allTextOnStructDefinitionLine = allText[objectDefinitionLineIndex]
+    let objectIsDefinedOnOneLineOnly = allTextOnStructDefinitionLine.contains(where: { $0 == "{"}) && allTextOnStructDefinitionLine.contains(where: { $0 == "}"})
+    let indentation = String(repeating: " ", count: tabWidth)
 
-        // Look for lines containing "let " or "var " after structIndex
-        for i in (structDefinitionLineIndex + 1)..<allText.count {
-            if allText[i].contains("}") {
-                // Stop the loop when encountering a closing brace
+    if objectIsDefinedOnOneLineOnly {
+        updatedText[objectDefinitionLineIndex] = "\(objectType) \(typeName) {\n"
+        updatedText.insert("\(indentation)\(propertyDefinition)\n", at: objectDefinitionLineIndex + 1)
+        updatedText.insert("}\n", at: objectDefinitionLineIndex + 2)
+    } else {
+        var lastPropertyIndex: Int?
+
+        // Iterate through lines after the object definition to find properties
+        for i in (objectDefinitionLineIndex + 1)..<allText.count {
+            let line = allText[i]
+            
+            // Stop when encountering a closing brace
+            if line.contains("}") {
                 break
             }
-            if allText[i].contains("let ") || allText[i].contains("var ") {
+            
+            // Update lastPropertyIndex if the line contains "let" or "var"
+            if line.contains("let ") || line.contains("var ") {
                 lastPropertyIndex = i
             }
         }
-        
-        if let lastPropertyIndex {
-            updatedText.insert("    \(propertyDefinition)\n", at: lastPropertyIndex + 1)
 
+        // Insert the new property definition if a valid property index is found
+        if let lastPropertyIndex = lastPropertyIndex {
+            updatedText.insert("\(indentation)\(propertyDefinition)\n", at: lastPropertyIndex + 1)
         }
-        
-
-        
     }
     
     return updatedText
