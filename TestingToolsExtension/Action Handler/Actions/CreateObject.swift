@@ -46,19 +46,7 @@ func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSource
             guard components.count == 2 else { throw TestingToolsError.invalidSelection }
             let propertyName = components[0]
             let propertyValue = components[1]
-            
-            let propertyType: String
-            if propertyValue.hasPrefix("\"") && propertyValue.hasSuffix("\"") {
-                propertyType = "String"
-            } else if Int(propertyValue) != nil {
-                propertyType = "Int"
-            } else if Double(propertyValue) != nil {
-                propertyType = "Double"
-            } else if propertyValue == "true" || propertyValue == "false" {
-                propertyType = "Bool"
-            } else {
-                propertyType = "\u{003C}#Type#\u{003E}"
-            }
+            let propertyType = inferPropertyType(from: propertyValue)
             properties.append((name: propertyName, type: propertyType))
         }
         
