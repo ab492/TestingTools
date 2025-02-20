@@ -7,23 +7,14 @@ enum PropertyType {
     case global
 }
 
-func createProperty(type: PropertyType, allText: [String], selectedText: [XCSourceTextRange], tabWidth: Int) throws -> [String] {
-    if selectedText.count > 1 {
-        throw TestingToolsError.multipleSelectionNotSupported
-    }
-    
-    guard let selectedText = selectedText.first else {
-        throw TestingToolsError.invalidSelection
-    }
-    
-    guard selectedText.start.line == selectedText.end.line else {
-        throw TestingToolsError.multilineSelectionNotSupported
-    }
-    
-    guard let lineContainingSelection = allText[safe: selectedText.start.line] else {
-        throw TestingToolsError.invalidSelection
-    }
-    
+func createProperty(
+    type: PropertyType,
+    allText: [String],
+    selectedText: XCSourceTextRange,
+    lineContainingSelection: String,
+    tabWidth: Int
+) throws -> [String] {
+
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let propertyName = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])

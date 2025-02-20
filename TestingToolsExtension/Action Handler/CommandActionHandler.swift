@@ -49,14 +49,16 @@ struct CommandActionHandler {
             return try createProperty(
                 type: .instance,
                 allText: allText,
-                selectedText: selections,
+                selectedText: selectedText,
+                lineContainingSelection: lineContainingSelection,
                 tabWidth: tabWidth
             )
         case .createLocalProperty:
             return try createProperty(
                 type: .local,
                 allText: allText,
-                selectedText: selections,
+                selectedText: selectedText,
+                lineContainingSelection: lineContainingSelection,
                 tabWidth: tabWidth
             )
             
@@ -64,7 +66,8 @@ struct CommandActionHandler {
             return try createProperty(
                 type: .global,
                 allText: allText,
-                selectedText: selections,
+                selectedText: selectedText,
+                lineContainingSelection: lineContainingSelection,
                 tabWidth: tabWidth
             )
             
