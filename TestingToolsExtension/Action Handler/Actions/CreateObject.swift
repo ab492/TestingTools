@@ -6,21 +6,17 @@ enum ObjectType: String {
     case `class`
 }
 
+func createObject(
+    _ type: ObjectType,
+    allText: [String],
+    selectedText: XCSourceTextRange,
+    lineContainingSelection: String,
+    tabWidth: Int
+) throws -> [String] {
 
-
-func createObject(_ type: ObjectType, allText: [String], selectedText: XCSourceTextRange, tabWidth: Int) throws -> [String] {
-
-    
-    guard selectedText.start.line == selectedText.end.line else {
-        throw TestingToolsError.multilineSelectionNotSupported
-    }
-    
     var updatedText = allText
     updatedText.append("\n")
 
-    guard let lineContainingSelection = allText[safe: selectedText.start.line] else {
-        throw TestingToolsError.invalidSelection
-    }
     let selectionStartIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.start.column)
     let selectionEndIndex = lineContainingSelection.index(lineContainingSelection.startIndex, offsetBy: selectedText.end.column)
     let selectedString = String(lineContainingSelection[selectionStartIndex..<selectionEndIndex])

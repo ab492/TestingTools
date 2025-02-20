@@ -32,6 +32,7 @@ struct CommandActionHandler {
                 .class,
                 allText: allText,
                 selectedText: selectedText,
+                lineContainingSelection: lineContainingSelection,
                 tabWidth: tabWidth
             )
             
@@ -40,6 +41,7 @@ struct CommandActionHandler {
                 .struct,
                 allText: allText,
                 selectedText: selectedText,
+                lineContainingSelection: lineContainingSelection,
                 tabWidth: tabWidth
             )
             
