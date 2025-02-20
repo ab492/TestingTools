@@ -9,6 +9,7 @@ enum Action: String, CaseIterable {
     case markInProgress = "testingtools.markInProgress"
     case markAsDone = "testingtools.markAsDone"
     case addPropertyToObject = "testingtools.addPropertyToObject"
+    case addMethodToObject = "testingtools.addMethodToObject"
     
     var identifier: String {
         self.rawValue
@@ -24,6 +25,7 @@ enum Action: String, CaseIterable {
         case .markInProgress: return "Mark in Progress ⬅️"
         case .markAsDone: return "Mark as Done ✅"
         case .addPropertyToObject: return "Add Property To Object"
+        case .addMethodToObject: return "Add Method To Object"
         }
     }
     

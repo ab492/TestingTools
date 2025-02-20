@@ -87,6 +87,16 @@ struct CommandActionHandler {
             
         case .addPropertyToObject:
             return try enhanceObject(
+                type: .addInstanceProperty,
+                allText: allText,
+                selectedText: selectedText,
+                lineContainingSelection: lineContainingSelection,
+                tabWidth: tabWidth
+            )
+            
+        case .addMethodToObject:
+            return try enhanceObject(
+                type: .addInstanceMethod,
                 allText: allText,
                 selectedText: selectedText,
                 lineContainingSelection: lineContainingSelection,

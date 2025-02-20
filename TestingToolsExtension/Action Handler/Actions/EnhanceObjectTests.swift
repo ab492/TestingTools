@@ -214,6 +214,41 @@ struct EnhanceObjectTests {
         }
     }
     
+    struct AddingMethods {
+        @Test func creatingVoidMethodOnStructDefinedOnOneLine() throws {
+            let text = [
+                "struct MyStruct { }\n",
+                "\n",
+                "struct SomeTestFile {\n",
+                "    func testSomething() {\n",
+                "        let myStruct = MyStruct()\n",
+                "        myStruct.someMethod()",
+                "    }\n",
+                "}\n"
+            ]
+            let highlightedText = getRangeOfText("someMethod()", from: text)!
+            
+            let sut = try makeSut(
+                action: .addMethodToObject,
+                allText: text,
+                selections: [highlightedText]
+            )
+            
+            #expect(sut == [
+                "struct MyStruct {\n",
+                "    func someMethod() { }\n",
+                "}\n",
+                "\n",
+                "struct SomeTestFile {\n",
+                "    func testSomething() {\n",
+                "        let myStruct = MyStruct()\n",
+                "        myStruct.someMethod()",
+                "    }\n",
+                "}\n"
+            ])
+        }
+    }
+    
     struct ErrorHandling {
         @Test func errorIsThrownIfNoPropertyIsSelectedToCreate() {
             let text = [
