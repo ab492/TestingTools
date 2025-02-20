@@ -31,7 +31,7 @@ struct CommandActionHandler {
             return try createObject(
                 .class,
                 allText: allText,
-                selectedText: selections,
+                selectedText: selectedText,
                 tabWidth: tabWidth
             )
             
@@ -39,7 +39,7 @@ struct CommandActionHandler {
             return try createObject(
                 .struct,
                 allText: allText,
-                selectedText: selections,
+                selectedText: selectedText,
                 tabWidth: tabWidth
             )
             

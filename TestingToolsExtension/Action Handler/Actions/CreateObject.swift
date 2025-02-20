@@ -6,12 +6,10 @@ enum ObjectType: String {
     case `class`
 }
 
-func createObject(_ type: ObjectType, allText: [String], selectedText: [XCSourceTextRange], tabWidth: Int) throws -> [String] {
-    let numberOfSelectedItems = selectedText.count
-    guard numberOfSelectedItems == 1,
-          let selectedText = selectedText.first else {
-        throw TestingToolsError.multipleSelectionNotSupported
-    }
+
+
+func createObject(_ type: ObjectType, allText: [String], selectedText: XCSourceTextRange, tabWidth: Int) throws -> [String] {
+
     
     guard selectedText.start.line == selectedText.end.line else {
         throw TestingToolsError.multilineSelectionNotSupported
